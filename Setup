@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd myapp
+npm install
+
+if [[ `uname` == "Linux" ]]; then
+   python -m virtualenv venv
+fi
