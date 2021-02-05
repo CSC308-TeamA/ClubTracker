@@ -1,3 +1,9 @@
+Notes for full setup:
+You will need node_modules to run 'npm start' properly. On first-time setup, you will also need to do 'npm install react-bootstrap bootstrap' in this directory.
+
+For Python Flask, follow instructions here https://flask.palletsprojects.com/en/1.1.x/installation/ to create a venv folder and activate it. You will also
+need to run the proper commands to set environment variables for Flask (see "My first REST API" for instructions depending on your machine).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
