@@ -1,3 +1,6 @@
+Storyboard:
+https://www.figma.com/file/s8ZNmfhXdlOIqteysREMU9/CSC-308?node-id=2%3A5813
+
 Notes for full setup:
 You will need node_modules to run 'npm start' properly. On first-time setup, you will also need to do 'npm install react-bootstrap bootstrap' in this directory.
 
@@ -74,3 +77,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Possible other installs
+
+You may have to download extra things which would be the following:
+
+-npm install node-sass@4.14.1
