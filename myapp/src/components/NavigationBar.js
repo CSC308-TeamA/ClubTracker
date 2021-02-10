@@ -17,6 +17,7 @@ export const NavigationBar = () => (
             <Link to="/sponsor">Sponsor</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/teamroster">Team Roster</Link>
+            <Link to="/calendar">Calendar</Link>
           </nav>
         </div>
       </div>

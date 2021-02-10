@@ -10,6 +10,8 @@ import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Jumbotron } from './components/Jumbotron.js';
 import TeamRoster from './pages/TeamRoster';
+import Calendar from './pages/Calendar';
+
 
 class App extends Component {
   render() {
@@ -26,6 +28,7 @@ class App extends Component {
               <Route path="/sponsor" component={Sponsor} />
               <Route path="/contact" component={Contact} />
               <Route path="/teamroster" component={TeamRoster} />
+              <Route path="/calendar" component={Calendar} />
             </Switch>
           </Layout>
         </Router>
