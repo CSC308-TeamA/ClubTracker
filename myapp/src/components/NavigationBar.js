@@ -3,7 +3,6 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import boatImage from '../assets/logo.PNG';
 
 export const NavigationBar = () => (
-
   <Navbar className="navbar-container">
   <Navbar.Brand href="/">Robotics Team</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -22,7 +21,7 @@ export const NavigationBar = () => (
           <NavDropdown.Item href="/calendar">Calendar</NavDropdown.Item>
           <NavDropdown.Item href="/pictures">Pictures</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="/login">Separated link</NavDropdown.Item>
+          <NavDropdown.Item href="/teamroster">Team Roster</NavDropdown.Item>
         </NavDropdown>
       </div>
     </Nav>

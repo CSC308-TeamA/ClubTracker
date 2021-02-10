@@ -1,15 +1,15 @@
 import React from 'react';
 import { Jumbotron as Jumbo, Container } from 'react-bootstrap';
 import "../styles/styles.scss"
-import boatImage from '../assets/dog.png';
+import boatImage from '../assets/websiteBanner.jpg';
 
 
 export const Jumbotron = () => (
   <div className="banner">
       <div className="container">
-          <div className="main-text">ROBOTICSSSSS</div>
+          <div className="main-text">ROBOTICS</div>
           <div className="main-image">
-            <img src={boatImage} alt="dog"/>
+            <img src={boatImage} alt="websiteBanner"/>
           </div>
         <div className="scroll">
           <span>Scroll down</span>

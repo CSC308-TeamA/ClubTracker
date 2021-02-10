@@ -9,6 +9,8 @@ import { Sponsor } from './pages/SponsorPage';
 import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Footer } from './components/Footer';
+import { Jumbotron } from './components/Jumbotron.js';
+import TeamRoster from './pages/TeamRoster';
 
 class App extends Component {
   render() {
@@ -25,6 +27,7 @@ class App extends Component {
               <Route path="/resources" component={Resources} />
               <Route path="/sponsor" component={Sponsor} />
               <Route path="/contact" component={Contact} />
+              <Route path="/teamroster" component={TeamRoster} />
             </Switch>
           </Layout>
           {/* <Footer /> */}
