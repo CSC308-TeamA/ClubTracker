@@ -8,7 +8,7 @@ import { Contact } from './pages/ContactPage';
 import { Sponsor } from './pages/SponsorPage';
 import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
-import { Jumbotron } from './components/Jumbotron.js';
+import { Footer } from './components/Footer';
 
 class App extends Component {
   render() {
@@ -16,7 +16,8 @@ class App extends Component {
       <React.Fragment>
         <Router>
           <NavigationBar />
-          <Jumbotron />
+          {/* <Jumbotron /> */}
+      
           <Layout>
             <Switch>
               <Route exact path="/" component={Home} />
@@ -26,6 +27,7 @@ class App extends Component {
               <Route path="/contact" component={Contact} />
             </Switch>
           </Layout>
+          {/* <Footer /> */}
         </Router>
       </React.Fragment>
     );
