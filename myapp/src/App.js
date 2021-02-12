@@ -6,12 +6,18 @@ import { Home } from './pages/HomePage';
 import { Resources } from './pages/ResourcesPage';
 import { Contact } from './pages/ContactPage';
 import { Sponsor } from './pages/SponsorPage';
+import { Calendar } from './pages/Calendar';
+import { Login } from './pages/LoginPage';
+import TeamRoster from './pages/TeamRoster';
+import { First } from './pages/FirstPage';
+import { Outreach } from './pages/OutreachPage';
+import { Pictures } from './pages/PicturePage';
+
 import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Footer } from './components/Footer';
-import { Jumbotron } from './components/Jumbotron.js';
-import TeamRoster from './pages/TeamRoster';
-import Calendar from './pages/Calendar';
+
+import "./styles/styles.scss";
 
 
 class App extends Component {
@@ -31,9 +37,13 @@ class App extends Component {
               <Route path="/contact" component={Contact} />
               <Route path="/teamroster" component={TeamRoster} />
               <Route path="/calendar" component={Calendar} />
+              <Route path="/login" component={Login} />
+              <Route path="/first" component={First} />
+              <Route path="/outreach" component={Outreach} />
+              <Route path="/pictures" component={Pictures} />
             </Switch>
           </Layout>
-          {/* <Footer /> */}
+          <Footer />
         </Router>
       </React.Fragment>
     );

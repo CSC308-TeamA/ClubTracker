@@ -31,7 +31,6 @@ header {
     bottom: 0px;
     z-index: 10;
     .navbar-container {
-        // @include white-bg deleted
         display: flex;
         justify-content: center;
         align-items: center;
@@ -41,7 +40,6 @@ header {
         bottom: calc(1 * (0.4rem + 30px));
         width: 100%;
 
-        // hover added with white-bg mixin
         &:hover {
             @include black-bg;
         }
