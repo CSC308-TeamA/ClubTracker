@@ -12,6 +12,23 @@ export const NavigationBar = () => (
         <Nav.Link href="/">Home</Nav.Link>
         <Nav.Link href="/resources">Resources</Nav.Link>
         <Nav.Link href="/about">About</Nav.Link>
+{/*   
+  <header>
+    <div className="container">
+      <div className="inner-header">
+        <div className="logo">
+          <Link to="/">ROBOTICS</Link>
+        </div>
+        <div className="navigation">
+          <nav>
+            <Link to="/about">About</Link>
+            <Link to="/recources">Resources</Link>
+            <Link to="/sponsor">Sponsor</Link>
+            <Link to="/contact">Contact</Link>
+            <Link to="/teamroster">Team Roster</Link>
+            <Link to="/calendar">Calendar</Link>
+          </nav>
+        </div> */}
       </div>
       <img src={boatImage} className="logo" alt="logo" width={100} />
       <div className="link-container link-container__right">
