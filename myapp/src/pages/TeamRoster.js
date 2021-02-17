@@ -1,48 +1,51 @@
-import React from 'react'
-
-//temporary location of people for team roster
-const people = [
-  {
-    name: 'Darren Collins',
-    role: 'Head Mentor',
-    quote: '',
-    image: '',
-  },
-  {
-    name: 'Avery',
-    role: 'Programmer',
-    quote: '',
-    image: '',
-  },
-  {
-    name: 'Jacob',
-    role: 'Lead Designer',
-    quote: 'Something epic here',
-    image: '',
-  },
-  {
-    name: 'Shane',
-    role: 'President',
-    quote: '',
-    image: '',
-  },
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+import Card from 'react-bootstrap/Card'
+import CardGroup from 'react-bootstrap/CardGroup'
 
 function TeamRoster() {
-  const list = people.map((row, index) => {
+  const [characters, setCharacters] = useState([]);
+
+  async function fetchAll() {
+    try {
+      const response = await axios.get('http://localhost:5000/teamroster');
+      return response.data.team_roster;
+    }
+
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetchAll().then(result => {
+      if (result)
+        setCharacters(result);
+    });
+  }, []);
+
+  const list = characters.map((row, index) => {
     return (
-      <dl key={index}>
-        <dt>{row.name}</dt>
-        <dd>{row.role}</dd>
-        <dd>{row.quote}</dd>
-        <img src={row.image} alt="personImage"/>
-      </dl>
+      <div style={{ padding: '10px' }}>
+        <Card key={index} style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={row.photo} />
+          <Card.Body>
+            <Card.Title>{row.name}</Card.Title>
+            <Card.Text>
+              <p> Position: {row.position} </p>
+              <p> Quote: <i>{row.quote}</i> </p>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
     );
   });
+
   return (
-  <list>
+  <div>
     {list}
-  </list>
+  </div>
   );
 }
 
