@@ -12,7 +12,7 @@ proj_db = {
       'status' : 'active',              # Not displayed to roster page
       'role': 'Advisor',                # Not displayed to roster page
       'position' : 'Head Mentor',
-      'photo': '/assets/profileSilhouette.jpg', 
+      'photo': '', 
       'email': 'dc@gmail.com',         
       'phone_number': '805-555-1234',  
       'quote' : 'darren\'s quote'
