@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import Card from 'react-bootstrap/Card'
-import CardGroup from 'react-bootstrap/CardGroup'
+import websiteBanner from '../assets/websiteBanner.jpg'
+import profileSilhouette from '../assets/profileSilhouette.jpg'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -28,13 +29,13 @@ function TeamRoster() {
   const list = characters.map((row, index) => {
     return (
       <div style={{ padding: '10px' }}>
-        <Card key={index} style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={row.photo} />
+        <Card key={ index } style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={ profileSilhouette } />
           <Card.Body>
-            <Card.Title>{row.name}</Card.Title>
+            <Card.Title>{ row.name }</Card.Title>
             <Card.Text>
-              <p> Position: {row.position} </p>
-              <p> Quote: <i>{row.quote}</i> </p>
+              <p> Position: { row.position } </p>
+              <p> Quote: <i>{ row.quote }</i> </p>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -44,7 +45,12 @@ function TeamRoster() {
 
   return (
   <div>
-    {list}
+    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center'}}>
+      <img src={ websiteBanner } />
+    </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {list}
+    </div>
   </div>
   );
 }
