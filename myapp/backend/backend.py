@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify 
+from flask_cors import CORS 
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +12,7 @@ proj_db = {
       'status' : 'active',              # Not displayed to roster page
       'role': 'Advisor',                # Not displayed to roster page
       'position' : 'Head Mentor',
-      'photo': '', 
+      'photo': '/assets/profileSilhouette.jpg', 
       'email': 'dc@gmail.com',         
       'phone_number': '805-555-1234',  
       'quote' : 'darren\'s quote'
