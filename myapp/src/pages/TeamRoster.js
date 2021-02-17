@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import Card from 'react-bootstrap/Card'
-import CardGroup from 'react-bootstrap/CardGroup'
+import websiteBanner from '../assets/websiteBanner.jpg'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -44,7 +44,12 @@ function TeamRoster() {
 
   return (
   <div>
-    {list}
+    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center'}}>
+      <img src={ websiteBanner } />
+    </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {list}
+    </div>
   </div>
   );
 }
