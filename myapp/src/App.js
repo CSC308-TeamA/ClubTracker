@@ -14,7 +14,7 @@ import { Outreach } from './pages/OutreachPage';
 import { Pictures } from './pages/PicturePage';
 
 import { Layout } from './components/Layout';
-import { NavigationBar } from './components/NavigationBar';
+import Navbar from './components/NavBar';
 import { Footer } from './components/Footer';
 
 import "./styles/styles.scss";
@@ -25,9 +25,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <Router>
-          <NavigationBar />
           {/* <Jumbotron /> */}
-      
+          <Navbar />
           <Layout>
             <Switch>
               <Route exact path="/" component={Home} />

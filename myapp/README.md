@@ -84,3 +84,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 You may have to download extra things which would be the following:
 
 -npm install node-sass@4.14.1
+-npm install react-icons --save
