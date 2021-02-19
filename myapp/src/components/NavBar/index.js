@@ -20,6 +20,7 @@ const Navbar = () => {
         <NB.Collapse id="responsive-navbar-nav">
  */}
           <NavNew className="mr-auto">
+            
             <Bars />
             <NavLink to='/'>
                 <img src={boatImage} alt="Logo" width={40}/>
@@ -36,6 +37,9 @@ const Navbar = () => {
               </NavLink>
               <NavLink to='/sponsor' activeStyle>
                 Sponsors
+              </NavLink>
+              <NavLink to='/contact' activeStyle>
+                Contact Us
               </NavLink>
               <DropDownBody 
                 title={<DropDownHeader>

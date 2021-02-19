@@ -1,4 +1,3 @@
-  
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,7 +9,7 @@ export const NavNew = styled(Nav)`
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1000px) / 2);
-  z-index: 10;
+  z-index: 99;
   font-family: Roboto;
   font-weight: 600;
   font-size: 0.75rem;
@@ -18,6 +17,8 @@ export const NavNew = styled(Nav)`
   margin: 100 20px;
   text-decoration: none;
   letter-spacing: 1.75px;
+  width: 100%;
+  position: fixed;
 `;
 
 export const NavLink = styled(Link)`

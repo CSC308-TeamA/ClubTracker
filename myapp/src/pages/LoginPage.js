@@ -1,9 +1,11 @@
 import React from 'react'
 import Form from 'react-bootstrap/form'
 import Button from 'react-bootstrap/Button'
+import Padding from '../components/Padding/';
 
 export const Login = () => (
     <>
+    <Padding />
         <h2>LOG IN PLS</h2>
         <Form>
             <Form.Group controlId="formBasicEmail">

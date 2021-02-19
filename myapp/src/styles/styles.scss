@@ -15,7 +15,9 @@ body {
   font-size: 16px;
   padding: 0;
   margin: 0;
-  background-color: $black;
+  .navfix {
+  top: 80px;
+  }
 }
 
 .carousel {
@@ -23,132 +25,12 @@ body {
   height:500px;
   margin: auto;
 
-  @media (max-width: 900px) {
-    .carousel {
-      width:auto;
-      height:auto;
-    }
+    @media (max-width: 900px) {
+      .carousel {
+        width:auto;
+        height:auto;
+      }
+  }
 }
-}
-
-// .container {
-//   width: 1640px;
-//   min-width: 1640px;
-//   margin: 0 auto;
-//   @media (max-width: 1440px) {
-//     width: 1280px;
-//     min-width: 1280px;
-//   }
-//   @media (max-width: 1280px) {
-//     width: 976px;
-//     min-width: 976px;
-//   }
-//   @media (max-width: 976px) {
-//     width: 768px;
-//     min-width: 768px;
-//   }
-// }
-
-// .jumbo {
-//   background: no-repeat fixed bottom;
-//   background-size: cover;
-//   color: #efefef;
-//   height: 200px;
-//   position: relative;
-//   z-index: -2;
-// }
-// .overlay {
-//   background-color: #000;
-//   opacity: 0.6;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   right: 0;
-//   z-index: -1;
-// }
 
 
-// //Banner
-// .banner {
-//   display: flex;
-//   align-items: center;
-//   background-color: $grey;
-//   position: relative;
-//   height: 100vh;
-//   .row {
-//     position: relative;
-//     .main-text {
-//       font-size: 5.8rem;
-//       text-transform: uppercase;
-//       letter-spacing: 42px;
-//       font-weight: 700;
-//       color: $white;
-//       position: absolute;
-//       width: 100%;
-//       left: 0;
-//       top: 50%;
-//       transform: translateY(-50%);
-//       text-align: center;
-//       mix-blend-mode: difference;
-//       z-index: 9;
-//       @media (max-width: 1440px) {
-//         font-size: 4.4rem;
-//         letter-spacing: 36px;
-//       }
-//     }
-//     .main-image {
-//       width: 400px;
-//       margin: 0 auto;
-//       @media (max-width: 1440px) {
-//         width: 200px;
-//       }
-//     }
-//     // .side-image {
-//     //   width: 260px;
-//     //   position: absolute;
-//     //   @media (max-width: 1440px) {
-//     //     width: 208px;
-//     //   }
-//     //   &.left {
-//     //     left: 168px;
-//     //     top: 12px;
-//     //     @media (max-width: 1440px) {
-//     //       left: 128px;
-//     //     }
-//     //   }
-//     //   &.right {
-//     //     right: 168px;
-//     //     bottom: 12px;
-//     //     @media (max-width: 1440px) {
-//     //       right: 128px;
-//     //     }
-//     //   }
-//     // }
-//   }
-//   .scroll {
-//     font-weight: 700;
-//     font-size: 0.875rem;
-//     letter-spacing: 1.5px;
-//     color: $black;
-//     text-transform: uppercase;
-//     position: absolute;
-//     bottom: 48px;
-//   }
-//   .fixed-misc {
-//     position: fixed;
-//     top: 50%;
-//     right: -48px;
-//     transform: rotate(-90deg);
-//     font-weight: 700;
-//     text-transform: uppercase;
-//     font-size: 0.875rem;
-//     letter-spacing: 1.5px;
-//     color: $white;
-//     mix-blend-mode: difference;
-//     z-index: 8;
-//     @media (max-width: 1440px) {
-//       right: -112px;
-//     }
-//   }
-// }

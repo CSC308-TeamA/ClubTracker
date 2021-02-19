@@ -3,6 +3,9 @@ import axios from 'axios'
 import Card from 'react-bootstrap/Card'
 import websiteBanner from '../assets/websiteBanner.jpg'
 import profileSilhouette from '../assets/profileSilhouette.jpg'
+import "../styles/styles.scss";
+import Padding from '../components/Padding/';
+
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -44,14 +47,15 @@ function TeamRoster() {
   });
 
   return (
-  <div>
-    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center'}}>
-      <img src={ websiteBanner } />
-    </div>
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {list}
-    </div>
-  </div>
+    <>
+      <Padding />
+      <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center'}}>
+        <img src={ websiteBanner } />
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {list}
+      </div>
+    </>
   );
 }
 
