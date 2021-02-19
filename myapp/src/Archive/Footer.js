@@ -1,6 +1,5 @@
 import "../styles/footer.styles.scss";
 import boatImage from '../assets/logo.PNG';
-import { Link } from 'react-router-dom';
 
 export const Footer = () => (
   <header>

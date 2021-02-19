@@ -12,10 +12,9 @@ import TeamRoster from './pages/TeamRoster';
 import { First } from './pages/FirstPage';
 import { Outreach } from './pages/OutreachPage';
 import { Pictures } from './pages/PicturePage';
-
 import { Layout } from './components/Layout';
-import Navbar from './components/NavBar';
-import { Footer } from './components/Footer';
+import Navbar from './components/NavBar/';
+import Footer from './components/Footer/';
 
 import "./styles/styles.scss";
 
@@ -43,6 +42,7 @@ class App extends Component {
             </Switch>
           </Layout>
           <Footer />
+          {/* <foot /> */}
         </Router>
       </React.Fragment>
     );

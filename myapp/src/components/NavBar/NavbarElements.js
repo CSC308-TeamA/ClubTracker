@@ -2,9 +2,9 @@
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavDropdown } from 'react-bootstrap';
+import { NavDropdown, Nav, Navbar as NB } from 'react-bootstrap';
 
-export const Nav = styled.nav`
+export const NavNew = styled(Nav)`
   background: #000;
   height: 80px;
   display: flex;
@@ -63,9 +63,6 @@ export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
   margin-right: 24px;
-  /* Third Nav */
-  /* justify-content: flex-end;
-  width: 100vw; */
   @media screen and (max-width: 768px) {
     display: none;
   }
