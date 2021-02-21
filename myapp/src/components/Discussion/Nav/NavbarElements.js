@@ -1,7 +1,6 @@
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavDropdown } from 'react-bootstrap';
 
 export const Ul = styled.ul`
   list-style: none;
@@ -25,41 +24,30 @@ export const Ul = styled.ul`
 `;
 
 export const NavNew = styled.nav`
-  background: #000;
-  height: 80px;
+  position: relative;
+  background: yellow;
   display: flex;
-  justify-content: space-between;
-  padding: 0.5rem calc((100vw - 1000px) / 2);
-  z-index: 99;
+  z-index: 20;
   font-family: Roboto;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
-  margin: 100 20px;
   text-decoration: none;
   letter-spacing: 1.75px;
   width: 100%;
   align-items: center;
-  margin-right: -24px;
-  position: fixed;
-  .logo {
-    padding: 15px 0;
-  }
 `;
 
 export const NavLink = styled(Link)`
-  color: yellow;
-  display: flex;
-  align-items: center;
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
-  padding: 0 1rem;
-  height: 100%;
-  cursor: pointer;
+
   &.active {
-    color: white;
-  }
-  &:hover {
-    color: white;
+    background-color: #ddd;
+    color: black;
   }
 `;
 
@@ -98,54 +86,11 @@ export const NavBtnLink = styled(Link)`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  /* Second Nav */
   margin-left: 24px;
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: #fff;
+    background: #256cd1;
     color: #010606;
-  }
-`;
-
-export const DropDownBody = styled(NavDropdown)`
-  color: yellow;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  height: 100%;
-  cursor: pointer;
-  &.active {
-    color: white;
-  }
-  &:hover {
-    color: white;
-  }
-  margin: 0 auto;
-  .dropdown-menu {
-    background-color: yellow;
-  }
-`;
-
-export const DropDownContainer = styled(NavDropdown.Item)`
-  width: 10.5em;
-  margin: 0 auto;
-  font-family: Roboto;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  
-`;
-
-export const DropDownHeader = styled.a`
-  width: 10.5em;
-  margin: 0 auto;
-  font-family: Roboto;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  color: yellow;
-  &:hover {
-    color: white;
   }
 `;
 

@@ -15,6 +15,7 @@ import { Pictures } from './pages/PicturePage';
 import { Layout } from './components/Layout';
 import Navbar from './components/NavBar/';
 import Footer from './components/Footer/';
+import { DiscussionBoard } from './pages/DiscussionBoard';
 
 import "./styles/styles.scss";
 
@@ -24,7 +25,6 @@ class App extends Component {
     return (
       <React.Fragment>
         <Router>
-          {/* <Jumbotron /> */}
           <Navbar />
           <Layout>
             <Switch>
@@ -39,10 +39,10 @@ class App extends Component {
               <Route path="/first" component={First} />
               <Route path="/outreach" component={Outreach} />
               <Route path="/pictures" component={Pictures} />
+              <Route path="/discussion" component={DiscussionBoard} />
             </Switch>
           </Layout>
           <Footer />
-          {/* <foot /> */}
         </Router>
       </React.Fragment>
     );
