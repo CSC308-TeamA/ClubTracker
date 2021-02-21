@@ -1,65 +1,24 @@
 import React from 'react';
+import Burger from './Burger';
 import {
-  Bars,
   NavNew,
-  NavLink,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
-  DropDownBody,
-  DropDownContainer, 
-  DropDownHeader
+  NavLink
 } from './NavbarElements';
 import boatImage from '../../assets/logo.PNG';
 
 const Navbar = () => {
   return (
     <>
-      {/* <NB collapseOnSelect expand="lg" className="justify-content-center">
-        <NB.Toggle aria-controls="responsive-navbar-nav" />
-        <NB.Collapse id="responsive-navbar-nav">
- */}
-          <NavNew className="mr-auto">
-            
-            <Bars />
-            <NavLink to='/'>
-                <img src={boatImage} alt="Logo" width={40}/>
-            </NavLink>
-            <NavMenu>
-              <NavLink to='/first' activeStyle>
-                FIRST
-              </NavLink>
-              <NavLink to='/about' activeStyle>
-                About
-              </NavLink>
-              <NavLink to='/outreach' activeStyle>
-                Outreach
-              </NavLink>
-              <NavLink to='/sponsor' activeStyle>
-                Sponsors
-              </NavLink>
-              <NavLink to='/contact' activeStyle>
-                Contact Us
-              </NavLink>
-              <DropDownBody 
-                title={<DropDownHeader>
-                  More
-                </DropDownHeader>}
-                id="collasible-nav-dropdown">
-                <DropDownContainer href="/calendar">Calendar</DropDownContainer>
-                <DropDownContainer href="/pictures">Pictures</DropDownContainer>
-                <DropDownContainer href="/teamroster">Team Roster</DropDownContainer>
-                <DropDownContainer href="/resources">Resources</DropDownContainer>
-              </DropDownBody>
-            </NavMenu>
-            <NavBtn>
-              <NavBtnLink to='/login'>Log In</NavBtnLink>
-            </NavBtn>
-          </NavNew>
-        {/* </NB.Collapse>
-     </NB> */}
+      <NavNew>
+        <div className="logo">
+          <NavLink to='/' activeStyle>
+            <img src={boatImage} alt="Logo" width={40}/>
+          </NavLink>
+        </div>
+        <Burger />
+      </NavNew>
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
