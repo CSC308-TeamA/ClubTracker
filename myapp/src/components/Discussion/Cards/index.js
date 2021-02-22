@@ -1,33 +1,39 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import {
   CardHoover,
   UpdateText,
-  DescriptionText
+  DescriptionText,
+  NavLink
 } from './CardElements';
 
 function Cards() {
   const information = [
     {
+      route: '/thread',
       title: '📢Announcements',
       description: 'Announcements/FAQs/Logistics',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
     },
     {
+      route: '/thread',
       title: '✒️General',
       description: 'General logisitics about the team and other information.',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
     },
     {
+      route: '/thread',
       title: '🤖Robot',
       description: 'General discussion about the robots.',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
     },
     {
+      route: '/thread',
       title: '⚔️Competition',
       description: 'Talk about the competition here.',
       threads: '🧵 2 Threads',
@@ -42,7 +48,11 @@ function Cards() {
           <CardHoover key={ index }>
             <Accordion.Toggle as={Card.Header} eventKey="0">
               <Card.Body>
-                <Card.Title>{ row.title }</Card.Title>
+                <Card.Title>            
+                  <NavLink to={ row.route } activeStyle>
+                    { row.title }
+                  </NavLink>
+                </Card.Title>
                 <DescriptionText>
                   { row.description }
                 </DescriptionText>
@@ -53,7 +63,9 @@ function Cards() {
               </Card.Body>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>Hello! I'm the body</Card.Body>
+              <Card.Body>
+                Hello! I'm the body
+              </Card.Body>
             </Accordion.Collapse>
           </CardHoover>
         </Accordion>

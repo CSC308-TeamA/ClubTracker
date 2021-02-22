@@ -16,6 +16,7 @@ import { Layout } from './components/Layout';
 import Navbar from './components/NavBar/';
 import Footer from './components/Footer/';
 import { DiscussionBoard } from './pages/DiscussionBoard';
+import ThreadPage from './pages/ThreadPage';
 
 import "./styles/styles.scss";
 
@@ -39,7 +40,8 @@ class App extends Component {
               <Route path="/first" component={First} />
               <Route path="/outreach" component={Outreach} />
               <Route path="/pictures" component={Pictures} />
-              <Route path="/discussion" component={DiscussionBoard} />
+              <Route exact path="/discussion" component={DiscussionBoard} />
+              <Route path="/thread" component={ThreadPage} />
             </Switch>
           </Layout>
           <Footer />

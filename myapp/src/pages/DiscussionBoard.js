@@ -1,9 +1,9 @@
-  
 import React from 'react'
 
 import Padding from '../components/Padding';
 import Navbar from '../components/Discussion/Nav';
 import Cards from '../components/Discussion/Cards';
+import Thread from '../components/Discussion/ThreadList';
 
 export const DiscussionBoard = () => (
   <>
@@ -16,6 +16,7 @@ export const DiscussionBoard = () => (
       </div>
 
       <Cards />
+      {/* <Thread /> */}
     </div>
   </>
 )
