@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Thread from '../components/Discussion/Thread';
 import Form from '../components/Discussion/Form'
 import Padding from '../components/Padding';
+import Navbar from '../components/Discussion/Nav';
 import '../styles/thread.css';
-
 
 function ThreadPage() {
   const [characters, setCharacters] = useState([
@@ -35,6 +35,7 @@ function ThreadPage() {
   return (
     <>
       <Padding />
+      <Navbar />
       <div className="container">
         <Thread characterData={characters} removeCharacter={removeOneCharacter} />
         <Form handleSubmit={updateList} />

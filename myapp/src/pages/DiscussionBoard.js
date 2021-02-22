@@ -1,14 +1,12 @@
 import React from 'react'
-
 import Padding from '../components/Padding';
 import Navbar from '../components/Discussion/Nav';
 import Cards from '../components/Discussion/Cards';
-import Thread from '../components/Discussion/ThreadList';
 
 export const DiscussionBoard = () => (
   <>
     <Padding />
-    {/* <Navbar /> */}
+    <Navbar />
 
     <div className="navfix">
       <div>
@@ -16,7 +14,6 @@ export const DiscussionBoard = () => (
       </div>
 
       <Cards />
-      {/* <Thread /> */}
     </div>
   </>
 )

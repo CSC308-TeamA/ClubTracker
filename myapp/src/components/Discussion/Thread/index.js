@@ -1,13 +1,12 @@
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import ThreadHeader from '../ThreadHeader'
-
+import Profile from '../Profile';
 import {
    CardHoover,
-   UpdateText,
+   ProfileLeft,
    DescriptionText,
-   NavLink
+   Edit,
  } from './ThreadElements';
 
 function ThreadBody(props) {
@@ -17,21 +16,18 @@ function ThreadBody(props) {
          <CardHoover >
             <tr key={ index }>
                <Card.Body>
+                  <ProfileLeft>
+                     <Profile />
+                     <p>
+                        { row.user }
+                     </p>                     
+                  </ProfileLeft>
                   <DescriptionText>
-                     <td>
-                        { row.comment }
-                     </td>
+                     { row.comment }
                   </DescriptionText>
-                  <UpdateText>
-                     <td>
-                        <p>
-                           { row.user }
-                        </p>
-                     </td>
-                     <td>
-                        <button onClick={() => props.removeCharacter(index)}>Delete</button>
-                     </td>
-                  </UpdateText>
+                  <Edit>
+                     <button onClick={() => props.removeCharacter(index)}>Delete</button>
+                  </Edit>
                </Card.Body>
             </tr>
          </CardHoover>

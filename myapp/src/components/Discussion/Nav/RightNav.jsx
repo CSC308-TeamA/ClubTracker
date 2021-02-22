@@ -13,8 +13,23 @@ const RightNav = ({ open }) => {
             </NavLink>
         </li>
         <li>
-            <NavLink to='/discussion/users' activeStyle>
-            Users
+            <NavLink to='/thread' activeStyle>
+            Annoucements
+            </NavLink>
+        </li>
+        <li>
+            <NavLink to='/thread' activeStyle>
+            General
+            </NavLink>
+        </li>
+        <li>
+            <NavLink to='/thread' activeStyle>
+            Robot
+            </NavLink>
+        </li>
+        <li>
+            <NavLink to='/thread' activeStyle>
+            Competition
             </NavLink>
         </li>
     </Ul>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 
+
 function Form(props) {
     const [person, setPerson] = useState(
         {
@@ -29,7 +30,9 @@ function Form(props) {
     }
 
     return (
+      <>
         <form>
+          
             <label htmlFor="name">Comment</label>
             <input
                 type="text"
@@ -46,6 +49,7 @@ function Form(props) {
                 onChange={handleChange} />
             <input type="button" value="Submit" onClick={submitForm} />
         </form>
+        </>
     );
 }
 

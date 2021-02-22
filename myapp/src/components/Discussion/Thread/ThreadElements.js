@@ -19,7 +19,7 @@ export const UpdateText = styled.div`
 
 export const DescriptionText = styled(Card.Text)`
   float: left;
-  width: 80%;
+  width: 60%;
 `;
 
 export const NavLink = styled(Link)`
@@ -27,4 +27,23 @@ export const NavLink = styled(Link)`
   &.active {
     color: blue;
   }
+`;
+
+export const Title = styled.div`
+  text-align: center;
+  font-size: 2rem;
+  color: black;
+  &.active {
+    color: blue;
+  }
+`;
+
+export const ProfileLeft = styled.div`
+  float: left;
+  width: 25%;
+`;
+
+export const Edit = styled.div`
+  float: left;
+  width: 15%;
 `;

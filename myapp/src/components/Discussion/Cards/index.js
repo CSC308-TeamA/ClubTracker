@@ -17,6 +17,7 @@ function Cards() {
       description: 'Announcements/FAQs/Logistics',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
+      newest: '⏲️Meeting 2/19',
     },
     {
       route: '/thread',
@@ -24,6 +25,7 @@ function Cards() {
       description: 'General logisitics about the team and other information.',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
+      newest: '⏲️How To Meme',
     },
     {
       route: '/thread',
@@ -31,6 +33,7 @@ function Cards() {
       description: 'General discussion about the robots.',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
+      newest: '⏲️Robot Fails',
     },
     {
       route: '/thread',
@@ -38,13 +41,14 @@ function Cards() {
       description: 'Talk about the competition here.',
       threads: '🧵 2 Threads',
       posts: '💬 5 Posts',
+      newest: '⏲️Ventura Regional 2021',
     },
   ];
 
   const list = information.map((row, index)  => {
     return (
       <>
-        <Accordion defaultActiveKey="0">
+        <Accordion>
           <CardHoover key={ index }>
             <Accordion.Toggle as={Card.Header} eventKey="0">
               <Card.Body>
@@ -64,7 +68,16 @@ function Cards() {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                Hello! I'm the body
+                <p>
+                  <NavLink to={ row.route } activeStyle>
+                    { row.newest }
+                  </NavLink>
+                </p>
+                <p>
+                  <NavLink to={ row.route } activeStyle>
+                    { row.newest }
+                  </NavLink>
+                </p>
               </Card.Body>
             </Accordion.Collapse>
           </CardHoover>
