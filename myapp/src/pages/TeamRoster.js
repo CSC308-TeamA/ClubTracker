@@ -10,7 +10,7 @@ function TeamRoster() {
   async function fetchAll() {
     try {
       const response = await axios.get('http://localhost:5000/teamroster');
-      return response.data.team_roster;
+      return response.data;
     }
 
     catch (error) {
