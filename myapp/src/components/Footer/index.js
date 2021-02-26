@@ -29,8 +29,8 @@ const Footer = () => {
           <NavLink to="https://www.instagram.com/bearmetal2046/?hl=en" activeStyle>
             Instagram
           </NavLink>
-          <NavLink to="https://www.facebook.com/FRC2046/" activeStyle>
-            Facebook
+          <NavLink to="https://www.thebluealliance.com/team/2046" activeStyle>
+            Blue Alliance
           </NavLink>
         </Nav>
       </Header>

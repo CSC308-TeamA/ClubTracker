@@ -1,20 +1,25 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { About } from './pages/AboutPage';
+
+import Navbar from './components/NavBar/';
+import Footer from './components/Footer/';
+
+import { First } from './pages/FirstPage/';
+import { About } from './pages/AboutPage/';
 import { Home } from './pages/HomePage';
 import { Resources } from './pages/ResourcesPage';
-import { Contact } from './pages/ContactPage';
-import { Sponsor } from './pages/SponsorPage';
+import Sponsor from './pages/SponsorPage/';
+import { Contact } from './pages/ContactPage/';
+
+import TeamRoster from './pages/TeamRoster';
 import { Calendar } from './pages/Calendar';
 import { Login } from './pages/LoginPage';
-import TeamRoster from './pages/TeamRoster';
-import { First } from './pages/FirstPage';
+
 import { Outreach } from './pages/OutreachPage';
 import { Pictures } from './pages/PicturePage';
 import { Layout } from './components/Layout';
-import Navbar from './components/NavBar/';
-import Footer from './components/Footer/';
+
 import { DiscussionBoard } from './pages/DiscussionBoard';
 import ThreadPage from './pages/ThreadPage';
 

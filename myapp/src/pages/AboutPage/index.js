@@ -1,6 +1,6 @@
 import React from 'react'
-import "../styles/styles.scss";
-import Padding from '../components/Padding/';
+import "../../styles/styles.scss";
+import Padding from '../../components/Padding/';
 
 export const About = () => (
   <>

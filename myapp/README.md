@@ -85,3 +85,17 @@ You may have to download extra things which would be the following:
 
 -npm install node-sass@4.14.1
 -npm install react-icons --save
+npm install react-player --save
+
+Notes to self:
+First terminal:
+cd .\myapp\backend\
+Set-ExecutionPolicy Unrestricted -Scope Process
+$env:FLASK_APP = "backend.py"
+$env:FLASK_ENV = "development"
+venv\Scripts\activate
+python -m flask run
+
+Go to another terminal:
+cd myapp
+npm start
