@@ -2,22 +2,40 @@ import React, { useState } from 'react';
 import Thread from '../components/Discussion/Thread';
 import Form from '../components/Discussion/Form'
 import Padding from '../components/Padding';
-import Navbar from '../components/Discussion/Nav';
 import '../styles/thread.css';
+import pfp1 from '../assets/profiles/pfp1.gif';
+import pfp2 from '../assets/profiles/pfp2.gif';
+import pfp3 from '../assets/profiles/pfp3.gif';
 
 function ThreadPage() {
   const [characters, setCharacters] = useState([
     {
-      comment: 'Sounds great! I will be there.',
-      user: 'Parent'
+      picture: pfp1,
+      name: 'Mr. Robot',
+      user: 'robo123',
+      role: 'Coach',
+      comment: 'Sounds great! I will be there.'
     },
     {
+      picture: pfp2,
+      name: 'Jane',
+      user: 'janedane',
+      role: 'Parent',
       comment: 'Cool.',
-      user: 'Game Master'
     },
     {
+      picture: pfp3,
+      name: 'Sally',
+      user: 'ILoveRobotics710',
+      role: 'Head Coder',
       comment: 'We can check out the new serve drive code.',
-      user: 'Head Coder'
+    },
+    {
+      picture: pfp1,
+      name: 'Jenisa',
+      user: 'lovelybluebug',
+      role: 'Head Coder',
+      comment: 'I am done.',
     },
   ]);
 
@@ -35,10 +53,14 @@ function ThreadPage() {
   return (
     <>
       <Padding />
-      <Navbar />
       <div className="container">
-        <Thread characterData={characters} removeCharacter={removeOneCharacter} />
-        <Form handleSubmit={updateList} />
+        <Thread 
+          characterData={characters} 
+          removeCharacter={removeOneCharacter} 
+        />
+        <Form 
+          handleSubmit={updateList} 
+        />
       </div>
     </>
   );  

@@ -85,7 +85,9 @@ You may have to download extra things which would be the following:
 
 -npm install node-sass@4.14.1
 -npm install react-icons --save
-npm install react-player --save
+-npm install react-player --save
+-npm i formik
+-npm i yup
 
 Notes to self:
 First terminal:

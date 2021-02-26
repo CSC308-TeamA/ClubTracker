@@ -17,10 +17,10 @@ import pinnacle from "../../assets/sponsors/pinnacle.png"
 import flow from "../../assets/sponsors/flow.png"
 import alaska from "../../assets/sponsors/alaska.jpg"
 import thinc from "../../assets/sponsors/thinc.png"
-import meme1 from "../../assets/meme1.jpg"
-import meme2 from "../../assets/meme2.jpg"
-import doge from "../../assets/doge.png"
-import dog from "../../assets/dog.png"
+import meme1 from "../../assets/random/meme1.jpg"
+import meme2 from "../../assets/random/meme2.jpg"
+import doge from "../../assets/random/doge.png"
+import dog from "../../assets/random/dog.png"
 
 function Sponsor () {
   const information = [
@@ -63,14 +63,14 @@ function Sponsor () {
           <SponsorInfo>
             <Row>
               <Col>
-                <a href={ row.link1 } id="logo">
+                <a href={ row.link1 } id="logo" alt={ row.titleright }>
                   <img src={ row.imageleft }/> 
                 </a>
               </Col>
               <Col>
                 <h2>{ row.titleright }</h2>
                 <p>{ row.descriptionright }</p>
-                <a href={ row.link1 } id="logo">
+                <a href={ row.link1 } id="logo" alt={ row.titleright }>
                   <Button variant="primary">VISIT SITE</Button>
                 </a>
               </Col>
@@ -82,12 +82,12 @@ function Sponsor () {
               <Col>
                 <h2>{ row.titleleft }</h2>
                 <p>{ row.descriptionleft }</p>
-                <a href={ row.link2 } id="logo">
+                <a href={ row.link2 } id="logo" alt={ row.titleleft }>
                   <Button variant="primary">VISIT SITE</Button>
                 </a>
               </Col>              
               <Col>
-                <a href={ row.link2 } id="logo">
+                <a href={ row.link2 } id="logo" alt={ row.titleleft }>
                   <img src={ row.imageright }/> 
                 </a>
               </Col>

@@ -1,26 +1,8 @@
 import React from 'react'
 import Form from 'react-bootstrap/form'
 import Button from 'react-bootstrap/Button'
-import Padding from '../components/Padding/'
-import styled from 'styled-components';
-import { NavLink as Link } from 'react-router-dom';;
-
-
-const NavLink = styled(Link)`
-    color: yellow;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    padding: 0 1rem;
-    height: 100%;
-    cursor: pointer;
-    &.active {
-    color: white;
-    }
-    &:hover {
-    color: white;
-    }
-`;
+import Padding from '../../components/Padding'
+import { NavLink } from './LoginPageElements'
 
 export const Login = () => (
     <>
@@ -44,6 +26,9 @@ export const Login = () => (
             </Form.Group>
             <Button variant="primary" type="Log In">
                 <NavLink to="/discussion">Log In</NavLink>
+            </Button>
+            <Button variant="primary" type="Log In">
+                <NavLink to="/signup">Sign Up</NavLink>
             </Button>
         </Form>
     </>

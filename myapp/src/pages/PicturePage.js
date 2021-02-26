@@ -3,17 +3,13 @@ import React from 'react'
 import { Caro } from '../components/Carousel';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
-import boatImage from '../assets/dog.png';
+import boatImage from '../assets/random/dog.png';
 import Padding from '../components/Padding/';
 
 export const Pictures = () => (
   <>
     <Padding />
-    <div className="navfix">
-      <div>
         <h2>PICTURES</h2>
-
-      </div>
       <Caro />
 
 
@@ -23,8 +19,7 @@ export const Pictures = () => (
         <Card.Body>
           <Card.Title>Card title</Card.Title>
           <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in to
-            additional content. This content is a little bit longer.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis interdum ornare. Etiam semper aliquet aliquam. Nam ultrices finibus nunc, at semper lectus iaculis ut.
           </Card.Text>
         </Card.Body>
       </Card>
@@ -50,6 +45,5 @@ export const Pictures = () => (
         </Card.Body>
       </Card>
     </CardDeck>
-    </div>
   </>
 )

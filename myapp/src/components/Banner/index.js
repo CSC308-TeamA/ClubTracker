@@ -1,10 +1,9 @@
 import React from 'react';
 import {
     Bandiv,
-    Image, Title
+    Image
 } from './BannerElements';
 import bannerImage from '../../assets/websiteBanner.jpg';
-import awardsImage from '../../assets/awards.PNG';
 
 const Banner = () => {
     return(

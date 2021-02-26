@@ -6,7 +6,7 @@ import {
    Title, 
    ProfileLeft
  } from './ThreadElements';
-
+ import pfp5 from '../../../assets/profiles/pfp5.gif';
 
 function ThreadHeader() {
    const information = [
@@ -29,7 +29,12 @@ function ThreadHeader() {
                   </Card.Title>
                   <hr />
                   <ProfileLeft>
-                     <Profile />
+                     <Profile 
+                        picture={ pfp5 }
+                        name='Mr. Robot'
+                        user='robo123'
+                        role='Coach'
+                     />
                   </ProfileLeft>
                   <DescriptionText>
                      <td>

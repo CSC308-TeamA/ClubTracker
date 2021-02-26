@@ -46,7 +46,6 @@ const RightNav = ({ open }) => {
                 <DropDownContainer href="/calendar">Calendar</DropDownContainer>
                 <DropDownContainer href="/pictures">Pictures</DropDownContainer>
                 <DropDownContainer href="/teamroster">Team Roster</DropDownContainer>
-                <DropDownContainer href="/resources">Resources</DropDownContainer>
                 <DropDownContainer href="/login">Log In</DropDownContainer>
             </DropDownBody>
         </li>
