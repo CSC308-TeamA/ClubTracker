@@ -75,8 +75,8 @@ function Sponsor () {
                 </a>
               </Col>
             </Row>
+            <hr className="new1" />
           </SponsorInfo>
-          <hr className="new1" />
           <SponsorInfo>
             <Row>
               <Col>
@@ -92,8 +92,8 @@ function Sponsor () {
                 </a>
               </Col>
             </Row>
+            <hr className="new1" />
           </SponsorInfo>
-          <hr className="new1" />
         </Container>
       </>
     );

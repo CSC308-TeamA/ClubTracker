@@ -1,8 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import Padding from '../../components/Padding'
-import { NavLink } from './LoginPageElements'
+import { NavLink, NewButton } from './LoginPageElements'
 
 export const Login = () => (
     <>
@@ -24,12 +23,12 @@ export const Login = () => (
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
-            <Button variant="primary" type="Log In">
+            <NewButton variant="primary" type="Log In">
                 <NavLink to="/discussion">Log In</NavLink>
-            </Button>
-            <Button variant="primary" type="Log In">
+            </NewButton>
+            <NewButton variant="primary" type="Log In">
                 <NavLink to="/signup">Sign Up</NavLink>
-            </Button>
+            </NewButton>
         </Form>
     </>
 )

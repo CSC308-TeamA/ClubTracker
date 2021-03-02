@@ -8,7 +8,8 @@ import {
   FormDiv,
   MapOuter,
   NavLink,
-  GmapCanvas
+  GmapCanvas, 
+  Line
 } from './ContactPageElements';
 import { ReactComponent as Facebook } from '../../assets/socials/facebook.svg';
 import { ReactComponent as Instagram } from '../../assets/socials/instagram.svg';
@@ -19,7 +20,7 @@ export const Contact = () => (
   <>
     <Padding />
     <h2>Contact Us!</h2>
-    <hr />
+    <Line />
     
     <FormDiv>
       <h4>Enter your information here:</h4>

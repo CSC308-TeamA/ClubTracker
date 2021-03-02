@@ -15,6 +15,7 @@ export const Header = styled.header`
   margin: 100 20px;
   text-decoration: none;
   letter-spacing: 1.75px;
+  border-top: 5px solid yellow;
 `;
 
 export const Nav = styled.nav`
@@ -28,7 +29,7 @@ export const Nav = styled.nav`
   width: 100%;
 `;
 
-export const NavLink = styled(Link)`
+export const NavLink = styled.a`
   color: yellow;
   display: flex;
   align-items: center;
@@ -43,3 +44,20 @@ export const NavLink = styled(Link)`
     color: white;
   }
 `;
+
+export const NavLinkLogo = styled(Link)`
+  color: yellow;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
+  &.active {
+    color: white;
+  }
+  &:hover {
+    color: white;
+  }
+`;
+

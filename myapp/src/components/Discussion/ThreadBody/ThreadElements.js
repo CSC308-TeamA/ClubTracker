@@ -11,6 +11,7 @@ export const CardHoover = styled(Card)`
 export const UpdateText = styled.div`
   float: right;
   width: 20%;
+  color: black;
   p {
     margin-bottom: 0px;
     color: blue;
@@ -20,6 +21,7 @@ export const UpdateText = styled.div`
 export const DescriptionText = styled(Card.Text)`
   float: left;
   width: 60%;
+  color: black;
 `;
 
 export const NavLink = styled(Link)`

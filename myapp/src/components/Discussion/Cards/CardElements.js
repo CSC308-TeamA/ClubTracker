@@ -20,6 +20,7 @@ export const UpdateText = styled.div`
 export const DescriptionText = styled(Card.Text)`
   float: left;
   width: 80%;
+  color: black;
 `;
 
 export const NavLink = styled(Link)`

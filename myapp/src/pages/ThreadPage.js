@@ -53,6 +53,7 @@ function ThreadPage() {
   return (
     <>
       <Padding />
+      <Padding />
       <div className="container">
         <Thread 
           characterData={characters} 

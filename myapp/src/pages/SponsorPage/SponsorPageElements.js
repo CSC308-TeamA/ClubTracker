@@ -4,7 +4,7 @@ export const Center = styled.div`
   padding: 50px 0;
   text-align: center;
   hr {
-    border: 2px solid black;
+    border: 2px solid white;
   }
 `;
 
@@ -22,7 +22,6 @@ export const SponsorRandom = styled.div`
 export const SponsorInfo = styled.div`
   text-align: center;
   padding-bottom: 50px;
-  padding-top: 50px;
   img {
     width: 200px;
     height: 200px;
@@ -31,6 +30,6 @@ export const SponsorInfo = styled.div`
     text-transform: uppercase;
   }
   hr.new1 {
-    border-top: 1px solid;
+    border: 1px solid white;
   }
 `;

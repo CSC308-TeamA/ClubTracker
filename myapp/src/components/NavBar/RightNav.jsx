@@ -19,12 +19,7 @@ const RightNav = ({ open }) => {
         </li>
         <li>
             <NavLink to='/about' activeStyle>
-            About
-            </NavLink>
-        </li>
-        <li>
-            <NavLink to='/outreach' activeStyle>
-            Outreach
+            About Us
             </NavLink>
         </li>
         <li>

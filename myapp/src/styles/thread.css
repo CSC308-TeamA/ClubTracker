@@ -1,25 +1,4 @@
-/*! 
- * Primitive UI | MIT License
- *
- * A minimalist front-end design toolkit built with Sass for developing 
- * responsive, browser-consistent web apps.
- *
- * Author: Tania Rascia <hello@taniarascia.com>
- * Source: https://github.com/taniarascia/primitive
- * Documentation: https://taniarascia.github.io/primitive
- */
-/**
- * Variables
- *
- * The majority of the configuration for the toolkit.
- */
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-/* Document
-   ========================================================================== */
-/**
- * 1. Correct the line height in all browsers.
- * 2. Prevent adjustments of font size after orientation changes in iOS.
- */
+
  html {
     line-height: 1.15;
     /* 1 */
@@ -396,75 +375,6 @@
   
   ol li ol {
     margin-bottom: 0;
-  }
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    margin: 1.5rem 0;
-    font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
-    line-height: 1.2;
-    color: #404040;
-  }
-  
-  h1:not(:first-child),
-  h2:not(:first-child),
-  h3:not(:first-child),
-  h4:not(:first-child),
-  h5:not(:first-child) {
-    margin: 1.5rem 0;
-  }
-  
-  h1:not(:first-child),
-  h2:not(:first-child),
-  h3:not(:first-child) {
-    margin-top: 2rem;
-  }
-  
-  h1 {
-    font-size: 1.75rem;
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-  }
-  
-  h3 {
-    font-size: 1.25rem;
-  }
-  
-  h4 {
-    font-size: 1.1rem;
-  }
-  
-  h5 {
-    font-size: 1rem;
-  }
-  
-  @media (min-width: 600px) {
-    h1:not(:first-child),
-    h2:not(:first-child),
-    h3:not(:first-child) {
-      margin-top: 2.5rem;
-    }
-    h1 {
-      font-size: 2.25rem;
-    }
-    h2 {
-      font-size: 2rem;
-    }
-    h3 {
-      font-size: 1.75rem;
-    }
-    h4 {
-      font-size: 1.5rem;
-    }
-    h5 {
-      font-size: 1.25rem;
-    }
   }
   
   a {
@@ -1020,10 +930,4 @@
     }
   }
   
-  /*
-   * Navigation
-   */
-  /**
-   * Layout
-   */
-  
+ 

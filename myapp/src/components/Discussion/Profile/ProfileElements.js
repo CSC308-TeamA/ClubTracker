@@ -14,10 +14,11 @@ export const UserInfo = styled.div`
 export const Name = styled.p`
   font-weight: bold;
   font-size: medium;
+  color: black;
 `;
 
 export const Username = styled.p`
-
+  color: black;
 `;
 
 export const Role = styled.p`

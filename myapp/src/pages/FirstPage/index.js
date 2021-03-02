@@ -2,7 +2,6 @@
 import React from 'react'
 import "../../styles/styles.scss";
 import Padding from '../../components/Padding/';
-// import ReactPlayer from "react-player"
 import firstLogo from "../../assets/first-logo.jpg"
 import firstStats from "../../assets/frc-stats.jpg"
 import Image from 'react-bootstrap/Image'

@@ -16,14 +16,13 @@ import { Calendar } from './pages/CalendarPage/';
 import { Login } from './pages/LoginPage/';
 import SignUp from './pages/SignUpPage/';
 
-import { Outreach } from './pages/OutreachPage';
 import { Pictures } from './pages/PicturePage';
 import { Layout } from './components/Layout';
 
 import { DiscussionBoard } from './pages/DiscussionBoard';
 import ThreadPage from './pages/ThreadPage';
 
-import "./styles/styles.scss";
+
 
 
 class App extends Component {
@@ -43,7 +42,6 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
               <Route path="/first" component={First} />
-              <Route path="/outreach" component={Outreach} />
               <Route path="/pictures" component={Pictures} />
               <Route exact path="/discussion" component={DiscussionBoard} />
               <Route path="/thread" component={ThreadPage} />

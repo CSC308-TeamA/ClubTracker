@@ -11,5 +11,6 @@ export const Center = styled.div`
 export const MainAbout = styled.div`
   img {
     float: left;
+    padding: 10px;
   }
 `;

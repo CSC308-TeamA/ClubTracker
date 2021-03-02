@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Bandiv,
-    Image
+    Image, Title
 } from './BannerElements';
 import bannerImage from '../../assets/websiteBanner.jpg';
 
@@ -9,8 +9,8 @@ const Banner = () => {
     return(
         <>
             <Bandiv>
-                {/* <Title> GO BEARS</Title> */}
                 <Image src={bannerImage} alt="Banner"/>
+                <Title>GO BEARS!</Title>
             </Bandiv>
         </>
     )
