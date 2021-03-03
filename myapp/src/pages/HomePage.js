@@ -16,8 +16,13 @@ export const Home = () => (
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ligula tortor, suscipit vitae sem eget, venenatis accumsan erat. Cras pharetra.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed ante et lectus tincidunt pretium quis non lorem. Vivamus sit amet fringilla nulla. Nullam eu magna in ex tempus scelerisque. Sed eu lectus odio. Ut eget ipsum vitae magna rutrum egestas. Pellentesque feugiat elementum turpis ut tempor. Etiam et efficitur.</p>
     </div>
-    <Button variant="warning" size="lg">Learn About Team 4068</Button>{' '}
-    <Button variant="warning" size="lg">Join Us</Button>{' '}
+    <form action="/about">
+      <Button variant="warning" size="lg">Learn About Team 4068</Button>{' '}
+    </form>
+    <form action="/about">
+      <Button variant="warning" size="lg">Join Us</Button>{' '}
+    </form>
+    
 
     <Image src={teamImage} fluid />
     <div>
@@ -32,41 +37,43 @@ export const Home = () => (
     <Card>
       <Card.Img variant="top" src={first} />
       <Card.Body>
-        <Card.Title>Card title</Card.Title>
+        <Card.Title>Team Calendar</Card.Title>
         <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
+          This team keeps it's calendar up to date and all events, milestones and compatition days can be found on it!
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-       <Button variant="primary">Go somewhere</Button>
+      <form action="/calendar">
+          <Button type="submit">Go to the Calendar</Button>
+        </form>
       </Card.Footer>
     </Card>
     <Card>
       <Card.Img variant="top" src={first} />
       <Card.Body>
-        <Card.Title>Card title</Card.Title>
+        <Card.Title>Meet the Team</Card.Title>
         <Card.Text>
-          This card has supporting text below as a natural lead-in to additional
-          content.{' '}
+          Here we are! The team roster shows all our teams members wiht their roll and a quote from each of them.
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-       <Button variant="primary">Go somewhere</Button>
+      <form action="/teamroster">
+          <Button type="submit">Go to the Team Roster</Button>
+        </form>
       </Card.Footer>
     </Card>
     <Card>
       <Card.Img variant="top" src={first} />
       <Card.Body>
-        <Card.Title>Card title</Card.Title>
+        <Card.Title>FIRST Robotics</Card.Title>
         <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in to
-          additional content. This card has even longer content than the first to
-          show that equal height action.
+          FIRST robotics is a international robotis comptetition founded by Dean Kamen. More information can be found on their webpage!
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-       <Button variant="primary">Go somewhere</Button>
+        <form action="https://www.firstinspires.org/robotics/frc">
+          <Button type="submit">Go to the FIRST Webpage</Button>
+        </form>
       </Card.Footer>
     </Card>
   </CardDeck>
