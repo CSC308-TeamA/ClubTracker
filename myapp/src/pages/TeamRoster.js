@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import Card from 'react-bootstrap/Card'
+import { Accordion, Button, Card } from 'react-bootstrap'
 import websiteBanner from '../assets/websiteBanner.jpg'
 import profileSilhouette from '../assets/profileSilhouette.jpg'
 import Form from './FilterForm.js'
+import AddUserForm from '../components/AddUserForm'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -56,29 +57,52 @@ function TeamRoster() {
   const list = characters.map((row, index) => {
     return (
       <div style={{ padding: '10px' }}>
-        <Card key={ index } style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={ profileSilhouette } />
-          <Card.Body>
-            <Card.Title>{ row.name }</Card.Title>
-            <Card.Text>
-              <p> Position: { row.position } </p>
-              <p> Quote: <i>{ row.quote }</i> </p>
-            </Card.Text>
-          </Card.Body>
-        </Card>
+        <Accordion>
+          <Card key={ index } style={{ width: '18rem' }}>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="link" eventKey={index}>
+                <Card.Title>{ row.name }</Card.Title>
+                <p> Position: { row.position } </p>
+                <Card.Img variant="top" src={ profileSilhouette } />
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey={index}>
+              <Card.Body>
+                <Card.Text>
+                  <p> Quote: <i>{ row.quote }</i> </p>
+                </Card.Text>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
       </div>
     );
   });
 
   return (
   <div>
-    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center'}}>
+    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center' }}>
       <img src={ websiteBanner } />
     </div>
-    <div>
+
+    <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '15px' }}>
+        <Accordion>
+          <Accordion.Toggle as={Button} variant="primary" eventKey="0">
+            + Add a Member 
+          </Accordion.Toggle>
+
+          <Accordion.Collapse eventKey="0">
+            <AddUserForm />
+          </Accordion.Collapse>
+
+        </Accordion>
+    </div>
+
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Form handleSubmit = {updatePage} />
     </div>
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {list}
     </div>
   </div>
