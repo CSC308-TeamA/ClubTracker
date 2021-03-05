@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Accordion, Button, Card } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import websiteBanner from '../assets/websiteBanner.jpg'
-import profileSilhouette from '../assets/profileSilhouette.jpg'
-import Form from './FilterForm.js'
+import Form from '../components/FilterForm'
 import AddUserForm from '../components/AddUserForm'
+import Roster from '../components/Roster'
+import styles from '../styles/TeamRoster.module.css'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -48,66 +49,52 @@ function TeamRoster() {
 
   function updatePage(field) {
     console.log(field);
+
     fetch(field).then(result => {
       if (result)
         setCharacters(result);
     });
   }
 
-  const list = characters.map((row, index) => {
-    return (
-      <div style={{ padding: '10px' }}>
-        <Accordion>
-          <Card key={ index } style={{ width: '18rem' }}>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey={index}>
-                <Card.Title>{ row.name }</Card.Title>
-                <p> Position: { row.position } </p>
-                <Card.Img variant="top" src={ profileSilhouette } />
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey={index}>
-              <Card.Body>
-                <Card.Text>
-                  <p> Quote: <i>{ row.quote }</i> </p>
-                </Card.Text>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </div>
-    );
-  });
+  async function makePostCall(person) {
+    try {
+      const response = await axios.post('http://localhost:5000/teamroster', person);
+      return response;
+    }
+
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  function updateRoster(person) {
+    makePostCall(person).then(result => {
+      if (result && result.status === 201)
+        setCharacters([...characters, result.data]);
+    });
+  }
 
   return (
-  <div>
-    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-      <img src={ websiteBanner } />
+    <div>
+      {/* <div className={ styles.header }>
+        <div className={ styles.headerBanner }>
+          <img src={ websiteBanner } />
+        </div>
+        <div className={ styles.headerAddMember }>
+          <AddUserForm handleSubmit={ updateRoster } />
+        </div>
+      </div> */}
+
+      <div className={styles.banner}>
+        <img src={websiteBanner} />
+      </div>
+
+      <AddUserForm handleSubmit={updateRoster} />
+      <Form handleSubmit={updatePage} />
+      <Roster characterData={characters} />
     </div>
-
-    <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '15px' }}>
-        <Accordion>
-          <Accordion.Toggle as={Button} variant="primary" eventKey="0">
-            + Add a Member 
-          </Accordion.Toggle>
-
-          <Accordion.Collapse eventKey="0">
-            <AddUserForm />
-          </Accordion.Collapse>
-
-        </Accordion>
-    </div>
-
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Form handleSubmit = {updatePage} />
-    </div>
-
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {list}
-    </div>
-  </div>
   );
 }
 
 export default TeamRoster;
-

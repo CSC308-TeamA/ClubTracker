@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { Button } from 'react-bootstrap/Button'
+import styles from '../styles/TeamRoster.module.css'
 
 function Form(props) {
   function handleChange(event) {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     if (name === "name")
       setField(
         {
@@ -70,37 +72,37 @@ function Form(props) {
   );
 
   return (
-    <form>
-      <label htmlFor = "name">Name</label>
+    <form className={styles.filterForm}>
+      <label htmlFor="name" className={styles.filterFormLabel}>Name</label>
       <input
-        type = "text"
-        name = "name"
-        value = {field.name}
-        onChange = {handleChange} />
+        type="text"
+        name="name"
+        value={field.name}
+        onChange={handleChange} />
 
-      <label htmlFor = "stat">Status</label>
-      <select name = "stat" id = "stat" onChange = {handleChange}>
-        <option value = "">Any</option>
-        <option value = "Active">Active</option>
+      <label htmlFor="stat" className={styles.filterFormLabel}>Status</label>
+      <select name="stat" id="stat" onChange={handleChange}>
+        <option value="">Any</option>
+        <option value="Active">Active</option>
       </select>
 
-      <label htmlFor = "role">Role</label>
-      <select name = "role" id = "role" onChange = {handleChange}>
-        <option value = "">Any</option>
-        <option value = "Member">Member</option>
-        <option value = "Officer">Officer</option>
-        <option value = "Advisor">Advisor</option>
+      <label htmlFor="role" className={styles.filterFormLabel}>Role</label>
+      <select name="role" id="role" onChange={handleChange}>
+        <option value="">Any</option>
+        <option value="Member">Member</option>
+        <option value="Officer">Officer</option>
+        <option value="Advisor">Advisor</option>
       </select>
 
-      <label htmlFor = "special">Specialization</label>
-      <select name = "special" id = "special" onChange = {handleChange}>
-        <option value = "">Any</option>
-        <option value = "Design">Design</option>
-        <option value = "Fabrication">Fabrication</option>
-        <option value = "Programming">Programming</option>
+      <label htmlFor="special" className={styles.filterFormLabel}>Specialization</label>
+      <select name="special" id="special" onChange={handleChange}>
+        <option value="">Any</option>
+        <option value="Design">Design</option>
+        <option value="Fabrication">Fabrication</option>
+        <option value="Programming">Programming</option>
       </select>
 
-      <input type = "button" value = "Filter" onClick = {submitForm} />
+      <input type="button" value="Filter" onClick={submitForm} className={styles.filterFormButton} />
     </form>
   );
 }

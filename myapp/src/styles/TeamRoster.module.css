@@ -1,0 +1,86 @@
+.banner {
+  padding-top: 15px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 
+.header {
+  padding-top: 15px;
+  padding-bottom: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.headerBanner {
+  display: flex;
+  align-self: center;
+}
+
+.headerAddMember {
+  display: flex;
+  align-self: flex-end;
+} */
+
+/* AddUserForm.js */
+
+.addUserForm {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 80px;
+  right: 15px;
+  /* padding-bottom: 15px; */
+}
+
+.addUserFormSumbitButton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* FilterForm.js */
+
+.filterForm {
+  display: flex;
+  justify-content: center;
+}
+
+.filterFormLabel {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.filterFormButton {
+  height: auto;
+  margin-left: 15px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Roster.js */
+
+.rosterList {
+  padding: 10px;
+  /* justify-content: left; */
+}
+
+.rosterListCard {
+  width: 17rem;
+}
+
+.rosterListCardPosition {
+  text-align: center;
+}
+
+.roster {
+  padding-top: 10px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
