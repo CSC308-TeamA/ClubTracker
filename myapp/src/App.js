@@ -11,7 +11,7 @@ import { Home } from './pages/HomePage';
 import Sponsor from './pages/SponsorPage/';
 import { Contact } from './pages/ContactPage/';
 
-import TeamRoster from './pages/TeamRoster';
+import TeamRoster from './pages/TeamRosterPage';
 import { Calendar } from './pages/CalendarPage/';
 import { Login } from './pages/LoginPage/';
 import SignUp from './pages/SignUpPage/';

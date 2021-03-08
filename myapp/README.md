@@ -55,10 +55,9 @@ You may have to download extra things which would be the following:
 -npm install node-sass@4.14.1
 -npm install react-icons --save
 -npm install react-player --save
--npm i formik
--npm i yup
 
 Notes to self:
+MAKE SURE TO RUN AS ADMIN SMH
 First terminal:
 cd .\myapp\backend\
 Set-ExecutionPolicy Unrestricted -Scope Process
@@ -70,3 +69,7 @@ python -m flask run
 Go to another terminal:
 cd myapp
 npm start
+
+For some reason if the venv is empty just do this:
+py -3 -m venv venv
+pip install Flask

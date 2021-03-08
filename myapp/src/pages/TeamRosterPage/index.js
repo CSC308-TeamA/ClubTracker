@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Accordion, Button, Card } from 'react-bootstrap'
-import websiteBanner from '../assets/websiteBanner.jpg'
-import profileSilhouette from '../assets/profileSilhouette.jpg'
-import "../styles/styles.scss";
-import Padding from '../components/Padding/';
 
-import Form from './FilterForm.js'
-import AddUserForm from '../components/AddUserForm'
+import websiteBanner from '../../assets/websiteBanner.jpg'
+import profileSilhouette from '../../assets/profileSilhouette.jpg'
+import "../../styles/styles.scss";
+import Padding from '../../components/Padding';
+import Form from '../FilterForm'
+import AddUserForm from '../../components/AddUserForm'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
