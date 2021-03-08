@@ -83,32 +83,33 @@ function TeamRoster() {
   });
 
   return (
-  <div>
-    <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-      <img src={ websiteBanner } />
-    </div>
+    <>
+    <Padding />
+      <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+        <img src={ websiteBanner } />
+      </div>
 
-    <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '15px' }}>
-        <Accordion>
-          <Accordion.Toggle as={Button} variant="primary" eventKey="0">
-            + Add a Member 
-          </Accordion.Toggle>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '15px' }}>
+          <Accordion>
+            <Accordion.Toggle as={Button} variant="primary" eventKey="0">
+              + Add a Member 
+            </Accordion.Toggle>
 
-          <Accordion.Collapse eventKey="0">
-            <AddUserForm />
-          </Accordion.Collapse>
+            <Accordion.Collapse eventKey="0">
+              <AddUserForm />
+            </Accordion.Collapse>
 
-        </Accordion>
-    </div>
+          </Accordion>
+      </div>
 
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Form handleSubmit = {updatePage} />
-    </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Form handleSubmit = {updatePage} />
+      </div>
 
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {list}
-    </div>
-  </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {list}
+      </div>
+    </>
   );
 }
 

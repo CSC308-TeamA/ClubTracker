@@ -43,6 +43,8 @@ class App extends Component {
               <Route path="/signup" component={SignUp} />
               <Route path="/first" component={First} />
               <Route path="/pictures" component={Pictures} />
+
+              
               <Route exact path="/discussion" component={DiscussionBoard} />
               <Route path="/thread" component={ThreadPage} />
             </Switch>
