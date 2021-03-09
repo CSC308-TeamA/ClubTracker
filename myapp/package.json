@@ -12,7 +12,7 @@
     "cors": "^2.8.5",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
+    "react-bootstrap": "^1.5.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-lightbox-component": "^1.2.1",

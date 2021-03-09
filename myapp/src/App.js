@@ -13,7 +13,7 @@ import { Contact } from './pages/ContactPage/';
 
 import TeamRoster from './pages/TeamRosterPage';
 import { Calendar } from './pages/CalendarPage/';
-import { Login } from './pages/LoginPage/';
+import Login from './pages/LoginPage/';
 import SignUp from './pages/SignUpPage/';
 
 import { Pictures } from './pages/PicturePage';
