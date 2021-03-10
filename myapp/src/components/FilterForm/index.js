@@ -76,38 +76,48 @@ function Form(props) {
       <NewCard>
         <BootStrapForm>
           <BootStrapForm.Row>
-          <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-            <label htmlFor = "name">Name</label>
-            <input
-              type = "text"
-              name = "name"
-              value = {field.name}
-              onChange = {handleChange} />
-          </BootStrapForm.Group>
-          <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-            <label htmlFor = "stat">Status</label>
-            <select name = "stat" id = "stat" onChange = {handleChange}>
-              <option value = "">Any</option>
-              <option value = "Active">Active</option>
-            </select>
-          </BootStrapForm.Group>
-          <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-            <label htmlFor = "role">Role</label>
-            <select name = "role" id = "role" onChange = {handleChange}>
-              <option value = "">Any</option>
-              <option value = "Member">Member</option>
-              <option value = "Officer">Officer</option>
-              <option value = "Advisor">Advisor</option>
-            </select>
-          </BootStrapForm.Group>
-          <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-            <label htmlFor = "special">Specialization</label>
-            <select name = "special" id = "special" onChange = {handleChange}>
-              <option value = "">Any</option>
-              <option value = "Design">Design</option>
-              <option value = "Fabrication">Fabrication</option>
-              <option value = "Programming">Programming</option>
-            </select>
+            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+              <label htmlFor = "name">Name</label>
+              <input
+                type = "text"
+                name = "name"
+                value = {field.name}
+                onChange = {handleChange} />
+            </BootStrapForm.Group>
+            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+              <label htmlFor = "stat">Status</label>
+              <select name = "stat" id = "stat" onChange = {handleChange}>
+                <option value = "">Any</option>
+                <option value = "Pending">Active</option>
+                <option value = "Active">Active</option>
+                <option value = "Inactive">Inactive</option>
+              </select>
+            </BootStrapForm.Group>
+            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+              <label htmlFor = "role">Role</label>
+              <select name = "role" id = "role" onChange = {handleChange}>
+                <option value = "">Any</option>
+                <option value = "Member">Member</option>
+                <option value = "Officer">Officer</option>
+                <option value = "Advisor">Advisor</option>
+              </select>
+            </BootStrapForm.Group>
+            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+              <label htmlFor = "special">Specialization</label>
+              <select name = "special" id = "special" onChange = {handleChange}>
+                <option value = "">Any</option>
+                <option value = "Design">Design</option>
+                <option value = "Fabrication">Fabrication</option>
+                <option value = "Electronics">Electronics</option>
+                <option value = "Assembly">Assembly</option>
+                <option value = "Programming">Programming</option>
+                <option value = "Media">Media</option>
+                <option value = "Business">Business</option>
+                <option value = "Scouting">Scouting</option>
+                <option value = "Pit Crew">Pit Crew</option>
+                <option value = "Drive Team">Drive Team</option>
+                <option value = "Other">Other</option>
+              </select>
             </BootStrapForm.Group>
             <input type = "button" value = "Filter" onClick = {submitForm} />
           </BootStrapForm.Row>
