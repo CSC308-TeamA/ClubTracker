@@ -135,21 +135,7 @@ def get_team_roster():
     position = request.args.get('position')
     specialization = request.args.get('specialization')
 
-    # int binaryCase
-    # if name != None: case + 1
-    # if status != None: case + 2
-    # if role != None: case + 4
-    # if position != None: case + 8
-    # if specialization != None: case + 16
-
-    # switch (binaryCase) {
-    #     case 0: return {"users_list": database.TeamRoster().find_all()}
-    #     case 1: return {"users_list": database.TeamRoster().find_by_name(name)}
-    #     case 2: return {"users_list": database.TeamRoster().find_by_status(status)}
-    #     case 4: return {"users_list": database.TeamRoster().find_by_role(role)}
-    #     case 8: return {"users_list": database.TeamRoster().find_by_position(position)}
-    #     case 16: return {"users_list": database.TeamRoster().find_by_specialization(specialization)}
-    # }
+    return {"users_list": database.TeamRoster().find_by_search(name, status, role, position, specialization)}
 
     filtered = []
     for p in proj_db['team_roster']:
