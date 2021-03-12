@@ -7,6 +7,23 @@ class Database(dict):
     __delattr__ = dict.__delitem__
     __setattr__ = dict.__setitem__
 
+    client = pymongo.MongoClient("mongodb+srv://jburiane:Jacob4136782@cluster0.r5jcz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    db = client.test
+
+# Correct format for inserting to database
+    # {
+    #   "name": "MemberONE",                  
+    #   "status" : "Active",
+    #   "role": "Member",   
+    #   "position" : "Member",
+    #   "specialization" : "N/A",
+    #   "photo": "", 
+    #   "email": "memberone@gmail.com",   
+    #   "phone_number": "805-555-0001",   
+    #   "quote" : "this is my quote here"
+    # }
+
+
     def save(self):
         if not self._id:
             self.collection.insert(self)
@@ -56,7 +73,8 @@ class TeamRoster(Database):
         switch(binaryCase) {
             case 0: users = list(self.collection.find())
             case 1: users = self.collection.find({'name':{'$' + name:'^Name'}})
-            case 31: users = self.collection.find({'name':{'$' + name:'^Name'}, 'status':{'$' + status:'^Status'}, 'role':{'$' + role:'^Role'}, 'position':{'$' + position:'^Position'}, 'specialization':{'$' + specialization:'^Specialization'}})
+            case 5: users = self.collection.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' } })
+            case 31: users = self.collection.find({'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' }, 'specialization': { '$regex': '^'+specialization , '$options': 'i' }})
         }
         for user in users:
             user["_id"] = str(user["_id"]) #converting ObjectId to str
