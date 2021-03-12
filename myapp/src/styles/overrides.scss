@@ -8,5 +8,9 @@ body {
   color: $body-color;
 }
 
+* {
+  font-size: 100%;
+  font-family: Roboto;
+ }
 
 @import "../../node_modules/bootstrap/scss/bootstrap";

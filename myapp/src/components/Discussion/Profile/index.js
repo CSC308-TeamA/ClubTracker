@@ -10,7 +10,7 @@ function Profile(props) {
    return (
          <>
             <UserInfo>
-               <img src={ props.picture }/>  
+               <img src={ props.picture } alt=""/>  
                <Name>
                   { props.name }
                </Name>

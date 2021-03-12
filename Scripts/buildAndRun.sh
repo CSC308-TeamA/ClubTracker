@@ -10,6 +10,8 @@ cd ../myapp
 
 echo 'bootstraping npm'
 npm install react-bootstrap bootstrap
+echo 'installing sass'
+npm install node-sass@4.14.1
 
 cd backend
 

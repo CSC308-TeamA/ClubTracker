@@ -1,13 +1,13 @@
 import React from 'react';
-import {
-   UserInfo, NewLI, NewB, NewUL
+import { 
+  NewLI, NewB, NewUL
  } from './ProfilePreviewElements';
  
 function ProfilePreview(props) {
     const rows = props.characterData.map((row, index) => {
    return (
          <>
-            <img src={ row.picture }/>  
+            <img src={ row.picture } alt=""/>  
             <NewUL>
                 <NewLI><NewB>Name</NewB>: { row.first } { row.last }</NewLI>
                 <NewLI><NewB>User👤</NewB>: { row.user }</NewLI>

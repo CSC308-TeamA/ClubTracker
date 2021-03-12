@@ -5,7 +5,7 @@ import { NavLink, NewDiv, NewCard, Center } from './LoginPageElements'
 import LoginCheck from '../../components/Authentication/LoginCheck'
 
 function Login() { 
-    const [characters, setCharacters] = useState([
+    const [setCharacters] = useState([
         {
             email: 'john@email.com',
             password: 'password',

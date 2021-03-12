@@ -64,7 +64,7 @@ function Sponsor () {
             <Row>
               <Col>
                 <a href={ row.link1 } id="logo" alt={ row.titleright }>
-                  <img src={ row.imageleft }/> 
+                  <img src={ row.imageleft } alt=""/> 
                 </a>
               </Col>
               <Col>
@@ -88,7 +88,7 @@ function Sponsor () {
               </Col>              
               <Col>
                 <a href={ row.link2 } id="logo" alt={ row.titleleft }>
-                  <img src={ row.imageright }/> 
+                  <img src={ row.imageright } alt=""/> 
                 </a>
               </Col>
             </Row>
@@ -113,16 +113,16 @@ function Sponsor () {
     <SponsorRandom>
       <h2>Other Sponsors</h2>
         <a href="https://theuselessweb.com/" id="logo">
-          <img src={ meme1 }/> 
+          <img src={ meme1 } alt=""/> 
         </a>
         <a href="https://theuselessweb.com/" id="logo">
-          <img src={ meme2 }/> 
+          <img src={ meme2 } alt=""/> 
         </a> 
         <a href="https://theuselessweb.com/" id="logo">
-          <img src={ doge }/> 
+          <img src={ doge } alt=""/> 
         </a> 
         <a href="https://theuselessweb.com/" id="logo">
-          <img src={ dog }/> 
+          <img src={ dog } alt=""/> 
         </a> 
     </SponsorRandom>
   </>
