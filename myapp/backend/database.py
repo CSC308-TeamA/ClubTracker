@@ -97,7 +97,7 @@ class TeamRoster(Database):
 
         switch = {
             0: list(db.TeamRoster.find()),
-            1: db.TeamRoster.find({'name':{'$' + name:'^Name'}}),
+            1: db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }}),
             5: db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' } }),
             31: db.TeamRoster.find({'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' }, 'specialization': { '$regex': '^'+specialization , '$options': 'i' }})
         }
