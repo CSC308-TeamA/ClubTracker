@@ -1,5 +1,8 @@
 import React from 'react';
 import { Card, CardColumns, Accordion } from 'react-bootstrap/'
+import {
+    CardChange
+  } from './PhotoGalleryPageElements';
 
 import pic1 from '../../assets/2012win.jpg'
 import pic2 from "../../assets/2019win.jpg"
@@ -11,10 +14,6 @@ import pic7 from "../../assets/girlsGen2017.png"
 import pic8 from "../../assets/teamPhoto.jpg"
 import pic9 from "../../assets/random/meme2.jpg"
 import pic10 from "../../assets/random/doge.png"
-
-import {
-    CardChange
-  } from './PhotoGalleryPageElements';
 
 function PhotoGallery() {
    const information = [

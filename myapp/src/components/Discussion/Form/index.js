@@ -36,7 +36,6 @@ function Form(props) {
                     name="picture"
                     id="picture"
                     value={person.picture}
-                    // onChange={handleChange} 
                 />
 
             <label htmlFor="name">Name</label>

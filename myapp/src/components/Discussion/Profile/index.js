@@ -5,7 +5,6 @@ import {
    Username,
    Role
  } from './ProfileElements';
- import pfp3 from '../../../assets/profiles/pfp3.gif';
 
 function Profile(props) {
    return (

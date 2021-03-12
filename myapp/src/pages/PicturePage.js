@@ -1,5 +1,5 @@
  import React from 'react'
-import { Caro } from '../components/Carousel';
+// import { Caro } from '../components/Carousel';
 import Padding from '../components/Padding/';
 import PhotoGallery from '../components/PhotoGallery/';
 

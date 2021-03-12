@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Accordion, Button, Card } from 'react-bootstrap'
+import { Accordion, Button } from 'react-bootstrap'
+import { CardChange, Hoover } from './TeamRosterPageElements';
 
 import websiteBanner from '../../assets/websiteBanner.jpg'
 import profileSilhouette from '../../assets/profileSilhouette.jpg'
 import "../../styles/styles.scss";
 import Padding from '../../components/Padding';
-import Form from '../FilterForm'
-import AddUserForm from '../../components/AddUserForm'
+import Form from '../../components/FilterForm'
+import AddUserForm from '../../components/AddUserForm/'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -61,22 +62,23 @@ function TeamRoster() {
     return (
       <div style={{ padding: '10px' }}>
         <Accordion>
-          <Card key={ index } style={{ width: '18rem' }}>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey={index}>
-                <Card.Title>{ row.name }</Card.Title>
+          <CardChange key={ index } style={{ width: '18rem' }}>
+            <CardChange.Header>
+     
+              <Accordion.Toggle as={Hoover} variant="link" eventKey={index}>
+                <CardChange.Title>{ row.name }</CardChange.Title>
                 <p> Position: { row.position } </p>
-                <Card.Img variant="top" src={ profileSilhouette } />
+                <CardChange.Img variant="top" src={ profileSilhouette } />
               </Accordion.Toggle>
-            </Card.Header>
+            </CardChange.Header>
             <Accordion.Collapse eventKey={index}>
-              <Card.Body>
-                <Card.Text>
+              <CardChange.Body>
+                <CardChange.Text>
                   <p> Quote: <i>{ row.quote }</i> </p>
-                </Card.Text>
-              </Card.Body>
+                </CardChange.Text>
+              </CardChange.Body>
             </Accordion.Collapse>
-          </Card>
+          </CardChange>
         </Accordion>
       </div>
     );
