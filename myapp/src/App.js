@@ -7,7 +7,7 @@ import Footer from './components/Footer/';
 
 import { First } from './pages/FirstPage/';
 import { About } from './pages/AboutPage/';
-import { Home } from './pages/HomePage';
+import { Home } from './pages/HomePage/';
 import Sponsor from './pages/SponsorPage/';
 import { Contact } from './pages/ContactPage/';
 

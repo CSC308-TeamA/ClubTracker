@@ -69,7 +69,7 @@ function SignUp() {
                         Click below to log in.
                         </NewCard.Text>
                         <Button variant="primary" type="Log In">
-                            <NavLink to="/logsin">Log In</NavLink>
+                            <NavLink to="/login">Log In</NavLink>
                         </Button>
                     </NewCard.Body>
                 </NewCard>
