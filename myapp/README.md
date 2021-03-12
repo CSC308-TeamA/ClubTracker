@@ -61,8 +61,13 @@ MAKE SURE TO RUN AS ADMIN SMH
 First terminal:
 cd .\myapp\backend\
 Set-ExecutionPolicy Unrestricted -Scope Process
+
 $env:FLASK_APP = "backend.py"
 $env:FLASK_ENV = "development"
+note on bash:
+export FLASK_APP=backend.py
+export FLASK_ENV=development
+
 venv\Scripts\activate
 python -m flask run
 

@@ -31,7 +31,6 @@ export const NavNew = styled.nav`
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1000px) / 2);
   z-index: 99;
-  font-family: Roboto;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;

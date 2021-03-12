@@ -22,7 +22,6 @@ export const Image = styled.img`
 export const Title = styled.h1`
     height: 180px;
     padding: 10px;
-    font-family: Roboto;
     font-weight: 600;
     font-size: 5rem;
     text-transform: uppercase;
