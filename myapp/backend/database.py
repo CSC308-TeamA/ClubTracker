@@ -1,4 +1,5 @@
 import pymongo, re
+from connection import Connect
 from pymongo import MongoClient
 from bson import ObjectId
 
@@ -29,7 +30,7 @@ class Database(dict):
 
     @staticmethod    
     def get_connection():
-        return MongoClient("")
+        return Connect.get_connection()
 
     # def get_database():
     #     client = Database.get_connection()
