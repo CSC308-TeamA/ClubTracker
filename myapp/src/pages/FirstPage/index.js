@@ -24,7 +24,7 @@ export const First = () => (
         </p>
       </MainAbout>
         <ResponsiveEmbed aspectRatio="16by9">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/WlK7S7-Kx70" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe title="FIRST Inspiratioin" width="560" height="315" src="https://www.youtube.com/embed/WlK7S7-Kx70" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </ResponsiveEmbed>
       <Center>
         <Image src={ firstStats } fluid />

@@ -66,6 +66,10 @@ $env:FLASK_ENV = "development"
 venv\Scripts\activate
 python -m flask run
 
+note on bash:
+export FLASK_APP=backend.py
+export FLASK_ENV=development
+
 Go to another terminal:
 cd myapp
 npm start

@@ -52,6 +52,7 @@ export const Contact = () => (
       <MapOuter>
         <GmapCanvas>
           <iframe 
+            title="THS Map"
             width="600" 
             height="500" 
             id="gmap_canvas" 

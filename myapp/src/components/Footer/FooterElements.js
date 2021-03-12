@@ -8,7 +8,6 @@ export const Header = styled.header`
   width: 100%;
   bottom: 0px;
   z-index: 10;
-  font-family: Roboto;
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;

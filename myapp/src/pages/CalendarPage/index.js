@@ -6,7 +6,7 @@ const calendarSourceURL = "https://calendar.google.com/calendar/embed?src=i7jilk
 export const Calendar = () => (
         <>
                 <Padding>
-                        <iframe src={calendarSourceURL} width="800" height="600" frameborder="0" scrolling="no" />
+                        <iframe title="Calendar" src={calendarSourceURL} width="800" height="600" frameborder="0" scrolling="no" />
                         <p>Check out our other events!</p>
                 </Padding>
         </>

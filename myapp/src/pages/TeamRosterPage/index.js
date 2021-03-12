@@ -88,7 +88,7 @@ function TeamRoster() {
     <>
     <Padding />
       <div style={{ paddingTop: '15px', paddingBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-        <img src={ websiteBanner } />
+        <img src={ websiteBanner } alt=""/>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '15px' }}>

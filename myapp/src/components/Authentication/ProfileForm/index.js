@@ -76,28 +76,29 @@ function ProfileForm(props) {
                     />
                 </Form.Group>
             </Form.Row>
-            
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-            <Form.Label>User</Form.Label>
-            <InputGroup hasValidation>
-                <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                        type="text"
-                        name="user"
-                        id="user"
-                        placeholder="user123"
-                        value={person.user}
-                        onChange={handleChange} 
-                        aria-describedby="inputGroupPrepend"
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Please choose a username.
-                    </Form.Control.Feedback>
-                </InputGroup>
-            </Form.Group>
+            <Form.Row>
+                <Form.Group as={Col} md="4" controlId="validationCustom04">
+                    <Form.Label>Username</Form.Label>
+                    <InputGroup hasValidation>
+                        <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="text"
+                                name="user"
+                                id="user"
+                                placeholder="user123"
+                                value={person.user}
+                                onChange={handleChange} 
+                                aria-describedby="inputGroupPrepend"
+                                required
+                            />
+                        <Form.Control.Feedback type="invalid">
+                            Please choose a username.
+                        </Form.Control.Feedback>
+                    </InputGroup>
+                </Form.Group>
+            </Form.Row>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
 
             <Form.Row>
@@ -134,15 +135,13 @@ function ProfileForm(props) {
                     type="text"
                     name="role"
                     id="role"
-                    placeholder="None"
+                    placeholder="Admin"
                     value={person.role}
                     onChange={handleChange}>
-                        <option>None</option>
-                        <option>Advisor</option>
-                        <option>Alum</option>
-                        <option>Parent</option>
+                        <option>Admin</option>
+                        <option>Officer</option>
                         <option>Member</option>
-                        <option>Lead Member</option>
+                        <option>Guest</option>
                 </Form.Control>
             </Form.Group>
 
@@ -150,24 +149,47 @@ function ProfileForm(props) {
                 <Form.Group as={Col} controlId="validationCustom07">
                     <Form.Label>Position</Form.Label>
                     <Form.Control
+                        as="select"
+                        size="sm"
+                        custom 
                         type="text"
                         name="position"
                         id="position"
                         placeholder="Lead"
                         value={person.position}
-                        onChange={handleChange} 
-                    />
+                        onChange={handleChange}>
+                            <option>None</option>
+                            <option>Parent</option>
+                            <option>Mentor</option>
+                            <option>Lead</option>
+                            <option>Alumni</option>
+                </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="validationCustom08">
                     <Form.Label>Specialization</Form.Label>
                     <Form.Control
+                        as="select"
+                        size="sm"
+                        custom
                         type="text"
                         name="specialization"
                         id="specialization"
                         placeholder="Food"
                         value={person.specialization}
-                        onChange={handleChange} 
-                    />
+                        onChange={handleChange}>
+                            <option>None</option>
+                            <option>Design</option>
+                            <option>Frabrication</option>
+                            <option>Electronics</option>
+                            <option>Assembly</option>
+                            <option>Programming</option>
+                            <option>Media</option>
+                            <option>Business</option>
+                            <option>Scoutin</option>
+                            <option>Pit Crew</option>
+                            <option>Drive</option>
+                            <option>Other</option>
+                    </Form.Control>
                 </Form.Group>
             </Form.Row>
 
