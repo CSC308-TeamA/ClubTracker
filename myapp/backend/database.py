@@ -5,8 +5,7 @@ from bson import ObjectId
 # class Connect(object):
 #     @staticmethod    
 #     def get_connection():
-#         return MongoClient("mongodb+srv://jburiane:Jacob4136782@cluster0.r5jcz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-
+#         return MongoClient("")
 class Database(dict):
 
     __getattr__ = dict.get
@@ -30,7 +29,7 @@ class Database(dict):
 
     @staticmethod    
     def get_connection():
-        return MongoClient("mongodb+srv://jburiane:Jacob4136782@cluster0.r5jcz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+        return MongoClient("")
 
     def save(self):
         if not self._id:
