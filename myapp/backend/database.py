@@ -32,43 +32,62 @@ class Database(dict):
     def get_connection():
         return MongoClient("mongodb+srv://jburiane:Jacob4136782@cluster0.r5jcz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
+    # def get_database():
+    #     client = Database.get_connection()
+    #     return client.get_database('2046Webpage')
+
     def save(self):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         if not self._id:
             db.TeamRoster.insert(self)
         else:
             db.TeamRoster.update(
                 { "_id": ObjectId(self._id) }, self)
         self._id = str(self._id)
+        client.close
 
     def reload(self):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         if self._id:
             result = db.TeamRoster.find_one({"_id": ObjectId(self._id)})
             if result :
                 self.update(result)
                 self._id = str(self._id)
+                client.close
                 return True
+        client.close
         return False
 
     def remove(self):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         if self._id:
             resp = db.TeamRoster.delete_one({"_id": ObjectId(self._id)})
+            client.close
             return resp.deleted_count
+        client.close
 
 class TeamRoster(Database):
 
-    client = Database.get_connection()
-    db = client.get_database('TeamRoster')
+    
 
     def find_all(self):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         users = list(db.TeamRoster.find())
         for user in users:
             user["_id"] = str(user["_id"]) #converting ObjectId to str
+        client.closev
         return users
 
         #db.products.find( { name: { $regex: /^name/i } } )
         #regx = ({'files':{'$regex':'^File'}})
         #name, status, role, specialization
     def find_by_search(self, name, status, role, position, specialization):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         binaryCase = 0
         if name != None: binaryCase + 1
         if status != None: binaryCase + 2
@@ -87,10 +106,14 @@ class TeamRoster(Database):
         
         for user in users:
             user["_id"] = str(user["_id"]) #converting ObjectId to str
+        client.close
         return users
 
     def instert_one(user):
+        client = Database.get_connection()
+        db = client.get_database('2046Webpage')
         results = db.TeamRoster.instert_one(user)
+        client.close
         return results.inserted_id
 
     def find_by_name(self, name):
@@ -98,6 +121,7 @@ class TeamRoster(Database):
         users = list(db.TeamRoster.find({ name: regx }))
         for user in users:
             user["_id"] = str(user["_id"])
+        client.close
         return users
 
     def find_by_status(self, status):
