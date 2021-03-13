@@ -71,7 +71,6 @@ class Database(dict):
 
 class TeamRoster(Database):
 
-    
 
     def find_all(self):
         client = Database.get_connection()
@@ -79,7 +78,7 @@ class TeamRoster(Database):
         users = list(db.TeamRoster.find())
         for user in users:
             user["_id"] = str(user["_id"]) #converting ObjectId to str
-        client.closev
+        client.close
         return users
 
         #db.products.find( { name: { $regex: /^name/i } } )
@@ -89,20 +88,40 @@ class TeamRoster(Database):
         client = Database.get_connection()
         db = client.get_database('2046Webpage')
         binaryCase = 0
-        if name != None: binaryCase + 1
-        if status != None: binaryCase + 2
-        if role != None: binaryCase + 4
-        if position != None: binaryCase + 8
-        if specialization != None: binaryCase + 16
+        if (name != None): 
+            binaryCase + 1
+        if (status != None): 
+            binaryCase + 2
+        if (role != None): 
+            binaryCase + 4
+        if (position != None): 
+            binaryCase + 8
+        if (specialization != None): 
+            binaryCase + 16
         users = None
+
+        print('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL')
+        print('BINARY CASE VALUE = ' + str(binaryCase))
+        print('name: ' + str(name))
+        print('status: ' + str(status))
+        print('role: ' + str(role))
+        print('position: ' + str(position))
+        print('specialization: ' + str(specialization))
+        print('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
 
         switch = {
             0: list(db.TeamRoster.find()),
-            1: db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }}),
-            5: db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' } }),
-            31: db.TeamRoster.find({'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' }, 'specialization': { '$regex': '^'+specialization , '$options': 'i' }})
+            1: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }})),
+            3: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }})),
+            5: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }})),
+            7: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }})),
+            9: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' }})),
+            11: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' },})),
+            17: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'specialization': { '$regex': '^'+specialization , '$options': 'i' }})),
+            19: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'specialization': { '$regex': '^'+specialization , '$options': 'i' }})),
+            31: list(db.TeamRoster.find({ 'name': { '$regex': '^'+name , '$options': 'i' }, 'status': { '$regex': '^'+status , '$options': 'i' }, 'role': { '$regex': '^'+role , '$options': 'i' }, 'position': { '$regex': '^'+position , '$options': 'i' },  'specialization': { '$regex': '^'+specialization , '$options': 'i' }}))
         }
-        users = switch[binaryCase]()
+        users = switch.get(binaryCase, list(db.TeamRoster.find()))
         
         for user in users:
             user["_id"] = str(user["_id"]) #converting ObjectId to str

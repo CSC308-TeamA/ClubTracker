@@ -22,13 +22,16 @@ def get_team_roster():
     position = request.args.get('position')
     specialization = request.args.get('specialization')
 
-    return {"users_list": database.TeamRoster().find_by_search(name, status, role, position, specialization)}
+    if (request.args == {}):
+      return {"team_roster": database.TeamRoster().find_all()}
+
+    return {"team_roster": database.TeamRoster().find_by_search(name, status, role, position, specialization)}
 
   elif request.method == 'POST':
-    usertoAdd = request.get_json()
-    usertoAdd["_id"] = database.TeamRoster.instert_one(usertoAdd)
-    resp = jsonify(usertoAdd)
-    resp.status_code = 201
+    userToAdd = request.get_json()
+    newUser = database.TeamRoster(userToAdd)
+    newUser.save()
+    resp = jsonify(newUser), 201
     return resp
 
 # def filter():

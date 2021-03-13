@@ -2,3 +2,4 @@ myapp/.eslintcache
 node_modules/*
 myapp/package-lock.json
 myapp/package.json
+myapp/backend/connection.py
