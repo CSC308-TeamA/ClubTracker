@@ -3,21 +3,11 @@ import { Accordion, Form, Row, Col, Button, Modal, ButtonGroup, ToggleButton } f
 import styles from '../styles/TeamRoster.module.css'
 
 function AddUserForm(props) {
-  function randID() {
-    var id = '';
-    for (var i = 0; i < 4; i++) {
-      id += Math.floor(Math.random() * 10);
-    }
-
-    return id;
-  }
-
   const [person, setPerson] = useState({
-    id: randID(),
     name: '',
     role: '',
     position: '',
-    specialization: '',
+    specialization: [],
     email: '',
     phone_number: '',
     quote: ''
@@ -27,7 +17,9 @@ function AddUserForm(props) {
     const { name, value } = event.target;
     var temp = { ...person };
 
-    temp[name] = value;
+    if (name != 'specialization') {
+      temp[name] = value;
+    } 
 
     setPerson(temp);
   }
@@ -45,6 +37,13 @@ function AddUserForm(props) {
     setValidated(true);
 
     if (form.checkValidity() === true) {
+      Object.keys(specializations).map(sp => {
+        if (specializations[sp]) {
+          person['specialization'].push(sp)
+        }
+      })
+
+      person['specialization'].sort();
       props.handleSubmit(person);
       handleClose();
     }
@@ -56,11 +55,10 @@ function AddUserForm(props) {
     setValidated(false);
     setShow(false);
     setPerson({
-      id: randID(),
       name: '',
       role: '',
       position: '',
-      specialization: '',
+      specialization: [],
       email: '',
       phone_number: '',
       quote: ''
@@ -78,6 +76,29 @@ function AddUserForm(props) {
     { name: 'Officer' },
     { name: 'Member' }
   ]
+
+  const [specializations, setSpecializations] = useState({
+    'Design': false,
+    'Fabrication': false,
+    'Electronics': false, 
+    'Assembly': false,
+    'Programming': false,
+    'Media': false,
+    'Business': false,
+    'Scouting': false,
+    'Pit Crew': false,
+    'Drive Team': false, 
+    'Other': false 
+  })
+
+  function handleCheckClick(event) {
+    const { name } = event.target;
+    var temp = { ...specializations };
+
+    temp[name] = !temp[name];
+
+    setSpecializations(temp);
+  }
 
   return (
     <div>
@@ -131,13 +152,12 @@ function AddUserForm(props) {
               </Col>
             </Form.Group>
 
-            {/* FIX THIS RADIO BUTTON */}
             <Form.Group as={Row}>
               <Form.Label column md="3"> Role </Form.Label>
               <Col md="9">
                 {roles.map((radio, index) => (
                   <Form.Check
-                    key={index} inline label={radio.name}
+                    required key={index} inline label={radio.name}
                     type="radio" name="role" id={`radio${index}`}
                     value={radio.name} checked={radioValue === radio.name}
                     onChange={(e) => {
@@ -146,6 +166,9 @@ function AddUserForm(props) {
                     }}>
                   </Form.Check>
                 ))}
+                <Form.Control.Feedback type="invalid">
+                  Please select a role.
+                </Form.Control.Feedback>
               </Col>
             </Form.Group>
 
@@ -153,25 +176,30 @@ function AddUserForm(props) {
               <Form.Label column md="3"> Position </Form.Label>
               <Col md="9">
                 <Form.Control
-                  type="text" name="position" id="position"
-                  value={person.position}
+                  required type="text" name="position" id="position"
+                  value={person.position} placeholder="Member"
                   onChange={handleChange} />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a position.
+                </Form.Control.Feedback>
               </Col>
             </Form.Group>
 
-            {/* FIX THIS INTO DROPDOWN */}
-            {/*         
-            <option value="Design">Design</option>
-            <option value="Fabrication">Fabrication</option>
-            <option value="Programming">Programming</option>
-            */}
             <Form.Group as={Row}>
               <Form.Label column md="3"> Specialization </Form.Label>
               <Col md="9">
-                <Form.Control
+                {Object.keys(specializations).map((checkbox, index) => (
+                  <Form.Check
+                    key={index} inline label={checkbox}
+                    type="checkbox" name={checkbox} id={`checkbox${index}`}
+                    value={checkbox} checked={specializations[checkbox]}
+                    onChange={handleCheckClick}>
+                  </Form.Check>
+                ))}
+                {/* <Form.Control
                   type="text" name="specialization" id="specialization"
                   value={person.specialization}
-                  onChange={handleChange} />
+                  onChange={handleChange} /> */}
               </Col>
             </Form.Group>
 
@@ -200,108 +228,3 @@ function AddUserForm(props) {
 }
 
 export default AddUserForm;
-
-{/* <div className={styles.addUserForm}>
-  <Accordion className={styles.addUserFormAccordion}>
-    <div className={styles.addUserFormButton} >
-      <Accordion.Toggle as={Button} variant="primary" eventKey="0">
-        + Add a Member
-          </Accordion.Toggle>
-    </div>
-
-    <Accordion.Collapse eventKey="0">
-      <Form noValidate validated={validated} onSubmit={submitForm}>
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Name </Form.Label>
-          <Col md="9">
-            <Form.Control
-              required type="text" name="name" id="name"
-              value={person.name} placeholder="Name"
-              onChange={handleChange} />
-            <Form.Control.Feedback type="invalid">
-              Please enter a name.
-                </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Email </Form.Label>
-          <Col md="9">
-            <Form.Control
-              required type="email" name="email" id="email"
-              value={person.email} placeholder="email@email.com"
-              onChange={handleChange} />
-            <Form.Control.Feedback type="invalid">
-              Please enter an email.
-                </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Phone Number </Form.Label>
-          <Col md="9">
-            <Form.Control
-              required type="text" name="phone_number" id="phone_number"
-              value={person.phone_number} placeholder="(555) 555-5555"
-              onChange={handleChange} />
-            <Form.Control.Feedback type="invalid">
-              Please enter a phone number.
-                </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-
-        FIX THIS RADIO BUTTON 
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Role </Form.Label>
-          <Col md="9">
-            {['radio'].map((type) => (
-              <div key={`inline-${type}`} className="mb-3">
-                <Form.Check required inline label="Advisor" type={type} id={`inline-${type}-1`} feedback="Please choose a role." />
-                <Form.Check inline label="Officer" type={type} id={`inline-${type}-2`} />
-                <Form.Check inline label="Member" type={type} id={`inline-${type}-2`} />
-              </div>
-            ))}
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Position </Form.Label>
-          <Col md="9">
-            <Form.Control
-              type="text" name="position" id="position"
-              value={person.position}
-              onChange={handleChange} />
-          </Col>
-        </Form.Group>
-
-        FIX THIS INTO DROPDOWN 
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Specialization </Form.Label>
-          <Col md="9">
-            <Form.Control
-              type="text" name="specialization" id="specialization"
-              value={person.specialization}
-              onChange={handleChange} />
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row}>
-          <Form.Label column md="3"> Quote </Form.Label>
-          <Col md="9">
-            <Form.Control
-              as="textarea" name="quote" id="quote"
-              value={person.quote} placeholder="Throw it back to Stack Attack."
-              rows={3}
-              onChange={handleChange} />
-          </Col>
-        </Form.Group>
-
-        <div className={styles.addUserFormButton}>
-          <Button variant="primary" type="submit">
-            Submit
-              </Button>
-        </div>
-      </Form>
-    </Accordion.Collapse>
-  </Accordion>
-</div> */}
