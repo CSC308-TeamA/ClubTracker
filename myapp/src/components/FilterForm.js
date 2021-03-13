@@ -89,9 +89,9 @@ function Form(props) {
       <label htmlFor="role" className={styles.filterFormLabel}>Role</label>
       <select name="role" id="role" onChange={handleChange}>
         <option value="">Any</option>
-        <option value="Member">Member</option>
-        <option value="Officer">Officer</option>
         <option value="Advisor">Advisor</option>
+        <option value="Officer">Officer</option>
+        <option value="Member">Member</option>
       </select>
 
       <label htmlFor="special" className={styles.filterFormLabel}>Specialization</label>
@@ -99,7 +99,15 @@ function Form(props) {
         <option value="">Any</option>
         <option value="Design">Design</option>
         <option value="Fabrication">Fabrication</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Assembly">Assembly</option>
         <option value="Programming">Programming</option>
+        <option value="Media">Media</option>
+        <option value="Business">Business</option>
+        <option value="Scouting">Scouting</option>
+        <option value="Pit Crew">Pit Crew</option>
+        <option value="Drive Team">Drive Team</option>
+        <option value="Other">Other</option>
       </select>
 
       <input type="button" value="Filter" onClick={submitForm} className={styles.filterFormButton} />

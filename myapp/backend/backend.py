@@ -34,13 +34,15 @@ class Model(dict):
       return resp.deleted_count
 
 class User(Model):
-  db_client = pymongo.MongoClient('127.0.0.1', 27017)
-  collection = db_client["TeamProject"]["TeamRoster"]
-
+  client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
+  # db = client.TeamProj
+  collection = client.TeamProj.TeamRoster
+  
+  # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
     filters = {}
     if name != None:
-      filters['name'] = name
+      filters['name'] = { '$regex': f'{name}', '$options': 'i'}
     if status != None:
       filters['status'] = status
     if role != None:
@@ -58,7 +60,7 @@ class User(Model):
   
   def add_user(self, user):
     user_added = self.collection.insert(user)
-    user_added._id = str(user_added._id)
+    user_added = str(user_added)
     return user_added
   
   
@@ -79,13 +81,14 @@ def get_team_roster():
     position = request.args.get('position')
     specialization = request.args.get('specialization')
 
-    filtered = User.find_by_filter(User, name, status, role, position, specialization)
-
-    return jsonify(filtered)
+    resp = jsonify(User.find_by_filter(User, name, status, role, position, specialization))
+    resp.status_code = 201
+    return resp
 
   elif request.method == 'POST':
     usertoAdd = request.get_json()
     User.add_user(User, usertoAdd)
+    
     resp = jsonify(usertoAdd)
     resp.status_code = 201
     return resp
