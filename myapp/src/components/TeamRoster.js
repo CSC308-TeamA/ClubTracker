@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import websiteBanner from '../assets/websiteBanner.jpg'
-import Form from '../../components/FilterForm'
-import AddUserForm from '../../components/AddUserForm'
-import Roster from '../../components/Roster'
+import Form from './FilterForm'
+import AddUserForm from './AddUserForm'
+import Roster from './Roster'
 import styles from '../styles/TeamRoster.module.css'
 
 function TeamRoster() {
