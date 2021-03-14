@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import websiteBanner from '../../assets/websiteBanner.jpg'
-import Form from '../../components/FilterForm/index'
-import AddUserForm from '../../components/AddUserForm/index'
+import websiteBanner from '../assets/websiteBanner.jpg'
+import Form from '../../components/FilterForm'
+import AddUserForm from '../../components/AddUserForm'
 import Roster from '../../components/Roster'
-import styles from '../../styles/TeamRoster.module.css'
+import styles from '../styles/TeamRoster.module.css'
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -86,7 +86,7 @@ function TeamRoster() {
       </div> */}
 
       <div className={styles.banner}>
-        <img src={websiteBanner} alt="website banner" />
+        <img src={websiteBanner} />
       </div>
 
       <AddUserForm handleSubmit={updateRoster} />

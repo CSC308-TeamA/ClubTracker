@@ -88,7 +88,7 @@ function Form(props) {
               <label htmlFor = "stat">Status</label>
               <select name = "stat" id = "stat" onChange = {handleChange}>
                 <option value = "">Any</option>
-                <option value = "Pending">Active</option>
+                <option value = "Pending">Pending</option>
                 <option value = "Active">Active</option>
                 <option value = "Inactive">Inactive</option>
               </select>
