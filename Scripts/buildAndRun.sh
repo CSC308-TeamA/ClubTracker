@@ -19,6 +19,10 @@ echo 'installing flask-cors'
 pip install flask-cors
 echo 'installing axios'
 npm install axios
+echo 'installing pymongo'
+pip install pymongo
+echo 'installing dnspython'
+pip install dnspython
 
 export FLASK_APP=backend.py
 export FLASK_ENV=development

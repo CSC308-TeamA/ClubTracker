@@ -15,7 +15,6 @@ export const Image = styled.img`
     max-height: 100%;
     height: auto;
     position: relative;
-    top: 110px;
     bottom: 0;
     margin: auto;
     padding: 10px;
@@ -55,3 +54,4 @@ export const NavLink = styled(Link)`
   color: white;
   }
 `;
+

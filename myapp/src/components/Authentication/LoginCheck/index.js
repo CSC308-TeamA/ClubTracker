@@ -54,7 +54,7 @@ function ProfileForm(props) {
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
-            <input type="button" value="Submit" onClick={submitForm} />
+            {/* <input type="button" value="Submit" onClick={submitForm} /> */}
         </>
     );
 }

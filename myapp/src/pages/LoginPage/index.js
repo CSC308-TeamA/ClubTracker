@@ -24,6 +24,10 @@ function Login() {
                 <NewCard>
                     <Form>
                         <LoginCheck handleSubmit={updateList}/>
+                        {/* Temp */}
+                        <Button variant="primary" type="Login">
+                            <NavLink to="/discussion">Log In</NavLink>
+                        </Button>
                     </Form>
                 </NewCard>
             </NewDiv>

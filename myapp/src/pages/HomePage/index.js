@@ -1,23 +1,22 @@
 import React from 'react'
-// import { Caro } from '../../components/Carousel';
-import Banner from '../../components/Banner';
-import { CardChange } from './HomePageElements';
+import Padding from '../../components/Padding';
+import { CardChange, Image } from './HomePageElements';
 import { Button, CardDeck, NavLink } from 'react-bootstrap'
 import PhotoGallery from '../../components/PhotoGallery/';
+import bannerImage from '../../assets/websiteBanner.jpg';
 
 
 export const Home = () => (
   <>
-    <Banner />
-
+    <Padding />
+    <Image src={bannerImage} alt="Banner"/>
     <div>
       <h2>About Us</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ligula tortor, suscipit vitae sem eget, venenatis accumsan erat. Cras pharetra.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed ante et lectus tincidunt pretium quis non lorem. Vivamus sit amet fringilla nulla. Nullam eu magna in ex tempus scelerisque. Sed eu lectus odio. Ut eget ipsum vitae magna rutrum egestas. Pellentesque feugiat elementum turpis ut tempor. Etiam et efficitur.</p>
+      <p>Just as the on-going space program does this, Bear Metal continues to instill interest in STEM and business careers while creating opportunities for students to broaden their educational horizons and simultaneously develop their interpersonal skills. We prepare members for the workforce by emphasizing hands on opportunities, accountability, teamwork, and leadership, which are the core values we impress upon our members. For us, robotics is not only about the skills we learn, but the lasting experiences that are the foundation of lifelong relationships.</p>
     </div>
-    <form action="/about">
-      <Button variant="warning" size="lg">Learn More</Button>{' '}
-    </form>
+    <Button variant="warning" type="submit">
+        <NavLink to="/about">Learn More</NavLink>
+    </Button>
 
     <CardDeck>
       <CardChange>
@@ -66,12 +65,11 @@ export const Home = () => (
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ligula tortor, suscipit vitae sem eget, venenatis accumsan erat. Cras pharetra.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed ante et lectus tincidunt pretium quis non lorem. Vivamus sit amet fringilla nulla. Nullam eu magna in ex tempus scelerisque. Sed eu lectus odio. Ut eget ipsum vitae magna rutrum egestas. Pellentesque feugiat elementum turpis ut tempor. Etiam et efficitur.</p>
     </div>
-    <form action="/contact">
-      <Button variant="warning" size="lg">Learn More</Button>{' '}
-    </form>
+    <Button variant="warning" type="submit">
+        <NavLink to="/contact">Contact Us</NavLink>
+    </Button>
     
-  {/* <Caro /> */}
-  <h2>Photo Gallery</h2>
-  <PhotoGallery />
+    <h2>Photo Gallery</h2>
+    <PhotoGallery />
   </>
 )
