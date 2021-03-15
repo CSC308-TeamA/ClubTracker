@@ -19,12 +19,12 @@ function ProfileForm(props) {
         });
     }
 
-    function submitForm() {
-        props.handleSubmit(person);
-        setPerson(
-          {email: '', password: ''}
-        );
-    }
+    // function submitForm() {
+    //     props.handleSubmit(person);
+    //     setPerson(
+    //       {email: '', password: ''}
+    //     );
+    // }
 
     return (
         <>
