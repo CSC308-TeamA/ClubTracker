@@ -68,6 +68,26 @@ function TeamRoster() {
     }
   }
 
+  async function makeDeleteCall(characters){
+    try {
+       const response = await axios.delete('http://localhost:5000/teamroster', character)
+       return response
+    }
+     catch (error) {
+        console.log(error);
+        return false;
+    }
+ }
+
+ function removeOneCharacter(index) {
+  const updated = characters.filter((character, i) => {
+      if (i === index)
+         makeDeleteCall(character)
+      return i !== index
+  });
+  setCharacters(updated);
+}
+
   function updateRoster(person) {
     makePostCall(person).then(result => {
       if (result && result.status === 201)
@@ -92,7 +112,7 @@ function TeamRoster() {
 
       <AddUserForm handleSubmit={updateRoster} />
       <Form handleSubmit={updatePage} />
-      <Roster characterData={characters} />
+      <Roster characterData={characters} removeCharacter={removeOneCharacter} />
     </div>
   );
 }

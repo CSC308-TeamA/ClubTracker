@@ -24,6 +24,7 @@ function RosterList(props) {
                 <Card.Body>
                   <Card.Text>
                     Quote: <i>{row.quote}</i>
+                    <button onClick={() => props.removeCharacter(index)}>Remove</button>
                   </Card.Text>
                 </Card.Body>
               </Accordion.Collapse>

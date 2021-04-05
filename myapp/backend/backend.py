@@ -62,8 +62,8 @@ class User(Model):
     user_added = self.collection.insert(user)
     user_added = str(user_added)
     return user_added
-  
-  
+
+ 
 @app.route('/test')
 def hello_world():
   test = request.args.get('test')
@@ -72,7 +72,7 @@ def hello_world():
   else:
     return "fail"
 
-@app.route('/teamroster', methods=['GET', 'POST'])
+@app.route('/teamroster', methods=['GET', 'POST', 'DELETE'])
 def get_team_roster():
   if request.method == 'GET':
     name = request.args.get('name')
@@ -92,3 +92,14 @@ def get_team_roster():
     resp = jsonify(usertoAdd)
     resp.status_code = 201
     return resp
+
+  elif request.method == 'DELETE' :
+    user = request.get_json()
+        if user.remove() :
+            return user
+        else :
+            return jsonify({"error": "User not found"}), 404
+
+@app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE'])
+def discussion_board(board):
+  return board
