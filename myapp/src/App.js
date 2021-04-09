@@ -46,7 +46,7 @@ class App extends Component {
 
               
               <Route exact path="/discussion" component={DiscussionBoard} />
-              <Route path="/thread" component={ThreadPage} />
+              <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
             </Switch>
           </Layout>
           <Footer />

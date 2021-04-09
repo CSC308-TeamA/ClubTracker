@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Component } from 'react'
+import axios from 'axios'
+
 import Thread from '../components/Discussion/Thread';
 import Form from '../components/Discussion/Form'
 import Padding from '../components/Padding';
@@ -7,64 +9,81 @@ import pfp1 from '../assets/profiles/pfp1.gif';
 import pfp2 from '../assets/profiles/pfp2.gif';
 import pfp3 from '../assets/profiles/pfp3.gif';
 
-function ThreadPage() {
-  const [characters, setCharacters] = useState([
+function ThreadPage(props) {
+  const thread = props.match.params.thread;
+
+  console.log(thread);
+
+  const [posts, setPosts] = useState([
     {
-      picture: pfp1,
-      name: 'Mr. Robot',
-      user: 'robo123',
-      role: 'Coach',
-      comment: 'Sounds great! I will be there.'
+      userId: 'id1',
+      comment: 'comment text'
     },
     {
-      picture: pfp2,
-      name: 'Jane',
-      user: 'janedane',
-      role: 'Parent',
-      comment: 'Cool.',
-    },
-    {
-      picture: pfp3,
-      name: 'Sally',
-      user: 'ILoveRobotics710',
-      role: 'Head Coder',
-      comment: 'We can check out the new serve drive code.',
-    },
-    {
-      picture: pfp1,
-      name: 'Jenisa',
-      user: 'lovelybluebug',
-      role: 'Head Coder',
-      comment: 'I am done.',
-    },
+      userId: 'id2',
+      comment: 'comment text2'
+    }
   ]);
 
-  function removeOneCharacter (index) {
-    const updated = characters.filter((character, i) => {
-        return i !== index
-    });
-    setCharacters(updated);
-  }
-
-  function updateList(person) {
-    setCharacters([...characters, person]);
+  function removePost() {
+    console.log("Hey");
   }
 
   return (
     <>
       <Padding />
       <Padding />
-      <div className="container">
-        <Thread 
-          characterData={characters} 
-          removeCharacter={removeOneCharacter} 
-        />
-        <Form 
-          handleSubmit={updateList} 
-        />
-      </div>
+      <Thread
+        postData = {posts}
+        removePost = {removePost}
+      />
     </>
-  );  
+  );
 }
 
 export default ThreadPage;
+
+/*  async function fetch() {
+    try {
+      const response = await axios.get('http://localhost:5000/discussions/thread');
+      return response.data;
+    }
+
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetch().then(result => {
+      if (result)
+        setPosts(result);
+    });
+  }, []);
+
+  function updatePage() {
+    fetch().then(result => {
+      if (result)
+        setPosts(result);
+    });
+  }
+
+  async function makePostCall(post) {
+    try {
+      const response = await axios.post('http://localhost:5000/discussions/thread', post);
+      return response;
+    }
+
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  function updatePage(post) {
+    makePostCall(post).then(result => {
+      if (result && result.status === 201)
+        setPosts([...posts, result.data]);
+    });
+  }*/

@@ -4,14 +4,14 @@ import ThreadBody from '../ThreadBody'
 import Card from 'react-bootstrap/Card'
 
 function Thread(props) {
-    console.log(props.characterData)
+    console.log(props.postData)
     return (
         <>
             <Card>
                 <ThreadHeader />
                 <ThreadBody 
-                    characterData={props.characterData} 
-                    removeCharacter={props.removeCharacter} 
+                    postData={props.postData}
+                    removePost={props.removePost}
                 />
             </Card>
         </>

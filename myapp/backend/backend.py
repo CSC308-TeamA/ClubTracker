@@ -93,6 +93,6 @@ def get_team_roster():
     resp.status_code = 201
     return resp
 
-@app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/discussion/<board>', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
   return board

@@ -10,7 +10,7 @@ import {
 
 
 function ThreadBody(props) {
-  const rows = props.characterData.map((row, index) => {
+  const rows = props.postData.map((row, index) => {
      return (
       <>
          <CardHoover >
@@ -27,7 +27,7 @@ function ThreadBody(props) {
                   { row.comment }
                </DescriptionText>
                <Edit>
-                  <button onClick={() => props.removeCharacter(index)}>Delete</button>
+                  <button onClick={() => props.removePost(index)}>Delete</button>
                </Edit>
             </Card.Body>
          </CardHoover>
