@@ -1,7 +1,6 @@
 # TeamProject
 ## Team Members
 Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
-<br />
 
 
 ## JavaScript Linter
@@ -18,7 +17,6 @@ Our team uses **ESLint** for our JavaScript code. Documentation found [here.](ht
 
 ### Running ESLint on any file or directory
 `npx eslint file.js` or `npx eslint ./directory`
-<br />
 
 
 ## Python Linter
@@ -29,7 +27,6 @@ Our team uses **PyLint** for our Python code. Documentation found [here.](http:/
 
 ### Running PyLint on any file 
 `python3 -m pylint file.py` or `python -m pylint file.py` depending on the user's development set up.
-<br />
 
 
 ## Docs with current user stories
