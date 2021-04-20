@@ -1,7 +1,7 @@
 Storyboard:
 https://www.figma.com/file/s8ZNmfhXdlOIqteysREMU9/CSC-308?node-id=2%3A5813
 
-Notes for full setup:
+# Notes for full setup:
 You will need node_modules to run 'npm start' properly. On first-time setup, you will also need to do 'npm install react-bootstrap bootstrap' in this directory.
 
 For Python Flask, follow instructions here https://flask.palletsprojects.com/en/1.1.x/installation/ to create a venv folder and activate it. You will also
@@ -48,39 +48,32 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
 ### Possible other installs
 
 You may have to download extra things which would be the following:
 
 -npm install node-sass@4.14.1
+-npm install react-icons --save
+-npm install react-player --save
+
+Notes to self:
+MAKE SURE TO RUN AS ADMIN SMH
+First terminal:
+cd .\myapp\backend\
+Set-ExecutionPolicy Unrestricted -Scope Process
+$env:FLASK_APP = "backend.py"
+$env:FLASK_ENV = "development"
+venv\Scripts\activate
+python -m flask run
+
+note on bash:
+export FLASK_APP=backend.py
+export FLASK_ENV=development
+
+Go to another terminal:
+cd myapp
+npm start
+
+For some reason if the venv is empty just do this:
+py -3 -m venv venv
+pip install Flask

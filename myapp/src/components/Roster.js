@@ -11,12 +11,12 @@ function RosterList(props) {
           <Accordion>
             <Card className={styles.rosterListCard}>
               <Card.Header>
+                <Card.Title className={styles.rosterListCardTitle}>{row.name}</Card.Title>
                 <Accordion.Toggle as={Button} variant="link" eventKey={row._id}>
-                  <Card.Title>{row.name}</Card.Title>
                   <Card.Img variant="top" src={profileSilhouette} />
                 </Accordion.Toggle>
-                <p className={styles.rosterListCardPosition}> 
-                  Position: {row.position} <br /> 
+                <p className={styles.rosterListCardPosition}>
+                  Position: {row.position} <br />
                   Specialization: {row.specialization.join(", ")}
                 </p>
               </Card.Header>
@@ -30,9 +30,9 @@ function RosterList(props) {
               </Accordion.Collapse>
             </Card>
           </Accordion>
-        </div>
+        </div >
       );
-    })
+})
   )
 }
 
