@@ -35,11 +35,14 @@ class Model(dict):
 
 class User(Model):
   client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
+  
+  def getCollection(name):
+    return client.get_database(“TeamProj”).get_collection(name)
   # db = client.TeamProj
-  collection = client.TeamProj.TeamRoster
   
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
+    collection = getCollection('TeamRoster')
     filters = {}
     if name != None:
       filters['name'] = { '$regex': f'{name}', '$options': 'i'}
@@ -59,9 +62,29 @@ class User(Model):
     return users
   
   def add_user(self, user):
+    collection = getCollection('TeamRoster')
     user_added = self.collection.insert(user)
     user_added = str(user_added)
     return user_added
+
+  def get_thread(self, thread):
+    collection = getCollection('Discussion_' + thread)
+    posts = list(self.collection.find())
+    
+    for post in posts:
+      post["_id"] = str(post["_id"])
+    return posts
+
+  def get_posts_in_thread(self, thread, name):
+
+
+  def get_index(self):
+    collection = getCollection('Discussion_Index')
+    groups = list(self.collection.find())
+    
+    for group in groups:
+      group["_id"] = str(group["_id"])
+    return groups
 
  
 @app.route('/test')
@@ -95,4 +118,29 @@ def get_team_roster():
 
 @app.route('/discussion/<board>', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
+  if request.method == 'GET':
+    resp = jsonify(User.get_thread(User, board))
+    resp.status_code = 201
+    return resp
+
+  elif request.method == 'POST':
+    return None
+
+  elif request.method == 'DELETE':
+    return None
+
+@app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
+def discussion_board(board):
+  if request.method == 'GET':
+    resp = jsonify(User.get_index(User))
+    resp.status_code = 201
+    return resp
+
+  elif request.method == 'POST':
+    return None
+
+  elif request.method == 'DELETE':
+    return None
+    
+    
   return board
