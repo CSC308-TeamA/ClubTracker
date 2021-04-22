@@ -36,7 +36,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
-    A
   },
   "eslintConfig": {
     "extends": [
