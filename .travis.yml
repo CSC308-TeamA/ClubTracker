@@ -7,4 +7,4 @@ before_install:
   - cd myapp
 
 script:
-  - npm test --passWithNoTests
+  - npm test
