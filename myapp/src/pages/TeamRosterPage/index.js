@@ -75,25 +75,46 @@ function TeamRoster() {
     });
   }
 
+  async function makeDeleteCall(id) {
+    try {
+      const response = await axios.delete(`http://localhost:5000/teamroster?_id=${id}`);
+      return response;
+    }
+
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  function removeCharacter(id) {
+    makeDeleteCall(id).then(result => {
+      if (result && result.status === 201) {
+        fetch({
+          name: '',
+          stat: '',
+          role: '',
+          posit: '',
+          special: ''
+        }).then(res => {
+          if (res) {
+            setCharacters(res);
+          }
+        })
+      }
+    })
+  }
+
   return (
     <div>
       <Padding />
-      {/* <div className={ styles.header }>
-        <div className={ styles.headerBanner }>
-          <img src={ websiteBanner } />
-        </div>
-        <div className={ styles.headerAddMember }>
-          <AddUserForm handleSubmit={ updateRoster } />
-        </div>
-      </div> */}
-
       <div className={styles.banner}>
         <img src={websiteBanner} alt="website banner" />
       </div>
 
       <AddUserForm handleSubmit={updateRoster} />
       <Form handleSubmit={updatePage} />
-      <Roster characterData={characters} />
+      <Roster characterData={characters} removeCharacter={removeCharacter} />
     </div>
   );
 }
