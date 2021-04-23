@@ -17,13 +17,14 @@ function RosterList(props) {
                 </Accordion.Toggle>
                 <p className={styles.rosterListCardPosition}>
                   Position: {row.position} <br />
-                  Specialization: {row.specialization.join(", ")}
+                  Specialization: {row.specialization ? row.specialization.join(", ") : ''}
                 </p>
               </Card.Header>
             <Accordion.Collapse eventKey={row._id}>
               <Card.Body>
                 <Card.Text>
                   Quote: <i>{row.quote}</i>
+                  <Button onClick={() => props.removeCharacter(row._id)}>Delete</Button>
                 </Card.Text>
               </Card.Body>
             </Accordion.Collapse>
@@ -39,7 +40,7 @@ function RosterList(props) {
 function Roster(props) {
   return (
     <div className={styles.roster}>
-      <RosterList characterData={props.characterData} />
+      <RosterList characterData={props.characterData} removeCharacter={props.removeCharacter} />
     </div>
   );
 }
