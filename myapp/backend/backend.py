@@ -45,7 +45,7 @@ class User(Model):
         'tlsAllowInvalidCertificates=true'
     )
 
-    def getCollection(self, id):
+    def get_collection(self, id):
         return self.client.get_database("TeamProj").get_collection(id)
 
     def find_by_filter(self, name, status, role, position, specialization, collection):
@@ -80,16 +80,24 @@ class User(Model):
 
 @app.route('/test')
 def hello_world():
+    '''
+    Test route. Returns the "test" request argument. If request argument is none, returns "fail".
+
+        Parameters:
+            None
+
+        Returns:
+            String: "test" request argument or "fail"
+    '''
     test = request.args.get('test')
     if test is not None:
         return test
-    else:
-        return "fail"
+    return "fail"
 
 
 @app.route('/teamroster', methods=['GET', 'POST', 'DELETE'])
 def get_team_roster():
-    collection = User.getCollection(User, 'TeamRoster')
+    collection = User.get_collection(User, 'TeamRoster')
 
     if request.method == 'GET':
         name = request.args.get('name')
@@ -104,15 +112,15 @@ def get_team_roster():
             )
         )
         resp.status_code = 201
-        return resp
+        # return resp
 
     elif request.method == 'POST':
-        usertoAdd = request.get_json()
-        User.add_user(User, usertoAdd, collection)
+        user_to_add = request.get_json()
+        User.add_user(User, user_to_add, collection)
 
-        resp = jsonify(usertoAdd)
+        resp = jsonify(user_to_add)
         resp.status_code = 201
-        return resp
+        # return resp
 
     elif request.method == 'DELETE':
         user_id = request.args.get('_id')
@@ -125,7 +133,7 @@ def get_team_roster():
             resp = jsonify({"error": "User not found"})
             resp.status_code = 404
 
-        return resp
+    return resp
 
 
 @app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE'])
