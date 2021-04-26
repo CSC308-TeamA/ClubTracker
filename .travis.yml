@@ -1,8 +1,7 @@
 jobs:
   include:
     - language: node_js
-      node_js:
-        - 14
+      node_js: 14
       before_install:
         - cd myapp
       install:
@@ -11,8 +10,8 @@ jobs:
       script:
         - npm test
 
-  include:
     - language: python
+      python: 3.9
       install:
         - pip install flask
         - pip install flask-cors
