@@ -13,7 +13,7 @@ jobs:
 
     - language: python
       python: 3.9
-      install:i
+      install:
         - pip install flask
         - pip install flask-cors
         - pip install pymongo
