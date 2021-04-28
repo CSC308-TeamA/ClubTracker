@@ -9,10 +9,11 @@ jobs:
         - npm install axios
       script:
         - npm test
+        - npm run build
 
     - language: python
       python: 3.9
-      install:
+      install:i
         - pip install flask
         - pip install flask-cors
         - pip install pymongo
