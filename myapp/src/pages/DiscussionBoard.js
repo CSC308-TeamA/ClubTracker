@@ -5,7 +5,7 @@ import Cards from '../components/Discussion/Cards';
 export const DiscussionBoard = () => (
   <>
     <Padding />
-        <h2>WELCOME TO THE DISCUSSION BOARD</h2>
-      <Cards />
+    <h2>WELCOME TO THE DISCUSSION BOARD</h2>
+    <Cards />
   </>
-)
+);

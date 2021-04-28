@@ -1,93 +1,101 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card'
-import Accordion from 'react-bootstrap/Accordion'
+import React, {useState} from 'react';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
 import {
   CardHoover,
   UpdateText,
+  ThreadCard,
+  TitleText,
   DescriptionText,
   NavLink
 } from './CardElements';
 
 function Cards() {
-  const information = [
+  const [groups, setGroups] = useState([
     {
-      route: '/thread',
-      title: '📢Announcements',
-      description: 'Announcements/FAQs/Logistics',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Meeting 2/19',
+      groupName: "Robot",
+      threads: [
+        {
+          name: "Meeting 4/20",
+          url: "Meeting-4-20",
+          description: "This is a thread",
+          dateCreated: "Date object",
+          lastModified: "Date object",
+          numPosts: 3
+        },
+        {
+          name: "Meeting 4/21",
+          url: "Meeting-4-21",
+          description: "This is a thread 2",
+          dateCreated: "Date object",
+          lastModified: "Date object",
+          numPosts: 3
+        }
+      ]
     },
     {
-      route: '/thread',
-      title: '✒️General',
-      description: 'General logisitics about the team and other information.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️How To Meme',
-    },
-    {
-      route: '/thread',
-      title: '🤖Robot',
-      description: 'General discussion about the robots.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Robot Fails',
-    },
-    {
-      route: '/thread',
-      title: '⚔️Competition',
-      description: 'Talk about the competition here.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Ventura Regional 2021',
-    },
-  ];
+      groupName: "Competition",
+      threads: [
+        {
+          name: "League",
+          url: "League",
+          description: "There is a competition",
+          dateCreated: "Date object",
+          lastModified: "Date object",
+          numPosts: 10
+        }
+      ]
+    }
+  ]);
 
-  const list = information.map((row, index)  => {
+  const groupCards = groups.map((group, index)  => {
+    const threads = group.threads.map((thread, index) => {
+      return (
+        <>
+          <ThreadCard>
+            <Card.Body>
+              <NavLink to={"discussion/" + thread.url} activeStyle>
+                <TitleText>
+                  {thread.name}
+                </TitleText>
+              </NavLink>
+              <DescriptionText>
+                {thread.description}
+              </DescriptionText>
+            </Card.Body>
+          </ThreadCard>
+        </>
+      );
+    });
+
     return (
       <>
-        <Accordion>
-          <CardHoover key={ index }>
+        <Card>
+          <Accordion>
             <Accordion.Toggle as={Card.Header} eventKey="0">
               <Card.Body>
-                <Card.Title>            
-                  <NavLink to={ row.route } activeStyle>
-                    { row.title }
-                  </NavLink>
-                </Card.Title>
+                <TitleText>
+                  {group.groupName}
+                </TitleText>
                 <DescriptionText>
-                  { row.description }
+                  Number of threads: {group.threads.length}
                 </DescriptionText>
-                <UpdateText>
-                  <p>{ row.threads }</p>
-                  <p>{ row.posts }</p>
-                </UpdateText>
               </Card.Body>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <p>
-                  <NavLink to={ row.route } activeStyle>
-                    { row.newest }
-                  </NavLink>
-                </p>
-                <p>
-                  <NavLink to={ row.route } activeStyle>
-                    { row.newest }
-                  </NavLink>
-                </p>
-              </Card.Body>
+              <div>
+                {threads}
+              </div>
             </Accordion.Collapse>
-          </CardHoover>
-        </Accordion>
+          </Accordion>
+        </Card>
       </>
     );
   });
 
   return (
     <>
-        {list}
+      {groupCards}
     </>
   );
 }
