@@ -36,13 +36,19 @@ class Model(dict):
 class User(Model):
   client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
   
-  def getCollection(name):
-    return client.get_database(“TeamProj”).get_collection(name)
+  def get_collection(name):
+    return client.get_database("TeamProj").get_collection(name)
   # db = client.TeamProj
-  
+
+  def create_collection(name):
+    return client.get_database("TeamProj").createCollection(name)
+
+  def delete_collection(name):
+    return client.get_database("TeamProj").deleateCollection(name)
+
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
-    collection = getCollection('TeamRoster')
+    collection = get_collection('TeamRoster')
     filters = {}
     if name != None:
       filters['name'] = { '$regex': f'{name}', '$options': 'i'}
@@ -62,13 +68,13 @@ class User(Model):
     return users
   
   def add_user(self, user):
-    collection = getCollection('TeamRoster')
+    collection = get_collection('TeamRoster')
     user_added = self.collection.insert(user)
     user_added = str(user_added)
     return user_added
 
   def get_thread(self, thread):
-    collection = getCollection('Discussion_' + thread)
+    collection = get_collection('Discussion_' + thread)
     posts = list(self.collection.find())
     
     for post in posts:
@@ -76,10 +82,16 @@ class User(Model):
     return posts
 
   def get_posts_in_thread(self, thread, name):
+    collection = get_collection('Discussion_' + thread)
+    groups = list(self.collection.find())
+    
+    for group in groups:
+      group["_id"] = str(group["_id"])
+    return groups
 
 
-  def get_index(self):
-    collection = getCollection('Discussion_Index')
+  def get_discussion_index(self):
+    collection = get_collection('Discussion_Index')
     groups = list(self.collection.find())
     
     for group in groups:
@@ -124,10 +136,20 @@ def discussion_board(board):
     return resp
 
   elif request.method == 'POST':
-    return None
+    posttoAdd = request.get_json()
+    User.add_post(User, posttoAdd)
+
+    resp = jsonify(posttoAdd)
+    resp.status_code = 201
+    return resp
 
   elif request.method == 'DELETE':
-    return None
+    posttoAdd = request.get_json()
+    User.remove_post(User, posttoAdd)
+
+    resp = jsonify(posttoAdd)
+    resp.status_code = 201
+    return resp
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
@@ -137,7 +159,12 @@ def discussion_board(board):
     return resp
 
   elif request.method == 'POST':
-    return None
+    posttoAdd = request.get_json()
+    User.add_post(User, posttoAdd)
+
+    resp = jsonify(posttoAdd)
+    resp.status_code = 201
+    return resp
 
   elif request.method == 'DELETE':
     return None
