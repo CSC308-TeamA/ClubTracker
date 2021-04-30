@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
 
 export const DescriptionText = styled(Card.Text)`
   float: left;

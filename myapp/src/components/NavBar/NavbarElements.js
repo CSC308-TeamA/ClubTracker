@@ -11,7 +11,7 @@ export const Ul = styled.ul`
     flex-flow: column nowrap;
     background-color: #222;
     position: fixed;
-    transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
+    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(100%)')};
     top: 0;
     right: 0;
     height: 100vh;
@@ -75,8 +75,6 @@ export const Bars = styled(FaBars)`
     cursor: pointer;
   }
 `;
-
-
 
 export const NavBtn = styled.nav`
   display: flex;
@@ -160,19 +158,19 @@ export const StyledBurger = styled.div`
   div {
     width: 2rem;
     height: 0.25rem;
-    background-color: ${({ open }) => open ? '#ccc' : '#333'};
+    background-color: ${({ open }) => (open ? '#ccc' : '#333')};
     border-radius: 10px;
     transform-origin: 1px;
     transition: all 0.3s linear;
     &:nth-child(1) {
-      transform: ${({ open }) => open ? 'rotate(45deg)' : 'rotate(0)'};
+      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
     }
     &:nth-child(2) {
-      transform: ${({ open }) => open ? 'translateX(100%)' : 'translateX(0)'};
-      opacity: ${({ open }) => open ? 0 : 1};
+      transform: ${({ open }) => (open ? 'translateX(100%)' : 'translateX(0)')};
+      opacity: ${({ open }) => (open ? 0 : 1)};
     }
     &:nth-child(3) {
-      transform: ${({ open }) => open ? 'rotate(-45deg)' : 'rotate(0)'};
+      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
 `;

@@ -18,5 +18,9 @@
         "react"
     ],
     "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "max-len": [1, { "ignoreStrings": true, "ignoreUrls": true }],
+        "indent": [2, 2],
+        "no-underscore-dangle": [2, { "allow": ["_id"] }]
     }
 }

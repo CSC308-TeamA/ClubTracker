@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Thread from '../components/Discussion/Thread';
-import Form from '../components/Discussion/Form'
+import Form from '../components/Discussion/Form';
 import Padding from '../components/Padding';
 import '../styles/thread.css';
 import pfp1 from '../assets/profiles/pfp1.gif';
@@ -14,7 +14,7 @@ function ThreadPage() {
       name: 'Mr. Robot',
       user: 'robo123',
       role: 'Coach',
-      comment: 'Sounds great! I will be there.'
+      comment: 'Sounds great! I will be there.',
     },
     {
       picture: pfp2,
@@ -39,10 +39,8 @@ function ThreadPage() {
     },
   ]);
 
-  function removeOneCharacter (index) {
-    const updated = characters.filter((character, i) => {
-        return i !== index
-    });
+  function removeOneCharacter(index) {
+    const updated = characters.filter((character, i) => i !== index);
     setCharacters(updated);
   }
 
@@ -55,16 +53,16 @@ function ThreadPage() {
       <Padding />
       <Padding />
       <div className="container">
-        <Thread 
-          characterData={characters} 
-          removeCharacter={removeOneCharacter} 
+        <Thread
+          characterData={characters}
+          removeCharacter={removeOneCharacter}
         />
-        <Form 
-          handleSubmit={updateList} 
+        <Form
+          handleSubmit={updateList}
         />
       </div>
     </>
-  );  
+  );
 }
 
 export default ThreadPage;
