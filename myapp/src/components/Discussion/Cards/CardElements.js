@@ -17,6 +17,17 @@ export const UpdateText = styled.div`
   }
 `;
 
+export const ThreadCard = styled(Card)`
+  background-color: #ddd;
+  width: 100%;
+`;
+
+export const TitleText = styled(Card.Title)`
+  float: left;
+  width: 80%;
+  color: black;
+`;
+
 export const DescriptionText = styled(Card.Text)`
   float: left;
   width: 80%;
