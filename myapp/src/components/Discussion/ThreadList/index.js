@@ -6,19 +6,17 @@ import React from 'react';
 // } from './NavbarElements';
 // import boatImage from '../../../assets/logo.PNG';
 
-const ThreadList = () => {
-  return (
-    <>
-      <thead>
-         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Remove</th>
-         </tr>
-      </thead>
-    </>
-  )
-}
+const ThreadList = () => (
+  <>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Job</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+  </>
+);
 
-export default ThreadList
+export default ThreadList;

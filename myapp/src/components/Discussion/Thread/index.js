@@ -1,21 +1,24 @@
 import React from 'react';
-import ThreadHeader from '../ThreadHeader'
-import ThreadBody from '../ThreadBody'
-import Card from 'react-bootstrap/Card'
+import PropTypes from 'prop-types';
+import Card from 'react-bootstrap/Card';
+import ThreadHeader from '../ThreadHeader';
+import ThreadBody from '../ThreadBody';
 
-function Thread(props) {
-    console.log(props.characterData)
-    return (
-        <>
-            <Card>
-                <ThreadHeader />
-                <ThreadBody 
-                    characterData={props.characterData} 
-                    removeCharacter={props.removeCharacter} 
-                />
-            </Card>
-        </>
-    );
+function Thread({ characterData, removeCharacter }) {
+  return (
+    <Card>
+      <ThreadHeader />
+      <ThreadBody
+        characterData={characterData}
+        removeCharacter={removeCharacter}
+      />
+    </Card>
+  );
 }
-    
+
+Thread.propTypes = {
+  characterData: PropTypes.node.isRequired,
+  removeCharacter: PropTypes.func.isRequired,
+};
+
 export default Thread;
