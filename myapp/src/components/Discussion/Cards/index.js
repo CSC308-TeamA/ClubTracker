@@ -1,60 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import {
-  CardHoover,
-  UpdateText,
   ThreadCard,
   TitleText,
   DescriptionText,
   NavLink
 } from './CardElements';
 
-function Cards() {
-  const [groups, setGroups] = useState([
-    {
-      groupName: "Robot",
-      threads: [
-        {
-          name: "Meeting 4/20",
-          url: "Meeting-4-20",
-          description: "This is a thread",
-          dateCreated: "Date object",
-          lastModified: "Date object",
-          numPosts: 3
-        },
-        {
-          name: "Meeting 4/21",
-          url: "Meeting-4-21",
-          description: "This is a thread 2",
-          dateCreated: "Date object",
-          lastModified: "Date object",
-          numPosts: 3
-        }
-      ]
-    },
-    {
-      groupName: "Competition",
-      threads: [
-        {
-          name: "League",
-          url: "League",
-          description: "There is a competition",
-          dateCreated: "Date object",
-          lastModified: "Date object",
-          numPosts: 10
-        }
-      ]
-    }
-  ]);
-
-  const groupCards = groups.map((group, index)  => {
+function Cards(props) {
+  const groupCards = props.groupData.map((group, index)  => {
     const threads = group.threads.map((thread, index) => {
       return (
         <>
           <ThreadCard>
             <Card.Body>
-              <NavLink to={"discussion/" + thread.url} activeStyle>
+              <NavLink to={"discussion/" + thread.url}>
                 <TitleText>
                   {thread.name}
                 </TitleText>
