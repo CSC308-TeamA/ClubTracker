@@ -5,7 +5,6 @@ import Form from '../../components/FilterForm/index';
 import AddUserForm from '../../components/AddUserForm/index';
 import Roster from '../../components/Roster';
 import styles from '../../styles/TeamRoster.module.css';
-import Padding from '../../components/Padding';
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -90,7 +89,6 @@ function TeamRoster() {
 
   return (
     <div>
-      <Padding />
       <div className={styles.banner}>
         <img src={websiteBanner} alt="website banner" />
       </div>
