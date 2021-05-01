@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import {
-  H3
+  H3,
 } from './ProfileElements';
 import pfp from '../../assets/profiles/pfp2.gif';
 
@@ -17,24 +17,30 @@ const Profile = () => {
     <div className="container">
       <header className="jumbotron">
         <H3>
-          <strong>{currentUser.username}</strong> Profile
+          <strong>{currentUser.username}</strong> 
+          Profile
         </H3>
       </header>
-      <img src={pfp} alt="Profile Picture" />
+      <img src={pfp} alt="Profile" />
       <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
+        <strong>Token:</strong>
+        {currentUser.accessToken.substring(0, 20)} 
+        ...
+        {' '}
         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
       </p>
       <p>
-        <strong>Id:</strong> {currentUser.id}
+        <strong>Id:</strong>
+        {currentUser.id}
       </p>
       <p>
-        <strong>Email:</strong> {currentUser.email}
+        <strong>Email:</strong>
+        {currentUser.email}
       </p>
       <strong>Authorities:</strong>
       <ul>
-        {currentUser.roles &&
-          currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+        {currentUser.roles 
+        && currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul>
       
     </div>

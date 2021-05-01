@@ -5,9 +5,9 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
-} from "./types";
+} from './types';
 
-import AuthService from "../services/auth.service";
+import AuthService from '../services/auth.service';
 
 export const register = (username, email, password) => (dispatch) => {
   return AuthService.register(username, email, password).then(
@@ -24,12 +24,11 @@ export const register = (username, email, password) => (dispatch) => {
       return Promise.resolve();
     },
     (error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+      const message = (error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString();
 
       dispatch({
         type: REGISTER_FAIL,
@@ -41,9 +40,9 @@ export const register = (username, email, password) => (dispatch) => {
       });
 
       return Promise.reject();
-    }
+    },
   );
-};
+}
 
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
@@ -56,12 +55,11 @@ export const login = (username, password) => (dispatch) => {
       return Promise.resolve();
     },
     (error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+      const message = (error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString();
 
       dispatch({
         type: LOGIN_FAIL,
@@ -73,7 +71,7 @@ export const login = (username, password) => (dispatch) => {
       });
 
       return Promise.reject();
-    }
+    },
   );
 };
 

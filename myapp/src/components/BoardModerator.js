@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import UserService from "../services/user.service";
+import UserService from '../services/user.service';
 
 const BoardModerator = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     UserService.getUserBoard().then(
@@ -11,15 +11,14 @@ const BoardModerator = () => {
         setContent(response.data);
       },
       (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+        const econtent = (error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString();
 
-        setContent(_content);
-      }
+        setContent(econtent);
+      },
     );
   }, []);
 

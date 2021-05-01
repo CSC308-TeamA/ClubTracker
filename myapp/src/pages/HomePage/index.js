@@ -1,28 +1,28 @@
-import React from 'react';
-// import UserService from "../../services/user.service";
+import React, { useState, useEffect } from 'react';
 import { Button, CardDeck, NavLink } from 'react-bootstrap';
+import UserService from '../../services/user.service';
 import { CardChange, Image } from './HomePageElements';
 import PhotoGallery from '../../components/PhotoGallery';
 import bannerImage from '../../assets/websiteBanner.jpg';
 
 function Home() {
-  // const [content, setContent] = useState("");
-  
-  //   useEffect(() => {
-  //     UserService.getPublicContent().then(
-  //       (response) => {
-  //         setContent(response.data);
-  //       },
-  //       (error) => {
-  //         const _content =
-  //           (error.response && error.response.data) ||
-  //           error.message ||
-  //           error.toString();
-  
-  //         setContent(_content);
-  //       }
-  //     );
-  //   }, []);
+  const [setContent] = useState('');
+
+  useEffect(() => {
+    UserService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const econtent = (error.response
+          && error.response.data)
+          || error.message
+          || error.toString();
+
+        setContent(econtent);
+      },
+    );
+  }, []);
 
   const aboutUsParagraph = 'Just as the on-going space program does this, Bear Metal continues to instill interest in STEM and business careers while creating opportunities for students to broaden their educational horizons and simultaneously develop their interpersonal skills. We prepare members for the workforce by emphasizing hands on opportunities, accountability, teamwork, and leadership, which are the core values we impress upon our members. For us, robotics is not only about the skills we learn, but the lasting experiences that are the foundation of lifelong relationships.';
 
