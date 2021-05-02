@@ -19,6 +19,7 @@ from bson import ObjectId
 app = Flask(__name__)
 CORS(app)
 
+
 class User:
     '''
     Class to represent a user
@@ -76,7 +77,6 @@ class User:
                 name (string): Name to filter by
                 status (string): Status to filter by
                 role (string): Role to filter by
-                position (string): Position to filter by
                 specialization (string): Specialization to filter by
                 collection (string): Collection to filter
 
@@ -165,7 +165,7 @@ def get_team_roster():
         name = request.args.get('name')
         status = request.args.get('status')
         role = request.args.get('role')
-        position = request.args.get('position')
+        # position = request.args.get('position')
         specialization = request.args.get('specialization')
 
         filters = {}
@@ -175,8 +175,8 @@ def get_team_roster():
             filters['status'] = status
         if role is not None:
             filters['role'] = role
-        if position is not None:
-            filters['position'] = position
+        # if position is not None:
+        #     filters['position'] = position
         if specialization is not None:
             filters['specialization'] = specialization
 

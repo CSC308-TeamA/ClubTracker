@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form, Row, Col, Button, Modal,
+  Form, Row, Col, Button,
 } from 'react-bootstrap';
-import styles from '../../styles/TeamRoster.module.css';
+import {
+  AddUserButton,
+  AddUserModal,
+  AddUserLabel,
+  SubmitButton,
+} from './AddUserFormElements';
 
 function AddUserForm({ handleSubmit }) {
   const [person, setPerson] = useState({
@@ -99,32 +104,31 @@ function AddUserForm({ handleSubmit }) {
     const temp = { ...specializations };
 
     temp[name] = !temp[name];
-
     setSpecializations(temp);
   }
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow} className={styles.addUserForm}>
+      <AddUserButton variant="primary" onClick={handleShow}>
         + Add a Member
-      </Button>
+      </AddUserButton>
 
-      <Modal
+      <AddUserModal
         size="lg"
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        className={styles.addUserFormAllColor}
       >
-        <Modal.Header>
-          <Modal.Title>Add a New Member</Modal.Title>
+        <AddUserModal.Header>
+          <AddUserModal.Title>Add a New Member</AddUserModal.Title>
           <Button variant="link" onClick={handleClose}> X </Button>
-        </Modal.Header>
-        <Modal.Body>
+        </AddUserModal.Header>
+
+        <AddUserModal.Body>
           <Form noValidate validated={validated} onSubmit={submitForm}>
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}>Name</Form.Label>
+              <AddUserLabel column md="3">Name</AddUserLabel>
               <Col md="9">
                 <Form.Control
                   required
@@ -142,7 +146,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Email </Form.Label>
+              <AddUserLabel column md="3"> Email </AddUserLabel>
               <Col md="9">
                 <Form.Control
                   required
@@ -160,7 +164,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Phone Number </Form.Label>
+              <AddUserLabel column md="3"> Phone Number </AddUserLabel>
               <Col md="9">
                 <Form.Control
                   required
@@ -178,7 +182,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Role </Form.Label>
+              <AddUserLabel column md="3"> Role </AddUserLabel>
               <Col md="9">
                 {roles.map((radio) => (
                   <Form.Check
@@ -204,7 +208,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Position </Form.Label>
+              <AddUserLabel column md="3"> Position </AddUserLabel>
               <Col md="9">
                 <Form.Control
                   required
@@ -222,7 +226,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Specialization </Form.Label>
+              <AddUserLabel column md="3"> Specialization </AddUserLabel>
               <Col md="9">
                 {Object.keys(specializations).map((checkbox, index) => (
                   <Form.Check
@@ -241,7 +245,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <Form.Group as={Row}>
-              <Form.Label column md="3" className={styles.addUserFormText}> Quote </Form.Label>
+              <AddUserLabel column md="3"> Quote </AddUserLabel>
               <Col md="9">
                 <Form.Control
                   as="textarea"
@@ -255,14 +259,14 @@ function AddUserForm({ handleSubmit }) {
               </Col>
             </Form.Group>
 
-            <div className={styles.addUserFormSumbitButton}>
+            <SubmitButton>
               <Button variant="primary" type="submit">
                 Submit
               </Button>
-            </div>
+            </SubmitButton>
           </Form>
-        </Modal.Body>
-      </Modal>
+        </AddUserModal.Body>
+      </AddUserModal>
     </div>
   );
 }

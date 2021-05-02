@@ -1,14 +1,13 @@
 import styled from 'styled-components';
-import { Card, Button } from 'react-bootstrap';
 
-export const CardChange = styled(Card)`
-  background-color: yellow;
-  color: black;
+const Banner = styled.img`
+  width: 100%;
+  max-height: 100%;
+  height: auto;
+  position: relative;
+  bottom: 0;
+  margin: auto;
+  padding: 10px;
 `;
 
-export const Hoover = styled(Button)`
-  color: black;
-  &:hover {
-    background-color: lightgrey;
-  }
-`;
+export default Banner;
