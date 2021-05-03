@@ -18,7 +18,9 @@ function Roster({ characterData, removeCharacter }) {
           <RosterListCard>
             <RosterListCardHeader>
               <RosterListCardTitle>
-                {row.name}
+                {row.member_first_name}
+                {' '}
+                {row.member_last_name_private ? '' : row.member_last_name}
               </RosterListCardTitle>
 
               <RosterList.Toggle as={Button} variant="link" eventKey={row._id}>
