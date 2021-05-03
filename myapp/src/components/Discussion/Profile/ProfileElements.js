@@ -21,6 +21,6 @@ export const Username = styled.p`
   color: black;
 `;
 
-export const Role = styled.p`
+export const Position = styled.p`
   color: red;
 `;

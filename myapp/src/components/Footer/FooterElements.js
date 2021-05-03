@@ -1,7 +1,6 @@
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 export const Header = styled.header`
   position: static; 
   background-color: black;
@@ -59,4 +58,3 @@ export const NavLinkLogo = styled(Link)`
     color: white;
   }
 `;
-

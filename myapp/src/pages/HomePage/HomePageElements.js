@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap';
 import { NavLink as Link } from 'react-router-dom';
 
 export const Bandiv = styled.div`
@@ -54,4 +54,3 @@ export const NavLink = styled(Link)`
   color: white;
   }
 `;
-

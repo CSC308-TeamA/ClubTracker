@@ -14,4 +14,3 @@ export const MainAbout = styled.div`
     padding: 10px;
   }
 `;
-

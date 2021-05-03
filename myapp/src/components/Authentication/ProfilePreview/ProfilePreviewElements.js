@@ -9,7 +9,6 @@ export const UserInfo = styled.div`
   alignContent: center;
 `;
 
-
 export const NewUL = styled.ul`
   list-style: none;
   display: table;

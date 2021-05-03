@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink as Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
 
 export const CardHoover = styled(Card)`
   &:hover {

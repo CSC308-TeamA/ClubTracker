@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink as Link } from 'react-router-dom';
-import { Card, Modal } from 'react-bootstrap'
+import { Card, Modal } from 'react-bootstrap';
 
 export const NavLink = styled(Link)`
   color: yellow;

@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-    PadDiv
-} from './PaddingElements';
+import PadDiv from './PaddingElements';
 
-const Padding = () => {
-    return(
-        <>
-            <PadDiv>
-            </PadDiv>
-        </>
-    )
+function Padding() {
+  return (
+    <PadDiv />
+  );
 }
 
 export default Padding;

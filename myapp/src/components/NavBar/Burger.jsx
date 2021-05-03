@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import RightNav from './RightNav';
 import {
-    StyledBurger
+  StyledBurger,
 } from './NavbarElements';
 
 const Burger = () => {
-  const [open, setOpen] = useState(false)
-  
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <StyledBurger open={open} onClick={() => setOpen(!open)}>
@@ -14,9 +14,9 @@ const Burger = () => {
         <div />
         <div />
       </StyledBurger>
-      <RightNav open={open}/>
+      <RightNav open={open} />
     </>
-  )
-}
+  );
+};
 
-export default Burger
+export default Burger;
