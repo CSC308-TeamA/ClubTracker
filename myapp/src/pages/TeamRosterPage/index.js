@@ -12,7 +12,7 @@ function TeamRoster() {
 
   async function fetch(field) {
     try {
-      let link = 'https://clubtracker-backend.heroku.com/teamroster?';
+      let link = 'https://clubtracker-backend.herokuapp.com/teamroster?';
       if (field.name !== '') link += `name=${field.name}&`;
       if (field.stat !== '') link += `status=${field.stat}&`;
       if (field.role !== '') link += `role=${field.role}&`;
