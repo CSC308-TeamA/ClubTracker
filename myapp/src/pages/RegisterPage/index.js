@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-validation/build/form';
@@ -12,6 +11,36 @@ import {
   register,
 } from '../../actions/auth';
 
+{ /* NOTE: Need to add the following -
+-first name
+-last name
+-number?
+-Roles/Permissions:
+  <option>Admin</option>
+  <option>Officer</option>
+  <option>Member</option>
+  <option>Guest</option>
+-Positions:
+  <option>None</option>
+  <option>Parent</option>
+  <option>Mentor</option>
+  <option>Lead</option>
+  <option>Alumni</option>
+-Specializations (Multiclick):
+  <option>None</option>
+  <option>Design</option>
+  <option>Frabrication</option>
+  <option>Electronics</option>
+  <option>Assembly</option>
+  <option>Programming</option>
+  <option>Media</option>
+  <option>Business</option>
+  <option>Scoutin</option>
+  <option>Pit Crew</option>
+  <option>Drive</option>
+  <option>Other</option>
+-Maybe pfp??
+*/ }
 const required = (value) => {
   if (!value) {
     return (
@@ -61,19 +90,22 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [successful, setSuccessful] = useState(false);
 
-  const { message } = useSelector((state) => state.message);
+  const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
-    setUsername(e.target.value);
+    const username = e.target.value;
+    setUsername(username);
   };
 
   const onChangeEmail = (e) => {
-    setEmail(e.target.value);
+    const email = e.target.value;
+    setEmail(email);
   };
 
   const onChangePassword = (e) => {
-    setPassword(e.target.value);
+    const password = e.target.value;
+    setPassword(password);
   };
 
   const handleRegister = (e) => {
@@ -83,7 +115,7 @@ const Register = () => {
 
     form.current.validateAll();
 
-    if (checkBtn.current.context.eerrors.length === 0) {
+    if (checkBtn.current.context._errors.length === 0) {
       dispatch(register(username, email, password))
         .then(() => {
           setSuccessful(true);
@@ -144,7 +176,7 @@ const Register = () => {
                 </div>
 
                 <div className="form-group">
-                  <button type="button" className="btn btn-primary btn-block">Sign Up</button>
+                  <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </div>
             )}
