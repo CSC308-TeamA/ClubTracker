@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable consistent-return */
+/* eslint-disable no-shadow */
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -29,8 +32,8 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { isLoggedIn } = useSelector(state => state.auth);
-  const { message } = useSelector(state => state.message);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
   const dispatch = useDispatch();
 
@@ -51,7 +54,7 @@ const Login = (props) => {
 
     form.current.validateAll();
 
-    if (checkBtn.current.context._errors.length === 0) {
+    if (checkBtn.current.context.eerrors.length === 0) {
       dispatch(login(username, password))
         .then(() => {
           props.history.push('/profile');
@@ -104,9 +107,9 @@ const Login = (props) => {
             </div>
 
             <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading}>
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
                 {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
+                  <span className="spinner-border spinner-border-sm" />
                 )}
                 <span>Login</span>
               </button>
