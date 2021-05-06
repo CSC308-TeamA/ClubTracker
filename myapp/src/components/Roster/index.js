@@ -7,7 +7,11 @@ import {
   RosterList,
   RosterListCard,
   RosterListCardHeader,
-  RosterListCardTitle,
+  RosterListCardName,
+  RosterListCardPosition,
+  RosterListToggle,
+  RosterBodySection,
+  DeleteMemberButton,
 } from './RosterElements';
 
 function Roster({ characterData, removeCharacter }) {
@@ -17,31 +21,59 @@ function Roster({ characterData, removeCharacter }) {
         <RosterList key={row._id}>
           <RosterListCard>
             <RosterListCardHeader>
-              <RosterListCardTitle>
-                {row.member_first_name}
-                {' '}
-                {row.member_last_name_private ? '' : row.member_last_name}
-              </RosterListCardTitle>
-
-              <RosterList.Toggle as={Button} variant="link" eventKey={row._id}>
+              <RosterListToggle eventKey={row._id}>
+                <RosterListCardName>
+                  {row.member_first_name}
+                  {' '}
+                  {row.member_last_name_private ? '' : row.member_last_name}
+                </RosterListCardName>
                 <RosterListCard.Img variant="top" src={profileSilhouette} />
-              </RosterList.Toggle>
-
-              Position:
-              {row.position}
-              <br />
+                {row.member_position
+                  ? (
+                    <RosterListCardPosition>
+                      {row.member_position}
+                    </RosterListCardPosition>
+                  )
+                  : ''}
+              </RosterListToggle>
             </RosterListCardHeader>
 
             <RosterList.Collapse eventKey={row._id}>
               <RosterListCard.Body>
                 <RosterListCard.Text>
-                  Specialization:
-                  {row.specialization ? row.specialization.join(', ') : ''}
-                  Quote:
-                  <i>{row.quote}</i>
-                  <Button onClick={() => removeCharacter(row._id)}>
-                    Delete
-                  </Button>
+                  <RosterBodySection>
+                    <b>Email: </b>
+                    {!row.member_email_private ? row.member_email : ''}
+                  </RosterBodySection>
+                  <RosterBodySection>
+                    <b>Phone Number: </b>
+                    {!row.member_cell_number_private ? row.member_cell_number : ''}
+                  </RosterBodySection>
+                  <RosterBodySection>
+                    <b>Member Status: </b>
+                    {row.member_status ? row.member_status : ''}
+                  </RosterBodySection>
+                  <RosterBodySection>
+                    <b>Specialization(s): </b>
+                    {row.member_specialization ? row.member_specialization.join(', ') : ''}
+                  </RosterBodySection>
+
+                  {/* {row.member_specialization.length > 0
+                    ? (
+                      <div>
+                        <b>Specialization(s): </b>
+                        {row.member_specialization.join(', ')}
+                      </div>
+                    ) : ''} */}
+                  <RosterBodySection>
+                    <b>Quote: </b>
+                    {row.member_quote ? row.member_quote : ''}
+                  </RosterBodySection>
+                  <DeleteMemberButton>
+                    <Button block onClick={() => removeCharacter(row._id)}>
+                      Delete Member
+                    </Button>
+                  </DeleteMemberButton>
                 </RosterListCard.Text>
               </RosterListCard.Body>
             </RosterList.Collapse>

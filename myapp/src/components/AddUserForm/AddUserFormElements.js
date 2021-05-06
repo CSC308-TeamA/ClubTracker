@@ -38,6 +38,7 @@ export const AddUserLabel = styled(Form.Label)`
 export const PrivateComponent = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 8px;
 `;
 
 export const PrivateLabel = styled(Form.Label)`

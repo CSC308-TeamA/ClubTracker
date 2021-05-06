@@ -18,10 +18,36 @@ export const RosterListCard = styled(Card)`
 `;
 
 export const RosterListCardHeader = styled(Card.Header)`
-    text-align: center;
+  text-align: center;
 `;
 
-export const RosterListCardTitle = styled(Card.Title)`
-    font-size: 16pt;
-    font-weight: bold;
+export const RosterListCardName = styled(Card.Title)`
+  font-size: 17pt;
+  font-weight: bold;
+  color: black;
+`;
+
+export const RosterListCardPosition = styled.div`
+  font-size: 15pt;
+  color: black;
+`;
+
+export const RosterListToggle = styled(Accordion.Toggle)`
+  &:active, &:hover, &:focus{
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.03);
+  };
+
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.03);
+`;
+
+export const RosterBodySection = styled.div`
+  padding-bottom: 5px;
+`;
+
+export const DeleteMemberButton = styled.div`
+  margin-top: 15px;
+  display: flex;  
+  justify-content: center;
 `;

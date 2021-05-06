@@ -58,15 +58,16 @@ function AddUserForm({ handleSubmit }) {
 
   const positions = [
     { id: 0, name: '' },
-    { id: 1, name: 'Director of Competitions' },
-    { id: 2, name: 'Lead' },
-    { id: 3, name: 'Lead Mentor' },
-    { id: 4, name: 'Member' },
-    { id: 5, name: 'Mentor' },
-    { id: 6, name: 'Parent' },
-    { id: 7, name: 'President' },
-    { id: 8, name: 'Secretary of Communications' },
-    { id: 9, name: 'Vice President' },
+    { id: 1, name: 'Advisor' },
+    { id: 2, name: 'Director of Competitions' },
+    { id: 3, name: 'Lead' },
+    { id: 4, name: 'Lead Mentor' },
+    { id: 5, name: 'Member' },
+    { id: 6, name: 'Mentor' },
+    { id: 7, name: 'Parent' },
+    { id: 8, name: 'President' },
+    { id: 9, name: 'Secretary of Communications' },
+    { id: 10, name: 'Vice President' },
   ];
 
   const [specializations, setSpecializations] = useState({
@@ -274,8 +275,7 @@ function AddUserForm({ handleSubmit }) {
                   </PrivateComponent>
                 </Row>
                 <Form.Control
-                  as={Col}
-                  type="email"
+                  type="text"
                   name="member_email"
                   id="member_email"
                   value={person.member_email}
