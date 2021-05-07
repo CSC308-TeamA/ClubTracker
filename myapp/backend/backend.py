@@ -34,9 +34,9 @@ class Model(dict):
       return resp.deleted_count
 
 class User(Model):
-  client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
   
   def get_collection(name):
+    client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
     return client.get_database("TeamProj").get_collection(name)
   # db = client.TeamProj
 
@@ -44,11 +44,51 @@ class User(Model):
     return client.get_database("TeamProj").createCollection(name)
 
   def delete_collection(name):
-    return client.get_database("TeamProj").deleateCollection(name)
+    return get_collection(name).drop()
+
+  def add_post(self, posttoAdd, board):
+    collection = get_collection('Discussion_' + board)
+    if (collection == None):
+      return None
+    collection.insert(posttoAdd)
+    return posttoAdd
+
+  def add_thread(self, threadtoAdd):
+    groupName = threadtoAdd['groupName']
+    threads = threadtoAdd['threads']
+    collection = get_collection('Disscussion_Index')
+    group = collection.find({'groupName': groupName})
+    if group == None:
+      collection.insert(threadtoAdd)
+      return
+    #Mongodb equivalant example
+    # collection.findOneAndUpdate(
+    #   {groupName: "Robot"}, 
+    #   {$push: 
+    #       { "threads" :  
+    #        {
+    #           "name": "Meeting 4/22",
+    #           "url": "Meeting-4-22",
+    #           "description": "This is a thread",
+    #           "numPosts": 1
+    #        }
+    #       }
+    #     },
+    #   {upsert:true, returnNewDocument: true })
+    for thread in threads: 
+      collection.find_one_and_update(
+        {'groupName': groupName},
+        {'$push': 
+          { 'threads' : thread}
+        },
+        upsert=True,
+        return_document=ReturnDocument.AFTER
+      )
+
 
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
-    collection = get_collection('TeamRoster')
+    collection = User.get_collection('TeamRoster')
     filters = {}
     if name != None:
       filters['name'] = { '$regex': f'{name}', '$options': 'i'}
@@ -61,29 +101,29 @@ class User(Model):
     if specialization != None:
       filters['specialization'] = specialization
       
-    users = list(self.collection.find(filters))
+    users = list(collection.find(filters))
     
     for user in users:
       user["_id"] = str(user["_id"])
     return users
   
   def add_user(self, user):
-    collection = get_collection('TeamRoster')
-    user_added = self.collection.insert(user)
+    collection = User.get_collection('TeamRoster')
+    user_added = collection.insert(user)
     user_added = str(user_added)
     return user_added
 
   def get_thread(self, thread):
-    collection = get_collection('Discussion_' + thread)
-    posts = list(self.collection.find())
+    collection = User.get_collection('Discussion_' + thread)
+    posts = list(collection.find())
     
     for post in posts:
       post["_id"] = str(post["_id"])
     return posts
 
   def get_posts_in_thread(self, thread, name):
-    collection = get_collection('Discussion_' + thread)
-    groups = list(self.collection.find())
+    collection = User.get_collection('Discussion_' + thread)
+    groups = list(collection.find())
     
     for group in groups:
       group["_id"] = str(group["_id"])
@@ -91,8 +131,8 @@ class User(Model):
 
 
   def get_discussion_index(self):
-    collection = get_collection('Discussion_Index')
-    groups = list(self.collection.find())
+    collection = User.get_collection('Discussion_Index')
+    groups = list(collection.find())
     
     for group in groups:
       group["_id"] = str(group["_id"])
@@ -123,10 +163,17 @@ def get_team_roster():
   elif request.method == 'POST':
     usertoAdd = request.get_json()
     User.add_user(User, usertoAdd)
-    
+
     resp = jsonify(usertoAdd)
     resp.status_code = 201
     return resp
+
+  elif request.method == 'DELETE' :
+    user = request.get_json()
+    if user.remove():
+      return user
+    else :
+      return jsonify({"error": "User not found"}), 404
 
 @app.route('/discussion/<board>', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
@@ -137,37 +184,41 @@ def discussion_board(board):
 
   elif request.method == 'POST':
     posttoAdd = request.get_json()
-    User.add_post(User, posttoAdd)
+    resp = User.add_post(User, posttoAdd, board)
+
+    if resp == None:
+      return jsonify({"error": "Thread not found"}), 404
 
     resp = jsonify(posttoAdd)
     resp.status_code = 201
     return resp
 
-  elif request.method == 'DELETE':
-    posttoAdd = request.get_json()
-    User.remove_post(User, posttoAdd)
-
-    resp = jsonify(posttoAdd)
-    resp.status_code = 201
-    return resp
+  elif request.method == 'DELETE' :
+    post = request.get_json()
+    if post.remove() :
+      return post
+    else :
+      return jsonify({"error": "Post not found"}), 404
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
-def discussion_board(board):
+def discussion():
   if request.method == 'GET':
-    resp = jsonify(User.get_index(User))
+    resp = jsonify(User.get_discussion_index(User))
     resp.status_code = 201
     return resp
 
   elif request.method == 'POST':
-    posttoAdd = request.get_json()
-    User.add_post(User, posttoAdd)
+    threadtoAdd = request.get_json()
+    resp = jsonify(User.add_thread(User, threadtoAdd))
 
-    resp = jsonify(posttoAdd)
     resp.status_code = 201
     return resp
 
-  elif request.method == 'DELETE':
-    return None
+  elif request.method == 'DELETE' :
+    thread = request.get_json()
+    if thread.remove() :
+      return thread
+    else :
+      return jsonify({"error": "Thread not found"}), 404
     
-    
-  return board
+  return None
