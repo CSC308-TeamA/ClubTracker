@@ -41,7 +41,7 @@ function DiscussionBoard() {
     }
   ]);
 
-/*  async function fetch() {
+  async function fetch() {
     try {
       const response = await axios.get("http://localhost:5000/discussion");
       return response.data;
@@ -59,7 +59,7 @@ function DiscussionBoard() {
         console.log("hello");
       }
     });
-  }, []);*/
+  }, []);
 
   return (
     <>
