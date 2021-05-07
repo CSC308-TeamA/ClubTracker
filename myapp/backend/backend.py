@@ -152,7 +152,7 @@ def discussion_board(board):
     return resp
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
-def discussion_board(board):
+def discussion():
   if request.method == 'GET':
     resp = jsonify(User.get_index(User))
     resp.status_code = 201
