@@ -6,7 +6,7 @@ import PhotoGallery from '../../components/PhotoGallery';
 import bannerImage from '../../assets/websiteBanner.jpg';
 
 function Home() {
-  const [setContent] = useState('');
+  const [, setContent] = useState('');
 
   useEffect(() => {
     UserService.getPublicContent().then(
