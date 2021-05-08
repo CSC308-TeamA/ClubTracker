@@ -17,14 +17,14 @@ const Profile = () => {
     <div className="container">
       <header className="jumbotron">
         <H3>
-          <strong>{currentUser.username}</strong> 
+          <strong>{currentUser.username}</strong>
           Profile
         </H3>
       </header>
       <img src={pfp} alt="Profile" />
       <p>
         <strong>Token:</strong>
-        {currentUser.accessToken.substring(0, 20)} 
+        {currentUser.accessToken.substring(0, 20)}
         ...
         {' '}
         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
@@ -39,10 +39,10 @@ const Profile = () => {
       </p>
       <strong>Authorities:</strong>
       <ul>
-        {currentUser.roles 
-        && currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+        {currentUser.roles
+        && currentUser.roles.map((role) => <li key={role.id}>{role}</li>)}
       </ul>
-      
+
     </div>
   );
 };

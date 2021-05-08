@@ -1,9 +1,11 @@
+/* eslint-disable consistent-return */
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
+import PropTypes from 'prop-types';
 import {
   Label, CardContainer, Card, ProfileImgCard,
 } from './LoginPageElements';
@@ -29,19 +31,17 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { isLoggedIn } = useSelector(state => state.auth);
-  const { message } = useSelector(state => state.message);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
+    setUsername(e.target.value);
   };
 
   const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
+    setPassword(e.target.value);
   };
 
   const handleLogin = (e) => {
@@ -51,7 +51,7 @@ const Login = (props) => {
 
     form.current.validateAll();
 
-    if (checkBtn.current.context._errors.length === 0) {
+    if (checkBtn.current.context.eerrors.length === 0) {
       dispatch(login(username, password))
         .then(() => {
           props.history.push('/profile');
@@ -104,9 +104,9 @@ const Login = (props) => {
             </div>
 
             <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading}>
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
                 {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
+                  <span className="spinner-border spinner-border-sm" />
                 )}
                 <span>Login</span>
               </button>
@@ -125,6 +125,10 @@ const Login = (props) => {
       </CardContainer>
     </div>
   );
+};
+
+Login.propTypes = {
+  history: PropTypes.func.isRequired,
 };
 
 export default Login;
