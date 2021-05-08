@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink as Link } from 'react-router-dom';
-import { Card, Modal } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 export const NavLink = styled(Link)`
   color: yellow;
@@ -29,8 +29,4 @@ export const NewCard = styled(Card)`
 
 export const Center = styled.h2`
   text-align: center;
-`;
-
-export const NewModal = styled(Modal)`
-  color: black;
 `;

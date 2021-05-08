@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/styles.scss';
 import Image from 'react-bootstrap/Image';
-import Padding from '../../components/Padding';
 import teamImage from '../../assets/teamPhoto.jpg';
 import awards from '../../assets/awards.PNG';
 import girlsGen from '../../assets/girlsGen2017.png';
@@ -26,8 +25,6 @@ function About() {
 
   return (
     <>
-      <Padding />
-
       <h2>ABOUT US</h2>
       <Line />
       <SubHead>
