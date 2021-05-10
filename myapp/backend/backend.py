@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify 
 from flask_cors import CORS 
 import pymongo
+import urllib.parse
+from datetime import datetime
 from bson import ObjectId
 
 app = Flask(__name__)
@@ -37,7 +39,9 @@ class User(Model):
   
   def get_collection(name):
     client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
-    return client.get_database("TeamProj").get_collection(name)
+    collection = client.get_database("TeamProj").get_collection(name)
+    client.close
+    return collection
   # db = client.TeamProj
 
   def create_collection(name):
@@ -58,9 +62,6 @@ class User(Model):
     threads = threadtoAdd['threads']
     collection = get_collection('Disscussion_Index')
     group = collection.find({'groupName': groupName})
-    if group == None:
-      collection.insert(threadtoAdd)
-      return
     #Mongodb equivalant example
     # collection.findOneAndUpdate(
     #   {groupName: "Robot"}, 
@@ -75,7 +76,11 @@ class User(Model):
     #       }
     #     },
     #   {upsert:true, returnNewDocument: true })
-    for thread in threads: 
+    for thread in threads:
+      thread['url'] = urllib.parse.quote(thread['name'], safe='')
+      thread['numPosts']  = 0
+      thread['dateCreated'] = datetime.datetime.utcnow()
+      thread['lastModified'] = datetime.datetime.utcnow()
       collection.find_one_and_update(
         {'groupName': groupName},
         {'$push': 
@@ -114,20 +119,21 @@ class User(Model):
     return user_added
 
   def get_thread(self, thread):
-    collection = User.get_collection('Discussion_' + thread)
+    collection = User.get_collection('Discussion_' + urllib.parse.quote(thread))
     posts = list(collection.find())
-    
+
     for post in posts:
-      post["_id"] = str(post["_id"])
+      post['_id'] = str(post['_id'])
+      post['user'] = str(post['user'])
     return posts
 
-  def get_posts_in_thread(self, thread, name):
-    collection = User.get_collection('Discussion_' + thread)
-    groups = list(collection.find())
+  # def get_posts_in_thread(self, thread, name):
+  #   collection = User.get_collection('Discussion_' + thread)
+  #   groups = list(collection.find())
     
-    for group in groups:
-      group["_id"] = str(group["_id"])
-    return groups
+  #   for group in groups:
+  #     group["_id"] = str(group["_id"])
+  #   return groups
 
 
   def get_discussion_index(self):
@@ -147,6 +153,10 @@ def hello_world():
   else:
     return "fail"
 
+@app.route('/test/<test_rule>')
+def hello_world_test(test_rule):
+  return jsonify(test_rule)
+
 @app.route('/teamroster', methods=['GET', 'POST'])
 def get_team_roster():
   if request.method == 'GET':
@@ -157,7 +167,7 @@ def get_team_roster():
     specialization = request.args.get('specialization')
 
     resp = jsonify(User.find_by_filter(User, name, status, role, position, specialization))
-    resp.status_code = 201
+    resp.status_code = 200
     return resp
 
   elif request.method == 'POST':
@@ -175,11 +185,11 @@ def get_team_roster():
     else :
       return jsonify({"error": "User not found"}), 404
 
-@app.route('/discussion/<board>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
   if request.method == 'GET':
     resp = jsonify(User.get_thread(User, board))
-    resp.status_code = 201
+    resp.status_code = 200
     return resp
 
   elif request.method == 'POST':
