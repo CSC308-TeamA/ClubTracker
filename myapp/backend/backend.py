@@ -37,19 +37,29 @@ class Model(dict):
       return resp.deleted_count
 
 class User(Model):
+  #client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
   
   def get_collection(name):
     client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
     collection = client.get_database("TeamProj").get_collection(name)
-    client.close
     return collection
-  # db = client.TeamProj
 
   def create_collection(name):
-    return client.get_database("TeamProj").createCollection(name)
+    client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
+    try:
+      return client.get_database("TeamProj").create_collection(name)
+    except pymongo.errors.CollectionInvalid:
+      return None
 
   def delete_collection(name):
-    return User.get_collection(name).drop()
+    client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
+    try:
+      print("trying to delete")
+      return client.get_database("TeamProj").drop_collection(name)
+    except pymongo.errors.OperationFailure:
+      print("Invalid Delete")
+      return None
+    
 
   def add_post(self, posttoAdd, board):
     collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
@@ -68,39 +78,44 @@ class User(Model):
     threads = threadtoAdd['threads']
     collection = User.get_collection('Discussion_Index')
     group = collection.find({'groupName': groupName})
-    #Mongodb equivalant example
-    # collection.findOneAndUpdate(
-    #   {groupName: "Robot"}, 
-    #   {$push: 
-    #       { "threads" :  
-    #        {
-    #           "name": "Meeting 4/22",
-    #           "url": "Meeting-4-22",
-    #           "description": "This is a thread",
-    #           "numPosts": 1
-    #        }
-    #       }
-    #     },
-    #   {upsert:true, returnNewDocument: true })
     out = list()
     for thread in threads:
       thread['url'] = urllib.parse.quote(thread['name'], safe='')
       thread['numPosts']  = 0
       thread['dateCreated'] = datetime.datetime.utcnow()
       thread['lastModified'] = datetime.datetime.utcnow()
-      out.append(collection.find_one_and_update(
-        {'groupName': groupName},
-        {'$push': 
-          { 'threads' : thread}
-        },
-        upsert=True,
-        return_document=ReturnDocument.AFTER
-      ))
+      if(User.create_collection("Discussion_" + thread['url']) != None):
+        out.append(collection.find_one_and_update(
+          {'groupName': groupName},
+          {'$push': 
+            { 'threads' : thread}
+          },
+          upsert=True,
+          return_document=ReturnDocument.AFTER
+        ))
+      else:
+        return None
     for thread in out:
       thread['_id'] = str(thread['_id'])
     return out
              
-
+  def remove_thread(thread):
+    groupName = thread['groupName']
+    threads = thread['threads']
+    collection = User.get_collection('Discussion_Index')
+    group = collection.find({'groupName': groupName})
+    out = list()
+    for thread in threads:
+      User.delete_collection("Discussion_" + thread['url'])
+      out.append(collection.find_one_and_update(
+        {'groupName': groupName},
+        {'$pull': 
+          {'threads': { 'url': thread['url']}},
+        }
+      ))
+      if(collection.find_one({'groupName': groupName})['threads'] == []):
+        collection.find_one_and_delete({'groupName': groupName})
+    return out
 
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
@@ -221,9 +236,9 @@ def discussion_board(board):
 
   elif request.method == 'DELETE' :
     post = request.get_json()
-    if post.remove() :
+    if User.remove_post(post) :
       return post
-    else :
+    else:
       return jsonify({"error": "Post not found"}), 404
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
@@ -244,14 +259,17 @@ def discussion():
   # }
   elif request.method == 'POST':
     threadtoAdd = request.get_json()
-    resp = jsonify(User.add_thread(User, threadtoAdd))
+    resp = User.add_thread(User, threadtoAdd)
+    if resp == None:
+      return jsonify({"error": "Thread already exists"}), 409
 
+    resp = jsonify(resp)
     resp.status_code = 201
     return resp
 
   elif request.method == 'DELETE' :
     thread = request.get_json()
-    if thread.remove() :
+    if User.remove_thread(thread) :
       return thread
     else :
       return jsonify({"error": "Thread not found"}), 404
