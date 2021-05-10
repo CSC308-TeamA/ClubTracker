@@ -196,6 +196,18 @@ function AddUserForm({ handleSubmit }) {
     }
   }
 
+  function handleShow() {
+    setShow(true);
+  }
+
+  function handleCheckClick(event) {
+    const { name } = event.target;
+    const temp = { ...specializations };
+
+    temp[name] = !temp[name];
+    setSpecializations(temp);
+  }
+
   return (
     <div>
       <AddUserButton variant="primary" onClick={handleShow}>

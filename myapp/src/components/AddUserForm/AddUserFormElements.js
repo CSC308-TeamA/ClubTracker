@@ -17,6 +17,7 @@ export const AddUserModal = styled(Modal)`
 export const Title = styled.h3`
   color: black;
 `;
+
 export const FirstSection = styled.h4`
   color: black;
   text-align: center;
