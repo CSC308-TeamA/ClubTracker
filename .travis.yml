@@ -5,18 +5,16 @@ jobs:
       before_install:
         - cd myapp
       install:
-        - npm install react-bootstrap bootstrap
-        - npm install axios
+        - npm install
       script:
         - npm test
         - npm run build
 
     - language: python
       python: 3.9
+      before install:
+        - cd myapp
       install:
-        - pip install flask
-        - pip install flask-cors
-        - pip install pymongo
-        - pip install dnspython
+        - pip install -r requirements.txt
       scipt:
         - pytest

@@ -12,8 +12,7 @@ function TeamRoster() {
 
   async function fetch(field) {
     try {
-      let link = 'http://localhost:5000/teamroster?';
-
+      let link = 'https://clubtracker-backend.herokuapp.com/teamroster?';
       if (field.name !== '') link += `name=${field.name}&`;
       if (field.stat !== '') link += `status=${field.stat}&`;
       if (field.role !== '') link += `role=${field.role}&`;
@@ -47,7 +46,7 @@ function TeamRoster() {
 
   async function makePostCall(person) {
     try {
-      const response = await axios.post('http://localhost:5000/teamroster', person);
+      const response = await axios.post('https://clubtracker-backend.herokuapp.com/teamroster', person);
       return response;
     } catch (error) {
       return false;
@@ -64,7 +63,7 @@ function TeamRoster() {
 
   async function makeDeleteCall(id) {
     try {
-      const response = await axios.delete(`http://localhost:5000/teamroster?_id=${id}`);
+      const response = await axios.delete(`https://clubtracker-backend.herokuapp.com/teamroster?_id=${id}`);
       return response;
     } catch (error) {
       return false;
