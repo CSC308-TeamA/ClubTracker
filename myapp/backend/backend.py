@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify 
 from flask_cors import CORS 
 import pymongo
+from pymongo import ReturnDocument
 import urllib.parse
-from datetime import datetime
+import datetime
 from bson import ObjectId
 
 app = Flask(__name__)
@@ -48,19 +49,24 @@ class User(Model):
     return client.get_database("TeamProj").createCollection(name)
 
   def delete_collection(name):
-    return get_collection(name).drop()
+    return User.get_collection(name).drop()
 
   def add_post(self, posttoAdd, board):
-    collection = get_collection('Discussion_' + board)
-    if (collection == None):
+    collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
+    if (collection.find_one() == None):
       return None
-    collection.insert(posttoAdd)
+    posttoAdd['date'] = datetime.datetime.utcnow()
+    posttoAdd['user'] = ObjectId(posttoAdd['user'])
+    retID = collection.insert_one(posttoAdd)
+    print(posttoAdd)
+    posttoAdd['_id'] = str(retID.inserted_id)
+    posttoAdd['user'] = str(posttoAdd['user'])
     return posttoAdd
 
   def add_thread(self, threadtoAdd):
     groupName = threadtoAdd['groupName']
     threads = threadtoAdd['threads']
-    collection = get_collection('Disscussion_Index')
+    collection = User.get_collection('Discussion_Index')
     group = collection.find({'groupName': groupName})
     #Mongodb equivalant example
     # collection.findOneAndUpdate(
@@ -76,19 +82,24 @@ class User(Model):
     #       }
     #     },
     #   {upsert:true, returnNewDocument: true })
+    out = list()
     for thread in threads:
       thread['url'] = urllib.parse.quote(thread['name'], safe='')
       thread['numPosts']  = 0
       thread['dateCreated'] = datetime.datetime.utcnow()
       thread['lastModified'] = datetime.datetime.utcnow()
-      collection.find_one_and_update(
+      out.append(collection.find_one_and_update(
         {'groupName': groupName},
         {'$push': 
           { 'threads' : thread}
         },
         upsert=True,
         return_document=ReturnDocument.AFTER
-      )
+      ))
+    for thread in out:
+      thread['_id'] = str(thread['_id'])
+    return out
+             
 
 
   # print(collection)
@@ -120,6 +131,8 @@ class User(Model):
 
   def get_thread(self, thread):
     collection = User.get_collection('Discussion_' + urllib.parse.quote(thread))
+    if (collection.find_one() == None):
+      return None
     posts = list(collection.find())
 
     for post in posts:
@@ -188,14 +201,17 @@ def get_team_roster():
 @app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE'])
 def discussion_board(board):
   if request.method == 'GET':
-    resp = jsonify(User.get_thread(User, board))
+    resp = User.get_thread(User, board)
+    if resp == None:
+      return jsonify({"error": "Thread not found"}), 404
+
+    resp = jsonify(resp)
     resp.status_code = 200
     return resp
 
   elif request.method == 'POST':
     posttoAdd = request.get_json()
     resp = User.add_post(User, posttoAdd, board)
-
     if resp == None:
       return jsonify({"error": "Thread not found"}), 404
 
@@ -217,6 +233,15 @@ def discussion():
     resp.status_code = 201
     return resp
 
+  # New threads should be of this form 
+  # (multiple threads can be added at one time)
+  # {
+  #     "groupName": "Robot",
+  #     "threads": [{
+  #         "name": "Frame Stuff",
+  #         "description": "This is a thread about the robot frame"
+  #     }]
+  # }
   elif request.method == 'POST':
     threadtoAdd = request.get_json()
     resp = jsonify(User.add_thread(User, threadtoAdd))
