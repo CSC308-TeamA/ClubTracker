@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import websiteBanner from '../../assets/websiteBanner.jpg';
-import Form from '../../components/FilterForm/index';
+import Filter from '../../components/Filter/index';
 import AddUserForm from '../../components/AddUserForm/index';
 import Roster from '../../components/Roster';
-import styles from '../../styles/TeamRoster.module.css';
 import Padding from '../../components/Padding';
+import Banner from './TeamRosterPageElements';
 
 function TeamRoster() {
   const [characters, setCharacters] = useState([]);
@@ -91,12 +91,9 @@ function TeamRoster() {
   return (
     <div>
       <Padding />
-      <div className={styles.banner}>
-        <img src={websiteBanner} alt="website banner" />
-      </div>
-
+      <Banner src={websiteBanner} alt="website banner" />
       <AddUserForm handleSubmit={updateRoster} />
-      <Form handleSubmit={updatePage} />
+      <Filter handleSubmit={updatePage} />
       <Roster characterData={characters} removeCharacter={removeCharacter} />
     </div>
   );
