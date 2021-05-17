@@ -4,22 +4,14 @@ import {
   Form, Row, Col, Button,
 } from 'react-bootstrap';
 import {
-  AddUserButton,
-  AddUserModal,
-  Title,
-  FirstSection,
-  Section,
-  AddUserLabel,
-  PrivateComponent,
-  PrivateLabel,
-  StatusComponent,
-  StatusRadio,
-  StatusLabel,
-  SpecializationComponent,
-  SpecializationRadio,
-  SpecializationLabel,
+  AddUserButton, AddUserModal, Title, FirstSection, Section, AddUserLabel,
+  PrivateComponent, PrivateLabel, StatusComponent, StatusRadio, StatusLabel,
+  SpecializationComponent, SpecializationRadio, SpecializationLabel,
   SubmitButton,
 } from './AddUserFormElements';
+import {
+  status, positions, grades, shirtSizes, genders,
+} from './AddUserFormProperties';
 
 function AddUserForm({ handleSubmit }) {
   const [person, setPerson] = useState({
@@ -51,24 +43,6 @@ function AddUserForm({ handleSubmit }) {
   const [show, setShow] = useState(false);
 
   const [statusValue, setStatusValue] = useState('0');
-  const status = [
-    { id: 1, name: 'Active' },
-    { id: 2, name: 'Inactive' },
-  ];
-
-  const positions = [
-    { id: 0, name: '' },
-    { id: 1, name: 'Advisor' },
-    { id: 2, name: 'Director of Competitions' },
-    { id: 3, name: 'Lead' },
-    { id: 4, name: 'Lead Mentor' },
-    { id: 5, name: 'Member' },
-    { id: 6, name: 'Mentor' },
-    { id: 7, name: 'Parent' },
-    { id: 8, name: 'President' },
-    { id: 9, name: 'Secretary of Communications' },
-    { id: 10, name: 'Vice President' },
-  ];
 
   const [specializations, setSpecializations] = useState({
     Assembly: false,
@@ -83,35 +57,6 @@ function AddUserForm({ handleSubmit }) {
     Scouting: false,
     Other: false,
   });
-
-  const grades = [
-    { id: 0, name: '' },
-    { id: 1, name: '8' },
-    { id: 2, name: '9' },
-    { id: 3, name: '10' },
-    { id: 4, name: '11' },
-    { id: 5, name: '12' },
-    { id: 6, name: 'N/A' },
-  ];
-
-  const shirtSizes = [
-    { id: 0, name: '' },
-    { id: 1, name: 'XXS' },
-    { id: 2, name: 'XS' },
-    { id: 3, name: 'S' },
-    { id: 4, name: 'M' },
-    { id: 5, name: 'L' },
-    { id: 6, name: 'XL' },
-    { id: 7, name: 'XXL' },
-    { id: 8, name: 'XXXL' },
-  ];
-
-  const genders = [
-    { id: 0, name: '' },
-    { id: 1, name: 'Female' },
-    { id: 2, name: 'Male' },
-    { id: 3, name: 'Other' },
-  ];
 
   function handleShow() {
     setShow(true);
@@ -491,7 +436,7 @@ function AddUserForm({ handleSubmit }) {
               <Col>
                 <AddUserLabel> Email </AddUserLabel>
                 <Form.Control
-                  type="email"
+                  type="text"
                   name="ec1_email"
                   id="ec1_email"
                   value={person.ec1_email}
@@ -544,7 +489,7 @@ function AddUserForm({ handleSubmit }) {
               <Col>
                 <AddUserLabel> Email </AddUserLabel>
                 <Form.Control
-                  type="email"
+                  type="text"
                   name="ec2_email"
                   id="ec2_email"
                   value={person.ec2_email}
