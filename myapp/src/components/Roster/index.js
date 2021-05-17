@@ -5,7 +5,7 @@ import profileSilhouette from '../../assets/profileSilhouette.png';
 import {
   TeamRoster, RosterList, RosterListCard, RosterListCardHeader,
   RosterListCardName, RosterListCardPosition, RosterListToggle,
-  RosterBodySection, DeleteMemberButton,
+  RosterBodySection, DeleteMemberButton, RosterListCardBody,
 } from './RosterElements';
 
 function Roster({ characterData, removeCharacter }) {
@@ -33,7 +33,7 @@ function Roster({ characterData, removeCharacter }) {
             </RosterListCardHeader>
 
             <RosterList.Collapse eventKey={row._id}>
-              <RosterListCard.Body>
+              <RosterListCardBody>
                 <RosterListCard.Text>
                   <RosterBodySection>
                     <b>Email: </b>
@@ -61,7 +61,7 @@ function Roster({ characterData, removeCharacter }) {
                     </Button>
                   </DeleteMemberButton>
                 </RosterListCard.Text>
-              </RosterListCard.Body>
+              </RosterListCardBody>
             </RosterList.Collapse>
           </RosterListCard>
         </RosterList>
