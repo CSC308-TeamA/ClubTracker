@@ -45,3 +45,18 @@ export const genders = [
   { id: 2, name: 'Male' },
   { id: 3, name: 'Other' },
 ];
+
+export const errorMap = {
+  member_first_name: 'Member\'s First Name',
+  member_last_name: 'Member\'s Last Name',
+  member_email: 'Member\'s Email',
+  member_cell_number: 'Member\'s Cell Number',
+  member_status: 'Member\'s Status',
+  member_position: 'Member\'s Position',
+  ec1_name: '(First) Emergency Contact\'s Name',
+  ec1_email: '(First) Emergency Contact\'s Email',
+  ec1_phone_number: '(First) Emergency Contact\'s Phone Number',
+  ec1_relation_to_member: '(First) Emergency Contact\'s Relationship to Member',
+  ec2_email: '(Second) Emergency Contact\'s Email',
+  ec2_phone_number: '(Second) Emergency Contact\'s Phone Number',
+};

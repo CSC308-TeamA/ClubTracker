@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form, Row, Col, Button,
+  Alert, Button, Form, Row, Col,
 } from 'react-bootstrap';
 import {
   AddUserButton, AddUserModal, Title, FirstSection, Section, AddUserLabel,
@@ -10,7 +10,7 @@ import {
   SubmitButton,
 } from './AddUserFormElements';
 import {
-  status, positions, grades, shirtSizes, genders,
+  status, positions, grades, shirtSizes, genders, errorMap,
 } from './AddUserFormProperties';
 
 function AddUserForm({ handleSubmit }) {
@@ -39,9 +39,9 @@ function AddUserForm({ handleSubmit }) {
     ec2_relation_to_member: '',
   });
 
-  // const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const [show, setShow] = useState(false);
-
+  const [showError, setShowError] = useState(false);
   const [statusValue, setStatusValue] = useState('0');
 
   const [specializations, setSpecializations] = useState({
@@ -56,6 +56,28 @@ function AddUserForm({ handleSubmit }) {
     'Pit Crew': false,
     Scouting: false,
     Other: false,
+  });
+
+  const [requiredInfo, setRequiredInfo] = useState({
+    member_first_name: false,
+    member_last_name: false,
+    member_email: false,
+    member_cell_number: false,
+    member_status: false,
+    member_position: false,
+    ec1_name: false,
+    ec1_email: false,
+    ec1_phone_number: false,
+    ec1_relation_to_member: false,
+  });
+
+  const [requiredValidForm, setRequiredValidForm] = useState({
+    member_email: false,
+    member_cell_number: false,
+    ec1_email: false,
+    ec1_phone_number: false,
+    ec2_email: false,
+    ec2_phone_number: false,
   });
 
   function handleShow() {
@@ -86,9 +108,33 @@ function AddUserForm({ handleSubmit }) {
     setSpecializations(temp);
   }
 
+  function resetValidation() {
+    setRequiredInfo({
+      member_first_name: false,
+      member_last_name: false,
+      member_email: false,
+      member_cell_number: false,
+      member_status: false,
+      member_position: false,
+      ec1_name: false,
+      ec1_email: false,
+      ec1_phone_number: false,
+      ec1_relation_to_member: false,
+    });
+    setRequiredValidForm({
+      member_email: false,
+      member_cell_number: false,
+      ec1_email: false,
+      ec1_phone_number: false,
+      ec2_email: false,
+      ec2_phone_number: false,
+    });
+  }
+
   function handleClose() {
-    // setValidated(false);
+    setValidated(false);
     setShow(false);
+    setStatusValue('0');
     setPerson({
       member_first_name: '',
       member_last_name: '',
@@ -113,23 +159,100 @@ function AddUserForm({ handleSubmit }) {
       ec2_phone_number: '',
       ec2_relation_to_member: '',
     });
+    setSpecializations({
+      Assembly: false,
+      Business: false,
+      Design: false,
+      'Drive Team': false,
+      Electronics: false,
+      Fabrication: false,
+      Media: false,
+      Programming: false,
+      'Pit Crew': false,
+      Scouting: false,
+      Other: false,
+    });
+    resetValidation();
+    setShowError(false);
   }
 
-  function checkValid() {
-    // Implement Validity check here (part of next story)
-    const isValid = true;
+  function checkRequiredInfo() {
+    const temp = { ...requiredInfo };
+    const requiredKeys = Object.keys(requiredInfo);
+    let isValid = true;
+
+    requiredKeys.forEach((requirement) => {
+      if ((person[requirement] !== '') || (person[requirement].trim() !== '')) {
+        temp[requirement] = true;
+      } else {
+        isValid = false;
+      }
+    });
+
+    setRequiredInfo(temp);
     return isValid;
   }
 
-  function submitForm() {
-    if (checkValid() === false) {
-      // Change elements to color red or have a note pop up
-      // Part of next story
+  function checkRequiredValidForm() {
+    const temp = { ...requiredValidForm };
+    const validFormKeys = Object.keys(requiredValidForm);
+    let isValid = true;
+
+    validFormKeys.forEach((form) => {
+      const inputValue = person[form];
+
+      if (form.includes('email')) {
+        if ((inputValue.split('@').length > 1) && (inputValue.slice(-4) === '.com')) {
+          temp[form] = true;
+        } else {
+          isValid = false;
+        }
+      } else if (form.includes('number')) {
+        const phoneNum = inputValue.split('-');
+
+        if (inputValue.split('-').length === 3) {
+          if ((phoneNum[0].length === 3) && (phoneNum[1].length === 3)
+          && (phoneNum[2].length === 4) && (!phoneNum[0].isNaN())
+          && (!phoneNum[1].isNaN()) && (!phoneNum[2].isNaN())) {
+            temp[form] = true;
+          } else {
+            isValid = false;
+          }
+        } else {
+          isValid = false;
+        }
+      }
+    });
+
+    setRequiredValidForm(temp);
+    return isValid;
+  }
+
+  function checkValid() {
+    resetValidation();
+
+    const enteredAllInfo = checkRequiredInfo();
+    const allValidForm = checkRequiredValidForm();
+
+    if (enteredAllInfo && allValidForm) {
+      setValidated(true);
+      return true;
     }
 
-    // setValidated(true);
+    setShowError(true);
+    return false;
+  }
 
-    if (checkValid() === true) {
+  function submitForm() {
+    const isValid = checkValid();
+
+    if (isValid === false && validated === false) {
+      const element = document.getElementById('AddUserModal');
+      element.scrollIntoView(true);
+      return;
+    }
+
+    if (isValid === true && validated === true) {
       Object.keys(specializations).forEach((sp) => {
         if (specializations[sp]) {
           person.member_specialization.push(sp);
@@ -148,6 +271,7 @@ function AddUserForm({ handleSubmit }) {
       </AddUserButton>
 
       <AddUserModal
+        id="AddUserModal"
         size="lg"
         show={show}
         onHide={handleClose}
@@ -162,7 +286,57 @@ function AddUserForm({ handleSubmit }) {
         </AddUserModal.Header>
 
         <AddUserModal.Body>
-          <Form onSubmit={submitForm}>
+          {/* ALERT HERE */}
+          <Alert show={showError} variant="danger" onClose={() => setShowError(false)} dismissible>
+            Please fix the following errors:
+            {Object.entries(requiredInfo).map((required) => (
+              !required[1]
+                ? (
+                  <div>
+                    Please enter an input for
+                    <b>
+                      &nbsp;
+                      &apos;
+                      {errorMap[required[0]]}
+                      &apos;
+                    </b>
+                  </div>
+                )
+                : ''
+            ))}
+            {Object.entries(requiredValidForm).map((required) => {
+              if (!required[1]) {
+                if (required[0].includes('email')) {
+                  return (
+                    <div>
+                      Invalid form for
+                      <b>
+                        &nbsp;
+                        &apos;
+                        {errorMap[required[0]]}
+                        &apos;
+                      </b>
+                      . Must be email@email.com
+                    </div>
+                  );
+                }
+                return (
+                  <div>
+                    Invalid form for
+                    <b>
+                      &nbsp;
+                      &apos;
+                      {errorMap[required[0]]}
+                      &apos;
+                    </b>
+                    . Must be ###-###-####
+                  </div>
+                );
+              }
+              return ('');
+            })}
+          </Alert>
+          <Form>
             <FirstSection>Member Information</FirstSection>
             <Form.Group as={Row}>
               <Col>
@@ -171,7 +345,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="member_first_name"
                   id="member_first_name"
-                  value={person.member_first_name}
+                  value={person.member_first_name.trim()}
                   placeholder="John"
                   onChange={handleChange}
                 />
@@ -196,7 +370,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="member_last_name"
                   id="member_last_name"
-                  value={person.member_last_name}
+                  value={person.member_last_name.trim()}
                   placeholder="Doe"
                   onChange={handleChange}
                 />
@@ -223,7 +397,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="member_email"
                   id="member_email"
-                  value={person.member_email}
+                  value={person.member_email.trim()}
                   placeholder="email@email.com"
                   onChange={handleChange}
                 />
@@ -249,7 +423,7 @@ function AddUserForm({ handleSubmit }) {
                   type="texr"
                   name="member_cell_number"
                   id="member_cell_number"
-                  value={person.member_cell_number}
+                  value={person.member_cell_number.trim()}
                   placeholder="555-555-5555"
                   onChange={handleChange}
                 />
@@ -266,7 +440,7 @@ function AddUserForm({ handleSubmit }) {
                       key={s.id}
                       inline
                       type="radio"
-                      name="Status"
+                      name="member_status"
                       id={`radio${s.id}`}
                       value={s.name}
                       checked={statusValue === s.name}
@@ -425,7 +599,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="ec1_relation_to_member"
                   id="ec1_relation_to_member"
-                  value={person.ec1_relation_to_member}
+                  value={person.ec1_relation_to_member.trim()}
                   placeholder="Parent"
                   onChange={handleChange}
                 />
@@ -436,10 +610,10 @@ function AddUserForm({ handleSubmit }) {
               <Col>
                 <AddUserLabel> Email </AddUserLabel>
                 <Form.Control
-                  type="text"
+                  type="email"
                   name="ec1_email"
                   id="ec1_email"
-                  value={person.ec1_email}
+                  value={person.ec1_email.trim()}
                   placeholder="email@email.com"
                   onChange={handleChange}
                 />
@@ -451,7 +625,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="ec1_phone_number"
                   id="ec1_phone_number"
-                  value={person.ec1_phone_number}
+                  value={person.ec1_phone_number.trim()}
                   placeholder="555-555-5555"
                   onChange={handleChange}
                 />
@@ -478,7 +652,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="ec2_relation_to_member"
                   id="ec2_relation_to_member"
-                  value={person.ec2_relation_to_member}
+                  value={person.ec2_relation_to_member.trim()}
                   placeholder="Parent"
                   onChange={handleChange}
                 />
@@ -489,10 +663,10 @@ function AddUserForm({ handleSubmit }) {
               <Col>
                 <AddUserLabel> Email </AddUserLabel>
                 <Form.Control
-                  type="text"
+                  type="email"
                   name="ec2_email"
                   id="ec2_email"
-                  value={person.ec2_email}
+                  value={person.ec2_email.trim()}
                   placeholder="email@email.com"
                   onChange={handleChange}
                 />
@@ -504,7 +678,7 @@ function AddUserForm({ handleSubmit }) {
                   type="text"
                   name="ec2_phone_number"
                   id="ec2_phone_number"
-                  value={person.ec2_phone_number}
+                  value={person.ec2_phone_number.trim()}
                   placeholder="555-555-5555"
                   onChange={handleChange}
                 />
@@ -512,7 +686,7 @@ function AddUserForm({ handleSubmit }) {
             </Form.Group>
 
             <SubmitButton>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" onClick={submitForm}>
                 Submit
               </Button>
             </SubmitButton>
