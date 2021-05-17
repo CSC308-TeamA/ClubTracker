@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
 import {
-  FilterForm,
-  FilterFormRow,
-  FilterFormGroup,
-  FilterButton,
+  FilterForm, FilterFormRow, FilterFormGroup, FilterButton,
 } from './FilterElements';
+import {
+  status, positions, specializations,
+} from './FilterProperties';
 
 function Filter(props) {
   const [field, setField] = useState(
     {
       name: '',
-      stat: '',
-      role: '',
-      // posit: '',
-      special: '',
+      member_status: '',
+      position: '',
+      specialization: '',
     },
   );
 
@@ -34,11 +33,12 @@ function Filter(props) {
   return (
     <FilterForm>
       <FilterFormRow>
+        {/* NEED TO FIX FOR FIRST AND LAST NAME */}
         <FilterFormGroup as={Col} controlId="formBasicPassword">
           <FilterForm.Label htmlFor="name">
             Name
           </FilterForm.Label>
-          <input
+          <FilterForm.Control
             type="text"
             name="name"
             value={field.name}
@@ -50,44 +50,66 @@ function Filter(props) {
           <FilterForm.Label htmlFor="stat">
             Status
           </FilterForm.Label>
-          <select name="stat" id="stat" onChange={handleChange}>
-            <option value="">Any</option>
-            <option value="Pending">Pending</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
+          <FilterForm.Control
+            as="select"
+            defaultValue=""
+            name="member_status"
+            onChange={handleChange}
+          >
+            {status.map((s) => (
+              <option
+                key={s.id}
+                value={s.value}
+                id={s.id}
+              >
+                {s.name}
+              </option>
+            ))}
+          </FilterForm.Control>
         </FilterFormGroup>
 
         <FilterFormGroup as={Col} controlId="formBasicPassword">
-          <FilterForm.Label htmlFor="role">
-            Role
+          <FilterForm.Label htmlFor="position">
+            Position
           </FilterForm.Label>
-          <select name="role" id="role" onChange={handleChange}>
-            <option value="">Any</option>
-            <option value="Member">Member</option>
-            <option value="Officer">Officer</option>
-            <option value="Advisor">Advisor</option>
-          </select>
+          <FilterForm.Control
+            as="select"
+            defaultValue=""
+            name="position"
+            onChange={handleChange}
+          >
+            {positions.map((p) => (
+              <option
+                key={p.id}
+                value={p.value}
+                id={p.id}
+              >
+                {p.name}
+              </option>
+            ))}
+          </FilterForm.Control>
         </FilterFormGroup>
 
         <FilterFormGroup as={Col} controlId="formBasicPassword">
           <FilterForm.Label htmlFor="special">
             Specialization
           </FilterForm.Label>
-          <select name="special" id="special" onChange={handleChange}>
-            <option value="">Any</option>
-            <option value="Design">Design</option>
-            <option value="Fabrication">Fabrication</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Assembly">Assembly</option>
-            <option value="Programming">Programming</option>
-            <option value="Media">Media</option>
-            <option value="Business">Business</option>
-            <option value="Scouting">Scouting</option>
-            <option value="Pit Crew">Pit Crew</option>
-            <option value="Drive Team">Drive Team</option>
-            <option value="Other">Other</option>
-          </select>
+          <FilterForm.Control
+            as="select"
+            defaultValue=""
+            name="specialization"
+            onChange={handleChange}
+          >
+            {specializations.map((spec) => (
+              <option
+                key={spec.id}
+                value={spec.value}
+                id={spec.id}
+              >
+                {spec.name}
+              </option>
+            ))}
+          </FilterForm.Control>
         </FilterFormGroup>
 
         <FilterFormGroup>

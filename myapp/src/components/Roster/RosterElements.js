@@ -15,10 +15,20 @@ export const RosterList = styled(Accordion)`
 export const RosterListCard = styled(Card)`
   width: 18rem;
   color: black;
+
+  &collapse {
+    height: 340px;
+  };
 `;
 
 export const RosterListCardHeader = styled(Card.Header)`
   text-align: center;
+  height: 340px;
+`;
+
+export const RosterListCardBody = styled(Card.Body)`
+  max-height: 300px;
+  overflow-y: scroll;
 `;
 
 export const RosterListCardName = styled(Card.Title)`
@@ -40,6 +50,7 @@ export const RosterListToggle = styled(Accordion.Toggle)`
 
   background-color: rgba(0, 0, 0, 0.03);
   border-color: rgba(0, 0, 0, 0.03);
+  height: 315px;
 `;
 
 export const RosterBodySection = styled.div`
@@ -48,6 +59,4 @@ export const RosterBodySection = styled.div`
 
 export const DeleteMemberButton = styled.div`
   margin-top: 15px;
-  display: flex;  
-  justify-content: center;
 `;

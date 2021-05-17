@@ -68,7 +68,7 @@ class User:
 
         return self.client.get_database("TeamProj").get_collection(name)
 
-    def find_by_filter(self, filters, collection):
+    def find_by_filter(self, filters, collection, single_name):
         '''
         Returns the documents in a collection, filtered by user inputted criteria.
 
@@ -85,6 +85,13 @@ class User:
         '''
 
         users = list(collection.find(filters))
+
+        if single_name is not None:
+            temp = list()
+            for user in users:
+                if (single_name in user["member_first_name"]) or (single_name in user["member_last_name"]):
+                    temp.append(user)
+            users = temp
 
         for user in users:
             user["_id"] = str(user["_id"])
@@ -163,23 +170,32 @@ def get_team_roster():
 
     if request.method == 'GET':
         name = request.args.get('name')
-        status = request.args.get('status')
-        role = request.args.get('role')
+        status = request.args.get('member_status')
+        position = request.args.get('position')
         specialization = request.args.get('specialization')
 
+        single_name = None
         filters = {}
         if name is not None:
-            filters['name'] = {'$regex': f'{name}', '$options': 'i'}
+            split_names = name.split()
+
+            if len(split_names) == 2:
+                filters['member_first_name'] = {'$regex': f'{split_names[0]}', '$options': 'i'}
+                filters['member_last_name'] = {'$regex': f'{split_names[1]}', '$options': 'i'}
+                single_name = None
+            else:
+                single_name = split_names[0]
+
         if status is not None:
-            filters['status'] = status
-        if role is not None:
-            filters['role'] = role
+            filters['member_status'] = status
+        if position is not None:
+            filters['member_position'] = position
         if specialization is not None:
-            filters['specialization'] = specialization
+            filters['member_specialization'] = {'$in': [f'{specialization}']}
 
         resp = jsonify(
             User.find_by_filter(
-                User, filters, collection
+                User, filters, collection, single_name
             )
         )
         resp.status_code = 201
