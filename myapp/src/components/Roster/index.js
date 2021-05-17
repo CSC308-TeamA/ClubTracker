@@ -3,15 +3,9 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import profileSilhouette from '../../assets/profileSilhouette.png';
 import {
-  TeamRoster,
-  RosterList,
-  RosterListCard,
-  RosterListCardHeader,
-  RosterListCardName,
-  RosterListCardPosition,
-  RosterListToggle,
-  RosterBodySection,
-  DeleteMemberButton,
+  TeamRoster, RosterList, RosterListCard, RosterListCardHeader,
+  RosterListCardName, RosterListCardPosition, RosterListToggle,
+  RosterBodySection, DeleteMemberButton,
 } from './RosterElements';
 
 function Roster({ characterData, removeCharacter }) {
