@@ -51,14 +51,6 @@ function Roster({ characterData, removeCharacter }) {
                     <b>Specialization(s): </b>
                     {row.member_specialization ? row.member_specialization.join(', ') : ''}
                   </RosterBodySection>
-
-                  {/* {row.member_specialization.length > 0
-                    ? (
-                      <div>
-                        <b>Specialization(s): </b>
-                        {row.member_specialization.join(', ')}
-                      </div>
-                    ) : ''} */}
                   <RosterBodySection>
                     <b>Quote: </b>
                     {row.member_quote ? row.member_quote : ''}
