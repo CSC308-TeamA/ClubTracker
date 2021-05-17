@@ -165,7 +165,6 @@ def get_team_roster():
         name = request.args.get('name')
         status = request.args.get('status')
         role = request.args.get('role')
-        # position = request.args.get('position')
         specialization = request.args.get('specialization')
 
         filters = {}
@@ -175,8 +174,6 @@ def get_team_roster():
             filters['status'] = status
         if role is not None:
             filters['role'] = role
-        # if position is not None:
-        #     filters['position'] = position
         if specialization is not None:
             filters['specialization'] = specialization
 
