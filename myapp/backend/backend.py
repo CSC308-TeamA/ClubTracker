@@ -40,6 +40,8 @@ class User(Model):
   #client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
   
   def get_collection(name):
+    if(not User.check_for_collection(name)):
+      return None
     client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
     collection = client.get_database("TeamProj").get_collection(name)
     return collection
@@ -54,26 +56,54 @@ class User(Model):
   def delete_collection(name):
     client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
     try:
-      print("trying to delete")
       return client.get_database("TeamProj").drop_collection(name)
     except pymongo.errors.OperationFailure:
-      print("Invalid Delete")
       return None
-    
 
-  def add_post(self, posttoAdd, board):
-    collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
-    if (collection.find_one() == None):
+  def check_for_collection(name):
+    client = pymongo.MongoClient("mongodb+srv://TeamProjAdmin:teamproject308@cluster0.3xlma.mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true")
+    if(client.get_database("TeamProj").list_collection_names(filter = {"name": name}) != None):
+      return True
+    return False
+    
+  def id_to_string_post(retPost):
+    retPost['_id'] = str(retPost['_id'])
+    retPost['user'] = str(retPost['user'])
+    for reply in retPost['replies']:
+      reply['_id'] = str(reply['_id'])
+      reply['user'] = str(reply['user'])
+    return retPost
+
+  def add_post(posttoAdd, board):
+    if(not User.check_for_collection(board)):
       return None
+    collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
     posttoAdd['date'] = datetime.datetime.utcnow()
     posttoAdd['user'] = ObjectId(posttoAdd['user'])
+    posttoAdd['replies'] = []
     retID = collection.insert_one(posttoAdd)
-    print(posttoAdd)
     posttoAdd['_id'] = str(retID.inserted_id)
-    posttoAdd['user'] = str(posttoAdd['user'])
+    posttoAdd = User.id_to_string_post(posttoAdd)
     return posttoAdd
 
-  def add_thread(self, threadtoAdd):
+  def reply_to_post(posttoAdd, toReplyTo, board):
+    if(not User.check_for_collection(board)):
+      return None
+    collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
+    posttoAdd['date'] = datetime.datetime.utcnow()
+    posttoAdd['user'] = ObjectId(posttoAdd['user'])
+    retPost = collection.find_one_and_update(
+      {'user': toReplyTo['user'], 'date': toReplyTo['date']},
+      {'$push': 
+        {'replies': posttoAdd}
+      },
+      upsert=True,
+      return_document=ReturnDocument.AFTER
+    )
+    retPost = User.id_to_string_post(retPost)
+    return retPost
+
+  def add_thread(threadtoAdd):
     groupName = threadtoAdd['groupName']
     threads = threadtoAdd['threads']
     collection = User.get_collection('Discussion_Index')
@@ -83,6 +113,30 @@ class User(Model):
       thread['url'] = urllib.parse.quote(thread['name'], safe='')
       thread['numPosts']  = 0
       thread['dateCreated'] = datetime.datetime.utcnow()
+      thread['lastModified'] = datetime.datetime.utcnow()
+      if(User.create_collection("Discussion_" + thread['url']) != None):
+        out.append(collection.find_one_and_update(
+          {'groupName': groupName},
+          {'$push': 
+            { 'threads' : thread}
+          },
+          upsert=True,
+          return_document=ReturnDocument.AFTER
+        ))
+      else:
+        return None
+    for thread in out:
+      thread['_id'] = str(thread['_id'])
+    return out
+
+  def update_thread(threadtoUpdate):
+    groupName = threadtoUpdate['groupName']
+    threads = threadtoUpdate['threads']
+    collection = User.get_collection('Discussion_Index')
+    group = collection.find({'groupName': groupName})
+    out = list()
+    for thread in threads:
+      thread['url'] = urllib.parse.quote(thread['name'], safe='')
       thread['lastModified'] = datetime.datetime.utcnow()
       if(User.create_collection("Discussion_" + thread['url']) != None):
         out.append(collection.find_one_and_update(
@@ -116,6 +170,14 @@ class User(Model):
       if(collection.find_one({'groupName': groupName})['threads'] == []):
         collection.find_one_and_delete({'groupName': groupName})
     return out
+
+    def remove_post(post, board):
+      collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
+      if (collection.find_one() == None):
+        return None
+      retID = collection.delete_one({'_id' : posttoAdd['_id']})
+      
+      return posttoAdd
 
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
@@ -213,7 +275,7 @@ def get_team_roster():
     else :
       return jsonify({"error": "User not found"}), 404
 
-@app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion_board(board):
   if request.method == 'GET':
     resp = User.get_thread(User, board)
@@ -226,7 +288,7 @@ def discussion_board(board):
 
   elif request.method == 'POST':
     posttoAdd = request.get_json()
-    resp = User.add_post(User, posttoAdd, board)
+    resp = User.add_post(posttoAdd, board)
     if resp == None:
       return jsonify({"error": "Thread not found"}), 404
 
@@ -241,7 +303,10 @@ def discussion_board(board):
     else:
       return jsonify({"error": "Post not found"}), 404
 
-@app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
+  elif request.method == 'PUT' :
+    return None
+
+@app.route('/discussion', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def discussion():
   if request.method == 'GET':
     resp = jsonify(User.get_discussion_index(User))
@@ -273,5 +338,6 @@ def discussion():
       return thread
     else :
       return jsonify({"error": "Thread not found"}), 404
-    
-  return None
+
+  elif request.method == 'PUT' :
+    return None
