@@ -8,7 +8,7 @@ import {
   status, positions, specializations,
 } from './FilterProperties';
 
-function Filter(props) {
+function Filter({ handleSubmit }) {
   const [field, setField] = useState(
     {
       name: '',
@@ -27,13 +27,12 @@ function Filter(props) {
   }
 
   function submitForm() {
-    props.handleSubmit(field);
+    handleSubmit(field);
   }
 
   return (
     <FilterForm>
       <FilterFormRow>
-        {/* NEED TO FIX FOR FIRST AND LAST NAME */}
         <FilterFormGroup as={Col} controlId="formBasicPassword">
           <FilterForm.Label htmlFor="name">
             Name
