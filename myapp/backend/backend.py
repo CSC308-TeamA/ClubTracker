@@ -173,29 +173,11 @@ def get_team_roster():
         status = request.args.get('member_status')
         position = request.args.get('position')
         specialization = request.args.get('specialization')
-
-        single_name = None
-        filters = {}
-        if name is not None:
-            split_names = name.split()
-
-            if len(split_names) == 2:
-                filters['member_first_name'] = {'$regex': f'{split_names[0]}', '$options': 'i'}
-                filters['member_last_name'] = {'$regex': f'{split_names[1]}', '$options': 'i'}
-                single_name = None
-            else:
-                single_name = split_names[0]
-
-        if status is not None:
-            filters['member_status'] = status
-        if position is not None:
-            filters['member_position'] = position
-        if specialization is not None:
-            filters['member_specialization'] = {'$in': [f'{specialization}']}
+        filters = roster_get_link_parse(name, status, position, specialization)
 
         resp = jsonify(
             User.find_by_filter(
-                User, filters, collection, single_name
+                User, filters[0], collection, filters[1]
             )
         )
         resp.status_code = 201
@@ -218,6 +200,30 @@ def get_team_roster():
             resp.status_code = 404
 
     return resp
+
+
+def roster_get_link_parse(name, status, position, specialization):
+    filters = {}
+
+    single_name = None
+    if name is not None:
+        split_names = name.split()
+
+        if len(split_names) == 2:
+            filters['member_first_name'] = {'$regex': f'{split_names[0]}', '$options': 'i'}
+            filters['member_last_name'] = {'$regex': f'{split_names[1]}', '$options': 'i'}
+            single_name = None
+        else:
+            single_name = split_names[0]
+
+    if status is not None:
+        filters['member_status'] = status
+    if position is not None:
+        filters['member_position'] = position
+    if specialization is not None:
+        filters['member_specialization'] = {'$in': [f'{specialization}']}
+
+    return filters, single_name
 
 
 @app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE'])
