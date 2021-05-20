@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import websiteBanner from '../../assets/websiteBanner.jpg';
 import Filter from '../../components/Filter/index';
-import AddUserForm from '../../components/AddUserForm/index';
+import RosterAdminOptions from '../../components/RosterAdminOptions/index';
 import Roster from '../../components/Roster';
 import Padding from '../../components/Padding';
 import Banner from './TeamRosterPageElements';
@@ -92,8 +92,11 @@ function TeamRoster() {
     <div>
       <Padding />
       <Banner src={websiteBanner} alt="website banner" />
-      <AddUserForm handleSubmit={updateRoster} />
-      <Filter handleSubmit={updatePage} />
+      <RosterAdminOptions
+        handleSubmit={updateRoster}
+        characterData={characters}
+      />
+      <Filter handleSubmit={updatePage} characterData={characters} />
       <Roster characterData={characters} removeCharacter={removeCharacter} />
     </div>
   );
