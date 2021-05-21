@@ -170,13 +170,13 @@ class User(Model):
         collection.find_one_and_delete({'groupName': groupName})
     return out
 
-    def remove_post(post, board):
-      collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
-      if (collection.find_one() == None):
-        return None
-      retID = collection.delete_one({'_id' : posttoAdd['_id']})
-      
-      return posttoAdd
+  def remove_post(post, board):
+    collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
+    if (collection.find_one() == None):
+      return None
+    retID = collection.delete_one({'_id' : posttoAdd['_id']})
+
+    return posttoAdd
 
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
@@ -277,7 +277,7 @@ def get_team_roster():
 @app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion_board(board):
   if request.method == 'GET':
-    resp = User.get_thread(board)
+    resp = User.get_thread(User, board)
     if resp == None:
       return jsonify({"error": "Thread not found"}), 404
 
@@ -297,7 +297,7 @@ def discussion_board(board):
 
   elif request.method == 'DELETE' :
     post = request.get_json()
-    if User.remove_post(post) :
+    if User.remove_post(post, board) :
       return post
     else:
       return jsonify({"error": "Post not found"}), 404

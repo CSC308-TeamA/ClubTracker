@@ -57,6 +57,18 @@ function CreateBoard(props) {
   }
 
   function postThread(thread) {
+    if (thread.groupName == "") {
+      alert("Please enter a group name");
+      return;
+    }
+    if (thread.name == "") {
+      alert("Please enter a thread name");
+      return;
+    }
+    if (thread.description == "") {
+      alert("Please enter a description");
+      return;
+    }
     makePostCall(thread).then(result => {
       if (result) {
         console.log(result);

@@ -33,6 +33,21 @@ function ThreadPage(props) {
     }
   }
 
+  async function makeDeleteCall(post) {
+    try {
+      const response = await axios.delete('http://localhost:5000/discussion/' + thread,
+        {
+          data: post
+        }
+      );
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   useEffect(() => {
     fetch().then(result => {
       if (result) {
@@ -51,9 +66,15 @@ function ThreadPage(props) {
     });
   }
 
-  function removePost(index) {
-    const updated = posts.filter((post, i) => i != index);
-    setPosts(updated);
+  function deletePost(post) {
+    console.log(post);
+    makeDeleteCall(post).then(result => {
+      if (result) {
+        fetch().then(result => {
+          setPosts(result);
+        });
+      }
+    });
   }
 
   return (
@@ -62,7 +83,7 @@ function ThreadPage(props) {
       <Padding />
       <Thread
         postData = {posts}
-        removePost = {removePost}
+        removePost = {deletePost}
       />
       <Form handleSubmit={createPost} />
     </>

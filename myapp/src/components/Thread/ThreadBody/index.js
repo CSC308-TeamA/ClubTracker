@@ -20,7 +20,7 @@ function ThreadBody(props) {
             {row.post}
           </DescriptionText>
           <Edit>
-            <button onClick={() => props.removePost(index)}>Delete</button>
+            <button onClick={() => props.removePost(row)}>Delete</button>
           </Edit>
         </Card.Body>
       </>
