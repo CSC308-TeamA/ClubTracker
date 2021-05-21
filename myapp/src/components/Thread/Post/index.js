@@ -7,10 +7,11 @@ import {
 } from './PostElements';
 
 function Post(props) {
+  // Put in a get request to get user info
   return (
     <>
       <UserInfo>
-        <p>{props.name}</p>
+        <Username>{props.user}</Username>
       </UserInfo>
     </>
   );

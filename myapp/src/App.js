@@ -45,7 +45,7 @@ class App extends Component {
               <Route path="/pictures" component={Pictures} />
 
               <Route exact path="/discussion" component={DiscussionBoard} />
-              <Route path="/create_board" component={CreateBoard} />
+              <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
               <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
             </Switch>
           </Layout>

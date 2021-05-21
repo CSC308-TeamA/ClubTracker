@@ -18,6 +18,14 @@ function DiscussionBoard() {
     }
   }
 
+  useEffect(() => {
+    fetch().then(result => {
+      if (result) {
+        setGroups(result);
+      }
+    });
+  }, []);
+
   async function makeDeleteCall(thread) {
     try {
       const response = await axios.delete('http://localhost:5000/discussion',
@@ -32,14 +40,6 @@ function DiscussionBoard() {
       return false;
     }
   }
-
-  useEffect(() => {
-    fetch().then(result => {
-      if (result) {
-        setGroups(result);
-      }
-    });
-  }, []);
 
   function updatePage() {
     fetch().then(result => {

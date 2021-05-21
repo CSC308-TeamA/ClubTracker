@@ -5,27 +5,55 @@ import Thread from '../../components/Thread/Thread';
 import Form from '../../components/Thread/Form';
 import Padding from '../../components/Padding';
 import './thread.css';
-import pfp1 from '../../assets/profiles/pfp1.gif';
-import pfp2 from '../../assets/profiles/pfp2.gif';
-import pfp3 from '../../assets/profiles/pfp3.gif';
 
 function ThreadPage(props) {
   const thread = props.match.params.thread;
 
-  const [posts, setPosts] = useState([
-    {
-      user: "objectId",
-      date: "date",
-      post: "I am saying this on a thread!"
-    },
-    {
-      user: "objectId#2",
-      date: "date",
-      post: "No way! Me too!"
-    }
-  ]);
+  const [posts, setPosts] = useState([]);
 
-  function removePost() {
+  async function fetch() {
+    try {
+      const response = await axios.get("http://localhost:5000/discussion/" + thread);
+      return response.data;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async function makePostCall(post) {
+    try {
+      const response = await axios.post('http://localhost:5000/discussion/' + thread, post);
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetch().then(result => {
+      if (result) {
+        setPosts(result);
+      }
+    });
+  }, []);
+
+  function createPost(post) {
+    makePostCall(post).then(result => {
+      if (result) {
+        fetch().then(result => {
+          setPosts(result);
+        });
+      }
+    });
+  }
+
+  function removePost(index) {
+    const updated = posts.filter((post, i) => i != index);
+    setPosts(updated);
   }
 
   return (
@@ -36,6 +64,7 @@ function ThreadPage(props) {
         postData = {posts}
         removePost = {removePost}
       />
+      <Form handleSubmit={createPost} />
     </>
   );
 }

@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import axios from "axios";
+//import {Redirect} from "react-router-dom";
 import Padding from "../../components/Padding";
 import {Form as BootStrapForm, Col} from "react-bootstrap";
 import {NewCard} from "./BoardElements.js";
 
-function CreateBoard() {
+function CreateBoard(props) {
   const [board, setBoard] = useState(
     {
       groupName: "",

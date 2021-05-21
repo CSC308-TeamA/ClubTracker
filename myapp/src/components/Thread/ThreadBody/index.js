@@ -14,7 +14,7 @@ function ThreadBody(props) {
       <>
         <Card.Body>
           <ProfileLeft>
-            <Post name={row.name} />
+            <Post user={row.user} />
           </ProfileLeft>
           <DescriptionText>
             {row.post}
