@@ -15,14 +15,26 @@ function Cards(props) {
         <>
           <ThreadCard>
             <Card.Body>
-              <NavLink to={"discussion/" + thread.url}>
-                <TitleText>
-                  {thread.name}
-                </TitleText>
-              </NavLink>
-              <DescriptionText>
-                {thread.description}
-              </DescriptionText>
+              <table>
+                <tr>
+                  <td>
+                    <NavLink to={"discussion/" + thread.url}>
+                      <TitleText>
+                        {thread.name}
+                      </TitleText>
+                    </NavLink>
+                    <DescriptionText>
+                      {thread.description}
+                    </DescriptionText>
+                  </td>
+                  <td>
+                    <button onClick={() => props.deleteThread({
+                              groupName: group.groupName,
+                              threads: [thread]
+                            })}>Delete</button>
+                  </td>
+                </tr>
+              </table>
             </Card.Body>
           </ThreadCard>
         </>

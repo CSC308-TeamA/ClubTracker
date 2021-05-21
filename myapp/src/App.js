@@ -19,9 +19,9 @@ import SignUp from './pages/SignUpPage/';
 import { Pictures } from './pages/PicturePage';
 import { Layout } from './components/Layout';
 
-import DiscussionBoard from './pages/DiscussionBoard';
-import ThreadPage from './pages/ThreadPage';
-
+import DiscussionBoard from './pages/Discussion/DiscussionBoard';
+import CreateBoard from './pages/Discussion/CreateBoard';
+import ThreadPage from './pages/Thread/ThreadPage';
 
 
 
@@ -44,8 +44,8 @@ class App extends Component {
               <Route path="/first" component={First} />
               <Route path="/pictures" component={Pictures} />
 
-              
               <Route exact path="/discussion" component={DiscussionBoard} />
+              <Route path="/create_board" component={CreateBoard} />
               <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
             </Switch>
           </Layout>

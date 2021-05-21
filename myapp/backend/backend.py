@@ -152,7 +152,7 @@ class User(Model):
     for thread in out:
       thread['_id'] = str(thread['_id'])
     return out
-             
+
   def remove_thread(thread):
     groupName = thread['groupName']
     threads = thread['threads']
@@ -324,7 +324,7 @@ def discussion():
   # }
   elif request.method == 'POST':
     threadtoAdd = request.get_json()
-    resp = User.add_thread(User, threadtoAdd)
+    resp = User.add_thread(threadtoAdd)
     if resp == None:
       return jsonify({"error": "Thread already exists"}), 409
 
