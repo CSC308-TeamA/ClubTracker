@@ -133,7 +133,6 @@ class User(Model):
     groupName = threadtoUpdate['groupName']
     threads = threadtoUpdate['threads']
     collection = User.get_collection('Discussion_Index')
-    group = collection.find({'groupName': groupName})
     out = list()
     for thread in threads:
       thread['url'] = urllib.parse.quote(thread['name'], safe='')
@@ -208,7 +207,7 @@ class User(Model):
 
   def get_thread(self, thread):
     collection = User.get_collection('Discussion_' + urllib.parse.quote(thread))
-    if (collection.find_one() == None):
+    if (collection == None):
       return None
     posts = list(collection.find())
 
@@ -278,7 +277,7 @@ def get_team_roster():
 @app.route('/discussion/<string:board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion_board(board):
   if request.method == 'GET':
-    resp = User.get_thread(User, board)
+    resp = User.get_thread(board)
     if resp == None:
       return jsonify({"error": "Thread not found"}), 404
 
