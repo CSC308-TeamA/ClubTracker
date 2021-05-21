@@ -174,9 +174,8 @@ class User(Model):
     collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
     if (collection.find_one() == None):
       return None
-    retID = collection.delete_one({'_id' : posttoAdd['_id']})
-
-    return posttoAdd
+    retID = collection.delete_one({'_id' : post['_id']})
+    return post
 
   # print(collection)
   def find_by_filter(self, name, status, role, position, specialization):
