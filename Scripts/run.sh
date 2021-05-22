@@ -7,7 +7,7 @@ export FLASK_ENV=development
 echo 'STARTING BACKEND'
 exec ../../Scripts/startBackend.sh &
 
-cd ..
+cd ../
 
 echo 'STARTING FRONTEND'
 exec ../Scripts/startFrontend.sh &

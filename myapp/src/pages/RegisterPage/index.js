@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -83,7 +84,7 @@ const Register = () => {
 
     form.current.validateAll();
 
-    if (checkBtn.current.context.eerrors.length === 0) {
+    if (checkBtn.current.context._errors.length === 0) {
       dispatch(register(username, email, password))
         .then(() => {
           setSuccessful(true);

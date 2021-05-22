@@ -19,6 +19,7 @@ from bson import ObjectId
 app = Flask(__name__)
 CORS(app)
 
+
 class User:
     '''
     Class to represent a user
@@ -127,7 +128,7 @@ class User:
             resp = collection.delete_one({"_id": ObjectId(user_id)})
             count = resp.deleted_count
         return count
-
+        
 
 @app.route('/test')
 def hello_world():
