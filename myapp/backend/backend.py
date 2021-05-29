@@ -86,20 +86,21 @@ class User(Model):
     posttoAdd = User.id_to_string_post(posttoAdd)
     return posttoAdd
 
-  def reply_to_post(posttoAdd, toReplyTo, board):
+  def reply_to_post(toReplyTo, board):
     if(not User.check_for_collection(board)):
       return None
     collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
-    posttoAdd['date'] = datetime.datetime.utcnow()
-    posttoAdd['user'] = ObjectId(posttoAdd['user'])
-    retPost = collection.find_one_and_update(
-      {'user': toReplyTo['user'], 'date': toReplyTo['date']},
-      {'$push': 
-        {'replies': posttoAdd}
-      },
-      upsert=True,
-      return_document=ReturnDocument.AFTER
-    )
+    for posttoAdd in toReplyTo['replies']:
+      posttoAdd['date'] = datetime.datetime.utcnow()
+      posttoAdd['user'] = ObjectId(posttoAdd['user'])
+      retPost = collection.find_one_and_update(
+        {'_id': ObjectId(toReplyTo['_id'])},
+        {'$push': 
+          {'replies': posttoAdd}
+        },
+        upsert=True,
+        return_document=ReturnDocument.AFTER
+      )
     retPost = User.id_to_string_post(retPost)
     return retPost
 
@@ -129,34 +130,32 @@ class User(Model):
       thread['_id'] = str(thread['_id'])
     return out
 
-  def update_thread(threadtoUpdate):
-    groupName = threadtoUpdate['groupName']
-    threads = threadtoUpdate['threads']
+  def update_thread(board, thread):
     collection = User.get_collection('Discussion_Index')
-    out = list()
-    for thread in threads:
-      thread['url'] = urllib.parse.quote(thread['name'], safe='')
-      thread['lastModified'] = datetime.datetime.utcnow()
-      if(User.create_collection("Discussion_" + thread['url']) != None):
-        out.append(collection.find_one_and_update(
-          {'groupName': groupName},
-          {'$push': 
-            { 'threads' : thread}
-          },
-          upsert=True,
-          return_document=ReturnDocument.AFTER
-        ))
-      else:
-        return None
-    for thread in out:
-      thread['_id'] = str(thread['_id'])
-    return out
+    if(User.get_collection("Discussion_" + urllib.parse.quote(board)) != None):
+      collection.find_one_and_update(
+        {'groupName': thread['groupName']},
+        {'$push': 
+          {'threads': {'lastModified' : datetime.datetime.utcnow()}}
+        },
+        array_filters={'url' : urllib.parse.quote(board)},
+        return_document=ReturnDocument.AFTER
+      )
+      collection.find_one_and_update(
+        {'groupName': thread['groupName']},
+        {'$inc': 
+          {'threads': { 'numPosts' : 1}}
+        },
+        return_document=ReturnDocument.AFTER
+      )
+    else:
+      return None
+    return jsonify("" + thread['url'] + "Has been updated"), 204
 
   def remove_thread(thread):
     groupName = thread['groupName']
     threads = thread['threads']
     collection = User.get_collection('Discussion_Index')
-    group = collection.find({'groupName': groupName})
     out = list()
     for thread in threads:
       User.delete_collection("Discussion_" + thread['url'])
@@ -172,9 +171,9 @@ class User(Model):
 
   def remove_post(post, board):
     collection = User.get_collection('Discussion_' + urllib.parse.quote(board))
-    if (collection.find_one() == None):
+    if (collection == None):
       return None
-    retID = collection.delete_one({'_id' : post['_id']})
+    retID = collection.delete_one({'_id' : ObjectId(post['_id'])})
     return post
 
   # print(collection)
@@ -302,9 +301,21 @@ def discussion_board(board):
       return jsonify({"error": "Post not found"}), 404
 
   elif request.method == 'PUT' :
+    reply = request.get_json()
+    resp = User.reply_to_post(reply, board) 
+    if resp == None:
+      return jsonify({"error": "Thread or Post not found"}), 404
+
+    resp = jsonify(reply)
+    resp.status_code = 201
+    return resp
+
+  elif request.method == 'PATCH' :
+    thread =  request.get_json()
+    User.update_thread(board, thread)
     return None
 
-@app.route('/discussion', methods=['GET', 'POST', 'DELETE', 'PUT'])
+@app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
 def discussion():
   if request.method == 'GET':
     resp = jsonify(User.get_discussion_index(User))
@@ -336,6 +347,3 @@ def discussion():
       return thread
     else :
       return jsonify({"error": "Thread not found"}), 404
-
-  elif request.method == 'PUT' :
-    return None
