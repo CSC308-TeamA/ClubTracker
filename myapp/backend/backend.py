@@ -146,6 +146,7 @@ class User(Model):
         {'$inc': 
           {'threads': { 'numPosts' : 1}}
         },
+        array_filters={'url' : urllib.parse.quote(board)},
         return_document=ReturnDocument.AFTER
       )
     else:
