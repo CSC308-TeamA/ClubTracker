@@ -2,94 +2,73 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import {
-  CardHoover,
-  UpdateText,
+  ThreadCard,
+  TitleText,
   DescriptionText,
   NavLink,
 } from './CardElements';
 
-function Cards() {
-  const information = [
-    {
-      id: 1,
-      route: '/thread',
-      title: '📢Announcements',
-      description: 'Announcements/FAQs/Logistics',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Meeting 2/19',
-    },
-    {
-      id: 2,
-      route: '/thread',
-      title: '✒️General',
-      description: 'General logisitics about the team and other information.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️How To Meme',
-    },
-    {
-      id: 3,
-      route: '/thread',
-      title: '🤖Robot',
-      description: 'General discussion about the robots.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Robot Fails',
-    },
-    {
-      id: 4,
-      route: '/thread',
-      title: '⚔️Competition',
-      description: 'Talk about the competition here.',
-      threads: '🧵 2 Threads',
-      posts: '💬 5 Posts',
-      newest: '⏲️Ventura Regional 2021',
-    },
-  ];
+function Cards(props) {
+  const groupCards = props.groupData.map((group, index)  => {
+    const threads = group.threads.map((thread, index) => {
+      return (
+        <>
+          <ThreadCard>
+            <Card.Body>
+              <table>
+                <tr>
+                  <td>
+                    <NavLink to={"discussion/" + thread.url}>
+                      <TitleText>
+                        {thread.name}
+                      </TitleText>
+                    </NavLink>
+                    <DescriptionText>
+                      {thread.description}
+                    </DescriptionText>
+                  </td>
+                  <td>
+                    <button onClick={() => props.deleteThread({
+                              groupName: group.groupName,
+                              threads: [thread]
+                            })}>Delete</button>
+                  </td>
+                </tr>
+              </table>
+            </Card.Body>
+          </ThreadCard>
+        </>
+      );
+    });
 
-  const list = information.map((row) => (
-    <>
-      <Accordion>
-        <CardHoover key={row.id}>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            <Card.Body>
-              <Card.Title>
-                <NavLink to={row.route} activeStyle>
-                  { row.title }
-                </NavLink>
-              </Card.Title>
-              <DescriptionText>
-                { row.description }
-              </DescriptionText>
-              <UpdateText>
-                <p>{ row.threads }</p>
-                <p>{ row.posts }</p>
-              </UpdateText>
-            </Card.Body>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <p>
-                <NavLink to={row.route} activeStyle>
-                  { row.newest }
-                </NavLink>
-              </p>
-              <p>
-                <NavLink to={row.route} activeStyle>
-                  { row.newest }
-                </NavLink>
-              </p>
-            </Card.Body>
-          </Accordion.Collapse>
-        </CardHoover>
-      </Accordion>
-    </>
-  ));
+    return (
+      <>
+        <Card>
+          <Accordion>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              <Card.Body>
+                <TitleText>
+                  {group.groupName}
+                </TitleText>
+                <DescriptionText>
+                  Number of threads: {group.threads.length}
+                </DescriptionText>
+              </Card.Body>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <div>
+                {threads}
+              </div>
+            </Accordion.Collapse>
+          </Accordion>
+        </Card>
+      </>
+    );
+  });
 
   return (
     <>
-      {list}
+      {groupCards}
     </>
   );
 }
