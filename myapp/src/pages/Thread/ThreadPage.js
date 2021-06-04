@@ -7,16 +7,15 @@ import Padding from '../../components/Padding';
 import './thread.css';
 
 function ThreadPage(props) {
-  const thread = props.match.params.thread;
+  const { thread } = props.match.params;
 
   const [posts, setPosts] = useState([]);
 
   async function fetch() {
     try {
-      const response = await axios.get("http://localhost:5000/discussion/" + thread);
+      const response = await axios.get(`http://localhost:5000/discussion/${thread}`);
       return response.data;
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return false;
     }
@@ -24,10 +23,9 @@ function ThreadPage(props) {
 
   async function makePostCall(post) {
     try {
-      const response = await axios.post('http://localhost:5000/discussion/' + thread, post);
+      const response = await axios.post(`http://localhost:5000/discussion/${thread}`, post);
       return response;
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return false;
     }
@@ -35,21 +33,19 @@ function ThreadPage(props) {
 
   async function makeDeleteCall(post) {
     try {
-      const response = await axios.delete('http://localhost:5000/discussion/' + thread,
+      const response = await axios.delete(`http://localhost:5000/discussion/${thread}`,
         {
-          data: post
-        }
-      );
+          data: post,
+        });
       return response;
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return false;
     }
   }
 
   useEffect(() => {
-    fetch().then(result => {
+    fetch().then((result) => {
       if (result) {
         setPosts(result);
       }
@@ -57,9 +53,9 @@ function ThreadPage(props) {
   }, []);
 
   function createPost(post) {
-    makePostCall(post).then(result => {
+    makePostCall(post).then((result) => {
       if (result) {
-        fetch().then(result => {
+        fetch().then((result) => {
           setPosts(result);
         });
       }
@@ -68,9 +64,9 @@ function ThreadPage(props) {
 
   function deletePost(post) {
     console.log(post);
-    makeDeleteCall(post).then(result => {
+    makeDeleteCall(post).then((result) => {
       if (result) {
-        fetch().then(result => {
+        fetch().then((result) => {
           setPosts(result);
         });
       }
@@ -82,8 +78,8 @@ function ThreadPage(props) {
       <Padding />
       <Padding />
       <Thread
-        postData = {posts}
-        removePost = {deletePost}
+        postData={posts}
+        removePost={deletePost}
       />
       <Form handleSubmit={createPost} />
     </>

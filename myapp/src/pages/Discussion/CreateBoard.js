@@ -1,46 +1,46 @@
-import React, {useState} from "react";
-import axios from "axios";
-//import {Redirect} from "react-router-dom";
-import Padding from "../../components/Padding";
-import {Form as BootStrapForm, Col} from "react-bootstrap";
-import {NewCard} from "./BoardElements.js";
+import React, { useState } from 'react';
+import axios from 'axios';
+// import {Redirect} from "react-router-dom";
+import { Form as BootStrapForm, Col } from 'react-bootstrap';
+import Padding from '../../components/Padding';
+import { NewCard } from './BoardElements';
 
 function CreateBoard(props) {
   const [board, setBoard] = useState(
     {
-      groupName: "",
-      name: "",
-      description: ""
-    }
+      groupName: '',
+      name: '',
+      description: '',
+    },
   );
 
   function handleChange(event) {
-    const {name, value} = event.target;
-    if (name == "group") {
+    const { name, value } = event.target;
+    if (name === 'group') {
       setBoard(
         {
           groupName: value,
           name: board.name,
-          description: board.description
-        }
+          description: board.description,
+        },
       );
     }
-    if (name == "name") {
+    if (name === 'name') {
       setBoard(
         {
           groupName: board.groupName,
           name: value,
-          description: board.description
-        }
+          description: board.description,
+        },
       );
     }
-    if (name == "description") {
+    if (name === 'description') {
       setBoard(
         {
           groupName: board.groupName,
           name: board.name,
-          description: value
-        }
+          description: value,
+        },
       );
     }
   }
@@ -49,46 +49,44 @@ function CreateBoard(props) {
     try {
       const response = await axios.post('http://localhost:5000/discussion', thread);
       return response;
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return false;
     }
   }
 
   function postThread(thread) {
-    if (thread.groupName == "") {
-      alert("Please enter a group name");
+    if (thread.groupName === '') {
+      alert('Please enter a group name');
       return;
     }
-    if (thread.name == "") {
-      alert("Please enter a thread name");
+    if (thread.name === '') {
+      alert('Please enter a thread name');
       return;
     }
-    if (thread.description == "") {
-      alert("Please enter a description");
+    if (thread.description === '') {
+      alert('Please enter a description');
       return;
     }
-    makePostCall(thread).then(result => {
+    makePostCall(thread).then((result) => {
       if (result) {
         console.log(result);
-        //redirect
+        // redirect
       }
     });
   }
 
-
   function submitForm() {
-    if (board.group == "") {
-      alert("Please provide a group name");
+    if (board.group === '') {
+      alert('Please provide a group name');
       return;
     }
-    if (board.name == "") {
-      alert("Please provide a name for your thread");
+    if (board.name === '') {
+      alert('Please provide a name for your thread');
       return;
     }
-    if (board.description == "") {
-      alert("Please provide a description for your thread");
+    if (board.description === '') {
+      alert('Please provide a description for your thread');
       return;
     }
 
@@ -98,10 +96,10 @@ function CreateBoard(props) {
         threads: [
           {
             name: board.name,
-            description: board.description
-          }
-        ]
-      }
+            description: board.description,
+          },
+        ],
+      },
     );
   }
 
@@ -114,32 +112,34 @@ function CreateBoard(props) {
         <BootStrapForm>
           <BootStrapForm.Row>
             <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor = "group">Group</label>
-              <select name = "group" id = "group" onChange = {handleChange}>
-                <option value = "">pick a group</option>
-                <option value = "Robot">Robot</option>
-                <option value = "Competition">Competition</option>
+              <label htmlFor="group">Group</label>
+              <select name="group" id="group" onChange={handleChange}>
+                <option value="">pick a group</option>
+                <option value="Robot">Robot</option>
+                <option value="Competition">Competition</option>
               </select>
             </BootStrapForm.Group>
             <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor = "name">Name</label>
+              <label htmlFor="name">Name</label>
               <input
-                type = "text"
-                name = "name"
-                value = {board.name}
-                onChange = {handleChange} />
+                type="text"
+                name="name"
+                value={board.name}
+                onChange={handleChange}
+              />
             </BootStrapForm.Group>
           </BootStrapForm.Row>
           <BootStrapForm.Row>
             <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor = "description">Description</label>
+              <label htmlFor="description">Description</label>
               <input
-                type = "text"
-                name = "description"
-                value = {board.description}
-                onChange = {handleChange} />
+                type="text"
+                name="description"
+                value={board.description}
+                onChange={handleChange}
+              />
             </BootStrapForm.Group>
-            <input type = "button" value = "Create" onClick = {submitForm} />
+            <input type="button" value="Create" onClick={submitForm} />
           </BootStrapForm.Row>
         </BootStrapForm>
       </NewCard>

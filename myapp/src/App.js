@@ -9,9 +9,9 @@ import Home from './pages/HomePage';
 import Sponsor from './pages/SponsorPage';
 import Contact from './pages/ContactPage';
 import TeamRoster from './pages/TeamRosterPage';
-import Calendar from './pages/CalendarPage/';
-import Login from './pages/LoginPage/';
-import SignUp from './pages/SignUpPage/';
+import Calendar from './pages/CalendarPage';
+import Login from './pages/LoginPage';
+import SignUp from './pages/SignUpPage';
 
 import Pictures from './pages/PicturePage';
 import Layout from './components/Layout';
@@ -20,12 +20,10 @@ import DiscussionBoard from './pages/Discussion/DiscussionBoard';
 import CreateBoard from './pages/Discussion/CreateBoard';
 import ThreadPage from './pages/Thread/ThreadPage';
 
-
-
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
+      <>
         <Router>
           <Navbar />
           <Layout>
@@ -48,7 +46,7 @@ class App extends Component {
           </Layout>
           <Footer />
         </Router>
-      </React.Fragment>
+      </>
     );
   }
 }

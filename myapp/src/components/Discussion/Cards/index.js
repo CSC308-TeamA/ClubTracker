@@ -9,37 +9,38 @@ import {
 } from './CardElements';
 
 function Cards(props) {
-  const groupCards = props.groupData.map((group, index)  => {
-    const threads = group.threads.map((thread, index) => {
-      return (
-        <>
-          <ThreadCard>
-            <Card.Body>
-              <table>
-                <tr>
-                  <td>
-                    <NavLink to={"discussion/" + thread.url}>
-                      <TitleText>
-                        {thread.name}
-                      </TitleText>
-                    </NavLink>
-                    <DescriptionText>
-                      {thread.description}
-                    </DescriptionText>
-                  </td>
-                  <td>
-                    <button onClick={() => props.deleteThread({
-                              groupName: group.groupName,
-                              threads: [thread]
-                            })}>Delete</button>
-                  </td>
-                </tr>
-              </table>
-            </Card.Body>
-          </ThreadCard>
-        </>
-      );
-    });
+  const groupCards = props.groupData.map((group, index) => {
+    const threads = group.threads.map((thread, index) => (
+      <>
+        <ThreadCard>
+          <Card.Body>
+            <table>
+              <tr>
+                <td>
+                  <NavLink to={`discussion/${thread.url}`}>
+                    <TitleText>
+                      {thread.name}
+                    </TitleText>
+                  </NavLink>
+                  <DescriptionText>
+                    {thread.description}
+                  </DescriptionText>
+                </td>
+                <td>
+                  <button onClick={() => props.deleteThread({
+                    groupName: group.groupName,
+                    threads: [thread],
+                  })}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </Card.Body>
+        </ThreadCard>
+      </>
+    ));
 
     return (
       <>
@@ -51,7 +52,9 @@ function Cards(props) {
                   {group.groupName}
                 </TitleText>
                 <DescriptionText>
-                  Number of threads: {group.threads.length}
+                  Number of threads:
+                  {' '}
+                  {group.threads.length}
                 </DescriptionText>
               </Card.Body>
             </Accordion.Toggle>
