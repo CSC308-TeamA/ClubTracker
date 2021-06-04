@@ -9,12 +9,12 @@ import Home from './pages/HomePage';
 import Sponsor from './pages/SponsorPage';
 import Contact from './pages/ContactPage';
 import TeamRoster from './pages/TeamRosterPage';
-import { Calendar } from './pages/CalendarPage/';
+import Calendar from './pages/CalendarPage/';
 import Login from './pages/LoginPage/';
 import SignUp from './pages/SignUpPage/';
 
-import { Pictures } from './pages/PicturePage';
-import { Layout } from './components/Layout';
+import Pictures from './pages/PicturePage';
+import Layout from './components/Layout';
 
 import DiscussionBoard from './pages/Discussion/DiscussionBoard';
 import CreateBoard from './pages/Discussion/CreateBoard';
