@@ -57,7 +57,7 @@ You may have to download extra things which would be the following:
 -npm install react-player --save
 
 Notes to self:
-MAKE SURE TO RUN AS ADMIN SMH
+MAKE SURE TO RUN AS ADMIN (powershell)
 First terminal:
 cd .\myapp\backend\
 Set-ExecutionPolicy Unrestricted -Scope Process
