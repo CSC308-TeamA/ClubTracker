@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
@@ -9,8 +11,8 @@ import {
 } from './CardElements';
 
 function Cards(props) {
-  const groupCards = props.groupData.map((group, index) => {
-    const threads = group.threads.map((thread, index) => (
+  const groupCards = props.groupData.map((group) => {
+    const threads = group.threads.map((thread) => (
       <>
         <ThreadCard>
           <Card.Body>
@@ -27,10 +29,12 @@ function Cards(props) {
                   </DescriptionText>
                 </td>
                 <td>
-                  <button onClick={() => props.deleteThread({
-                    groupName: group.groupName,
-                    threads: [thread],
-                  })}
+                  <button
+                    type="button"
+                    onClick={() => props.deleteThread({
+                      groupName: group.groupName,
+                      threads: [thread],
+                    })}
                   >
                     Delete
                   </button>

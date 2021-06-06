@@ -1,15 +1,16 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Post from '../Post';
 import {
   DescriptionText,
   Edit,
-  CardHoover,
   ProfileLeft,
 } from './ThreadElements';
 
 function ThreadBody(props) {
-  const rows = props.postData.map((row, index) => (
+  const rows = props.postData.map((row) => (
     <>
       <Card.Body>
         <ProfileLeft>
@@ -19,7 +20,7 @@ function ThreadBody(props) {
           {row.post}
         </DescriptionText>
         <Edit>
-          <button onClick={() => props.removePost(row)}>Delete</button>
+          <button type="button" onClick={() => props.removePost(row)}>Delete</button>
         </Edit>
       </Card.Body>
     </>

@@ -1,4 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { CommentInput } from './FormElements';
 
 function Form(props) {
@@ -48,5 +50,9 @@ function Form(props) {
     </>
   );
 }
+
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default Form;
