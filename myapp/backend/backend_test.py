@@ -1,7 +1,7 @@
 import pytest
-from mockito import *
-from backend import app as flask_app
-from backend import *
+from mockito import when
+from .backend import app as flask_app
+from .backend import *
 
 '''
 Note that these tests are designed to not interact with any actual MongoDB databases and focus more on testing

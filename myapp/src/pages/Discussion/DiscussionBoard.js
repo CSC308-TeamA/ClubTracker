@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cards from '../../components/Discussion/Cards';
@@ -62,7 +63,7 @@ function DiscussionBoard() {
           </td>
           <td>
             <a href="/create_board">
-              <button>New Board</button>
+              <button type="submit">New Board</button>
             </a>
           </td>
         </tr>

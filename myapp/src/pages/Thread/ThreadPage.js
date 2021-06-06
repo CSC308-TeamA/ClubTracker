@@ -1,4 +1,8 @@
-import React, { useState, useEffect, Component } from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Thread from '../../components/Thread/Thread';
