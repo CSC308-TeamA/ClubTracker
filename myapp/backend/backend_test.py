@@ -27,6 +27,7 @@ def test_hello_world(client):
 
 
 def test_mock_user_delete_fail(client):
+    when(User).get_collection(...).thenReturn()
     when(User).remove_user(...).thenReturn(False)
 
     res = client.delete("/teamroster?_id=1234")
@@ -35,6 +36,7 @@ def test_mock_user_delete_fail(client):
 
 
 def test_mock_user_delete_pass(client):
+    when(User).get_collection(...).thenReturn()
     when(User).remove_user(...).thenReturn(True)
 
     res = client.delete("/teamroster?_id=abcd5678")
