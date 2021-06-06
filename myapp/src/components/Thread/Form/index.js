@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CommentInput } from './FormElements.js';
+import { CommentInput } from './FormElements';
 
 function Form(props) {
   const [person, setPerson] = useState(

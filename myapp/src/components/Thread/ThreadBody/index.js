@@ -9,23 +9,21 @@ import {
 } from './ThreadElements';
 
 function ThreadBody(props) {
-  const rows = props.postData.map((row, index) => {
-    return (
-      <>
-        <Card.Body>
-          <ProfileLeft>
-            <Post user={row.user} />
-          </ProfileLeft>
-          <DescriptionText>
-            {row.post}
-          </DescriptionText>
-          <Edit>
-            <button onClick={() => props.removePost(row)}>Delete</button>
-          </Edit>
-        </Card.Body>
-      </>
-    );
-  });
+  const rows = props.postData.map((row, index) => (
+    <>
+      <Card.Body>
+        <ProfileLeft>
+          <Post user={row.user} />
+        </ProfileLeft>
+        <DescriptionText>
+          {row.post}
+        </DescriptionText>
+        <Edit>
+          <button onClick={() => props.removePost(row)}>Delete</button>
+        </Edit>
+      </Card.Body>
+    </>
+  ));
 
   return (
     <tbody>
