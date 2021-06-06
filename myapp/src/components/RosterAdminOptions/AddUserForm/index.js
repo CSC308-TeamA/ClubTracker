@@ -196,7 +196,9 @@ function AddUserForm({ handleSubmit, handleHide, showForm }) {
     validFormKeys.forEach((form) => {
       const inputValue = person[form];
 
-      if (form.includes('email')) {
+      if (form.includes('ec2') && inputValue.trim() === '') {
+        temp[form] = true;
+      } else if (form.includes('email')) {
         if ((inputValue.split('@').length > 1) && (inputValue.slice(-4) === '.com')) {
           temp[form] = true;
         } else {
@@ -207,8 +209,8 @@ function AddUserForm({ handleSubmit, handleHide, showForm }) {
 
         if (inputValue.split('-').length === 3) {
           if ((phoneNum[0].length === 3) && (phoneNum[1].length === 3)
-          && (phoneNum[2].length === 4) && (!phoneNum[0].isNaN())
-          && (!phoneNum[1].isNaN()) && (!phoneNum[2].isNaN())) {
+          && (phoneNum[2].length === 4) && (!Number.isNaN(phoneNum[0]))
+          && (!Number.isNaN(phoneNum[1])) && (!Number.isNaN(phoneNum[2]))) {
             temp[form] = true;
           } else {
             isValid = false;

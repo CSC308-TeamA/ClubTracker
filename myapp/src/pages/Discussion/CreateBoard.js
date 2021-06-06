@@ -52,7 +52,7 @@ function CreateBoard(props) {
       const response = await axios.post('http://localhost:5000/discussion', thread);
       return response;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   }
@@ -72,7 +72,7 @@ function CreateBoard(props) {
     }
     makePostCall(thread).then((result) => {
       if (result) {
-        console.log(result);
+        // console.log(result);
         // redirect
       }
     });
