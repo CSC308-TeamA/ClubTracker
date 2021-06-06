@@ -1,6 +1,6 @@
 import pytest
 from mockito import when
-from .backend import app as flask_app
+from .backend.backend import app as flask_app
 from .backend import *
 
 '''
