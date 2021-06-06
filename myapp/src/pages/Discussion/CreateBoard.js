@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 // import {Redirect} from "react-router-dom";
 import { Form as BootStrapForm, Col } from 'react-bootstrap';
-import Padding from '../../components/Padding';
 import { NewCard } from './BoardElements';
 
 function CreateBoard(props) {
@@ -105,7 +104,6 @@ function CreateBoard(props) {
 
   return (
     <>
-      <Padding />
       <h2>CREATE A BOARD</h2>
 
       <NewCard>

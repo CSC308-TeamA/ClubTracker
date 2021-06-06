@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Padding from '../../components/Padding';
 
 import {
   SponsorRandom,
@@ -102,7 +101,6 @@ function Sponsor() {
 
   return (
     <>
-      <Padding />
       <Center>
         <h2>Thank you to all of our sponsors!</h2>
         <p>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, CardDeck, NavLink } from 'react-bootstrap';
-import Padding from '../../components/Padding';
 import { CardChange, Image } from './HomePageElements';
 import PhotoGallery from '../../components/PhotoGallery';
 import bannerImage from '../../assets/websiteBanner.jpg';
@@ -16,7 +15,6 @@ function Home() {
 
   return (
     <>
-      <Padding />
       <Image src={bannerImage} alt="Banner" />
       <div>
         <h2>About Us</h2>

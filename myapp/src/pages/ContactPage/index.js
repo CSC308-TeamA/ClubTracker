@@ -2,7 +2,6 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Padding from '../../components/Padding';
 import {
   FormDiv,
   MapOuter,
@@ -17,7 +16,6 @@ import { ReactComponent as Twitter } from '../../assets/socials/twitter.svg';
 function Contact() {
   return (
     <>
-      <Padding />
       <h2>Contact Us!</h2>
       <Line />
 

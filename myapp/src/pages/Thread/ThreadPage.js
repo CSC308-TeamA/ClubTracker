@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import Thread from '../../components/Thread/Thread';
 import Form from '../../components/Thread/Form';
-import Padding from '../../components/Padding';
 import './thread.css';
 
 function ThreadPage(props) {
@@ -75,8 +74,6 @@ function ThreadPage(props) {
 
   return (
     <>
-      <Padding />
-      <Padding />
       <Thread
         postData={posts}
         removePost={deletePost}

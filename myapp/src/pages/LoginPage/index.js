@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import Padding from '../../components/Padding';
 import {
   NavLink, NewDiv, NewCard, Center,
 } from './LoginPageElements';
@@ -20,7 +19,6 @@ function Login() {
 
   return (
     <>
-      <Padding />
       <Center>LOG IN</Center>
       <NewDiv>
         <NewCard>

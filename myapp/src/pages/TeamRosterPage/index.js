@@ -4,7 +4,6 @@ import websiteBanner from '../../assets/websiteBanner.jpg';
 import Filter from '../../components/Filter/index';
 import RosterAdminOptions from '../../components/RosterAdminOptions/index';
 import Roster from '../../components/Roster';
-import Padding from '../../components/Padding';
 import Banner from './TeamRosterPageElements';
 
 function TeamRoster() {
@@ -90,7 +89,6 @@ function TeamRoster() {
 
   return (
     <div>
-      <Padding />
       <Banner src={websiteBanner} alt="website banner" />
       <RosterAdminOptions
         handleSubmit={updateRoster}

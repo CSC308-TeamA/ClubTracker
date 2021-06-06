@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Thread from '../components/Discussion/Thread';
 import Form from '../components/Discussion/Form';
-import Padding from '../components/Padding';
-import '../styles/thread.css';
 import pfp1 from '../assets/profiles/pfp1.gif';
 import pfp2 from '../assets/profiles/pfp2.gif';
 import pfp3 from '../assets/profiles/pfp3.gif';
@@ -50,8 +48,6 @@ function ThreadPage() {
 
   return (
     <>
-      <Padding />
-      <Padding />
       <div className="container">
         <Thread
           characterData={characters}

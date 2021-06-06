@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Padding from '../../components/Padding';
 import Cards from '../../components/Discussion/Cards';
 
 function DiscussionBoard() {
@@ -56,8 +55,6 @@ function DiscussionBoard() {
 
   return (
     <>
-      <Padding />
-      <Padding />
       <table>
         <tr>
           <td>

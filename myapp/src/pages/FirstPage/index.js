@@ -2,7 +2,6 @@ import React from 'react';
 import '../../styles/styles.scss';
 import Image from 'react-bootstrap/Image';
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed';
-import Padding from '../../components/Padding';
 import firstLogo from '../../assets/first-logo.jpg';
 import firstStats from '../../assets/frc-stats.jpg';
 import {
@@ -17,7 +16,6 @@ function First() {
 
   return (
     <>
-      <Padding />
       <h2>What is the FIRST Robotics Competition?</h2>
       <hr />
       <MainAbout>
