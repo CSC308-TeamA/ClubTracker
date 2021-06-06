@@ -26,6 +26,12 @@ def test_hello_world(client):
     assert res.status_code == 200
 
 
+def test_dynamic_routes(client):
+    res = client.get("/test/dynamic")
+    assert res.status_code == 200
+    assert res.json == "dynamic"
+
+
 def test_mock_user_delete_fail(client):
     when(User).get_collection(...).thenReturn()
     when(User).remove_user(...).thenReturn(False)

@@ -407,7 +407,8 @@ class User:
             resp = collection.delete_one({"_id": ObjectId(user_id)})
             count = resp.deleted_count
         return count
- 
+
+
 @app.route('/test')
 def hello_world():
     '''
@@ -424,6 +425,7 @@ def hello_world():
     if test is not None:
         return test
     return "fail"
+
 
 @app.route('/test/<test_rule>')
 def hello_world_test(test_rule):
@@ -543,7 +545,7 @@ def discussion_board(board):
 
   elif request.method == 'DELETE' :
     post = request.get_json()
-    if User.remove_post(post, board) :
+    if User.remove_post(post, board):
       return post
     else:
       return jsonify({"error": "Post not found"}), 404
