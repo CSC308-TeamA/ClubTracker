@@ -2,9 +2,6 @@
 ## Team Members
 Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
 
-## Travis CI Build Status
-[![Build Status](https://travis-ci.com/CSC308-TeamA/ClubTracker.svg?branch=main)](https://travis-ci.com/CSC308-TeamA/ClubTracker)
-
 
 ## JavaScript Linter
 Our team uses **ESLint** for our JavaScript code. Documentation found [here.](https://eslint.org/docs/user-guide/getting-started)
