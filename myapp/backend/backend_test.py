@@ -50,6 +50,22 @@ def test_mock_user_delete_pass(client):
     assert res.status_code == 201
 
 
+def test_mock_user_discussion_post_already_exists(client):
+    when(User).add_thread(...).thenReturn(None)
+
+    res = client.post("/discussion")
+    assert res.json == {"error": "Thread already exists"}
+    assert res.status_code == 409
+
+
+def test_mock_user_discussion_delete_fail(client):
+    when(User).remove_thread(...).thenReturn(False)
+
+    res = client.delete("/discussion")
+    assert res.json == {"error": "Thread not found"}
+    assert res.status_code == 404
+
+
 def test_roster_get_only_single_name():
     response = roster_get_link_parse("Steve", None, None, None)
 
