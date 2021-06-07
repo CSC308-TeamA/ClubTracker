@@ -584,7 +584,7 @@ def discussion():
 
   elif request.method == 'POST':
     threadtoAdd = request.get_json()
-    resp = User.add_thread(threadtoAdd)
+    resp = User().add_thread(threadtoAdd)
     if resp == None:
       return jsonify({"error": "Thread already exists"}), 409
 
@@ -594,7 +594,7 @@ def discussion():
 
   elif request.method == 'DELETE':
     thread = request.get_json()
-    if User.remove_thread(thread):
+    if User().remove_thread(thread):
       return thread
     else:
       return jsonify({"error": "Thread not found"}), 404
