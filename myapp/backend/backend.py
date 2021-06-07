@@ -539,7 +539,8 @@ class User:
 
         account = collection.find_one({'session_token': cookie_session})
         return (account['username'], 201)
-
+# split into give str of object id from cookie session
+# from string of object id, get username
 
 
 @app.route('/test')
