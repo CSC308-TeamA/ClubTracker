@@ -70,7 +70,7 @@ class User:
             Returns:
                 mongoDB collection or None if no such collection exists
         '''
-        if not self.check_for_collection(self, name):
+        if not self.check_for_collection(name):
             return None
         else:
             return self.client.get_database("TeamProj").get_collection(name)
@@ -414,8 +414,6 @@ class User:
     def generate_session_token(self):
         return str(uuid4())
 
-# TODO: UPDATE THE STATUS CODES 
-
     def create_account(self, account_to_create):
         '''
         Creates an account in the Accounts collection. Returns a string and status code.
@@ -433,7 +431,7 @@ class User:
                 message (string): Either an error message or session_token
                 status_code (int): Status code
         '''
-        collection = self.get_collection(self, 'Accounts')
+        collection = self.get_collection('Accounts')
 
         email = account_to_create['email']
         if collection.count({'email': email}) != 0:
@@ -447,7 +445,7 @@ class User:
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
         account_to_create['password'] = hashed
 
-        session_token = self.generate_session_token(self)
+        session_token = self.generate_session_token()
         account_to_create['session_token'] = session_token
 
         collection.insert(account_to_create)
@@ -471,7 +469,7 @@ class User:
                 message (string): Either an error message or session_token
                 status_code (int): Status code
         '''
-        collection = self.get_collection(self, 'Accounts')
+        collection = self.get_collection('Accounts')
 
         email = account_to_login['email']
         account = collection.find_one({'email': email})
@@ -484,7 +482,7 @@ class User:
 
         logged_in = collection.find_one_and_update(
             {'email': email},
-            {'$set': {'session_token': self.generate_session_token(self)}},
+            {'$set': {'session_token': self.generate_session_token()}},
             return_document=ReturnDocument.AFTER
         )
 
@@ -507,7 +505,7 @@ class User:
                 message (string): Message stating if user is logged in or not.
                 status_code (int): Status code
         '''
-        collection = self.get_collection(self, 'Accounts')
+        collection = self.get_collection('Accounts')
 
         if collection.count({'session_token': cookie_session}) == 0:
             return ('Session token not linked to a logged in account', 200)
@@ -531,9 +529,9 @@ class User:
                 message (string): Either an error message or the username associated with the session token
                 status_code (int): Status code
         '''
-        collection = self.get_collection(self, 'Accounts')
+        collection = self.get_collection('Accounts')
 
-        resp = self.is_account_logged_in(self, cookie_session)
+        resp = self.is_account_logged_in(cookie_session)
         if resp[1] != 201:
             return resp
 
@@ -582,7 +580,7 @@ def check_user_logged_in():
             resp = jsonify({"error": "No session token stored in cookie"})
             resp.status_code = 200
         else:
-            login_check = User.is_account_logged_in(User, session_token)
+            login_check = User().is_account_logged_in(session_token)
             resp = jsonify(login_check[0])
             resp.status_code = login_check[1]
 
@@ -600,7 +598,7 @@ def get_team_roster():
             resp (JSON): Contains status code and object based on the request method.
     '''
 
-    collection = User.get_collection(User, 'TeamRoster')
+    collection = User().get_collection('TeamRoster')
 
     if request.method == 'GET':
         name = request.args.get('name')
@@ -610,15 +608,13 @@ def get_team_roster():
         filters = roster_get_link_parse(name, status, position, specialization)
 
         resp = jsonify(
-            User.find_by_filter(
-                User, filters[0], collection, filters[1]
-            )
+            User().find_by_filter(filters[0], collection, filters[1])
         )
         resp.status_code = 201
 
     elif request.method == 'POST':
         user_to_add = request.get_json()
-        User.add_user(User, user_to_add, collection)
+        User().add_user(user_to_add, collection)
 
         resp = jsonify(user_to_add)
         resp.status_code = 201
@@ -626,7 +622,7 @@ def get_team_roster():
     elif request.method == 'DELETE':
         user_id = request.args.get('_id')
 
-        if User.remove_user(User, user_id, collection):
+        if User().remove_user(user_id, collection):
             resp = jsonify(user_id)
             resp.status_code = 201
         else:
@@ -672,7 +668,7 @@ def discussion_board(board):
             dependant on method
     '''
     if request.method == 'GET':
-        resp = User.get_thread(User, board)
+        resp = User().get_thread(board)
         if resp == None:
             return jsonify({"error": "Thread not found"}), 404
 
@@ -682,7 +678,7 @@ def discussion_board(board):
 
     elif request.method == 'POST':
         posttoAdd = request.get_json()
-        resp = User.add_post(posttoAdd, board)
+        resp = User().add_post(posttoAdd, board)
         if resp == None:
             return jsonify({"error": "Thread not found"}), 404
 
@@ -692,13 +688,13 @@ def discussion_board(board):
 
     elif request.method == 'DELETE' :
         post = request.get_json()
-        if User.remove_post(post, board):
+        if User().remove_post(post, board):
             return post
         return jsonify({"error": "Post not found"}), 404
 
     elif request.method == 'PUT' :
         reply = request.get_json()
-        resp = User.reply_to_post(reply, board)
+        resp = User().reply_to_post(reply, board)
         if resp == None:
             return jsonify({"error": "Thread or Post not found"}), 404
 
@@ -708,7 +704,7 @@ def discussion_board(board):
 
     elif request.method == 'PATCH' :
         thread =  request.get_json()
-        User.update_thread(board, thread)
+        User().update_thread(board, thread)
         return None
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE'])
@@ -723,7 +719,7 @@ def discussion():
             dependant on method
     '''
     if request.method == 'GET':
-        resp = jsonify(User.get_discussion_index(User))
+        resp = jsonify(User().get_discussion_index())
         resp.status_code = 201
         return resp
 
@@ -758,7 +754,7 @@ def signup():
     if request.method == 'POST':
         account_to_create = request.get_json()
 
-        creating_account = User.create_account(User, account_to_create)
+        creating_account = User().create_account(account_to_create)
 
         resp = jsonify(creating_account[0])
         resp.set_cookie('session', creating_account[0])
@@ -779,7 +775,7 @@ def login():
     if request.method == 'PATCH':
         account_to_login = request.get_json()
 
-        login_account = User.login_account(User, account_to_login)
+        login_account = User().login_account(account_to_login)
 
         resp = jsonify(login_account[0])
         resp.set_cookie('session', login_account[0])
