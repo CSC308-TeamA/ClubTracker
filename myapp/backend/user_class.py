@@ -50,7 +50,7 @@ class User:
             Returns:
                 mongoDB collection or None if no such collection exists
         '''
-        if (not self.check_for_collection(name)):
+        if (not self.check_for_collection(self, name)):
             return None
         else:
             return self.client.get_database("TeamProj").get_collection(name)
@@ -130,7 +130,7 @@ class User:
               Returns:
                   a list of all posts in 'Discussion_<board>' with IDs converted to strings
           '''
-        collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
+        collection = self.get_collection(self, 'Discussion_' + urllib.parse.quote(board))
         if (collection == None):
             return None
         posts = list(collection.find())
@@ -149,7 +149,7 @@ class User:
               Returns:
                   a list of all groups in 'Discussion_Index' with IDs converted to strings
           '''
-        collection = self.get_collection('Discussion_Index')
+        collection = self.get_collection(self, 'Discussion_Index')
         groups = list(collection.find())
 
         for group in groups:
@@ -168,9 +168,9 @@ class User:
               Returns:
                   the post after added to the collection and converted to a response using id_to_string_post or None if the board can not be found
           '''
-        if (not self.check_for_collection(board)):
+        if (not self.check_for_collection(self, board)):
             return None
-        collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
+        collection = self.get_collection(self, 'Discussion_' + urllib.parse.quote(board))
         posttoAdd['date'] = datetime.datetime.utcnow()
         posttoAdd['user'] = ObjectId(posttoAdd['user'])
         posttoAdd['replies'] = []
@@ -193,7 +193,7 @@ class User:
           '''
         if (not self.check_for_collection(board)):
             return None
-        collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
+        collection = self.get_collection(self, 'Discussion_' + urllib.parse.quote(board))
         for posttoAdd in toReplyTo['replies']:
             posttoAdd['date'] = datetime.datetime.utcnow()
             posttoAdd['user'] = ObjectId(posttoAdd['user'])
@@ -221,7 +221,7 @@ class User:
           '''
         groupName = threadtoAdd['groupName']
         threads = threadtoAdd['threads']
-        collection = self.get_collection('Discussion_Index')
+        collection = self.get_collection(self, 'Discussion_Index')
         out = list()
         for thread in threads:
             thread['url'] = urllib.parse.quote(thread['name'], safe='')
@@ -256,8 +256,8 @@ class User:
               Returns:
                   a JSON statement refering to the updated thread or None if the thread could not be found
           '''
-        collection = self.get_collection('Discussion_Index')
-        if (self.get_collection("Discussion_" + urllib.parse.quote(board)) != None):
+        collection = self.get_collection(self, 'Discussion_Index')
+        if (self.get_collection(self, "Discussion_" + urllib.parse.quote(board)) != None):
             collection.find_one_and_update(
                 {'groupName': thread['groupName']},
                 {'$push':
@@ -291,10 +291,10 @@ class User:
           '''
         groupName = thread['groupName']
         threads = thread['threads']
-        collection = self.get_collection('Discussion_Index')
+        collection = self.get_collection(self, 'Discussion_Index')
         out = list()
         for thread in threads:
-            self.delete_collection("Discussion_" + thread['url'])
+            self.delete_collection(self, "Discussion_" + thread['url'])
             out.append(collection.find_one_and_update(
                 {'groupName': groupName},
                 {'$pull':
@@ -317,9 +317,9 @@ class User:
               Returns:
                   the post that was removed or None if the collection was not found
           '''
-        if (not self.check_for_collection('Discussion_' + urllib.parse.quote(board))):
+        if (not self.check_for_collection(self, 'Discussion_' + urllib.parse.quote(board))):
             return None
-        collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
+        collection = self.get_collection(self, 'Discussion_' + urllib.parse.quote(board))
         collection.delete_one({'_id': ObjectId(post['_id'])})
         return post
 
