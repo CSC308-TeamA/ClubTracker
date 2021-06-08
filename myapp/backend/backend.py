@@ -123,7 +123,7 @@ class User:
             return True
         return False
 
-    def id_to_string_post(ret_post):
+    def id_to_string_post(self, ret_post):
         '''
         Modifies a post (in the format of this discussion board) recieved from mongoDB for return to a browser by converting ObjectID objects to strings
 
@@ -662,7 +662,7 @@ def roster_get_link_parse(name, status, position, specialization):
     return filters, single_name
 
 
-@app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
+@app.route('/discussion/<board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion_board(board):
     '''
     Discussion Board Thead pages: Performs GET, POST, DELETE, PUT, or PATCH action based on the requet method.
