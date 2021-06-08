@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import {
   ThreadCard,
+  ThreadInfo,
   TitleText,
   DescriptionText,
   NavLink,
@@ -18,7 +19,7 @@ function Cards(props) {
           <Card.Body>
             <table>
               <tr>
-                <td>
+                <ThreadInfo>
                   <NavLink to={`discussion/${thread.url}`}>
                     <TitleText>
                       {thread.name}
@@ -27,7 +28,7 @@ function Cards(props) {
                   <DescriptionText>
                     {thread.description}
                   </DescriptionText>
-                </td>
+                </ThreadInfo>
                 <td>
                   <button
                     type="button"
