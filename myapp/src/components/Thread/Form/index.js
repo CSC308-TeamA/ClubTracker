@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { CommentInput } from './FormElements';
 
@@ -11,6 +12,16 @@ function Form(props) {
     },
   );
 
+  async function fetch(session) {
+    try {
+      const response = await axios.get(`http://localhost:5000/userid/${session}`);
+      return response.data[0];
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   function handleChange(event) {
     const { value } = event.target;
     setPerson({
@@ -20,10 +31,13 @@ function Form(props) {
   }
 
   function submitForm() {
-    props.handleSubmit(person);
-    setPerson(
-      { user: '', post: '' },
-    );
+    fetch(person.user).then((result) => {
+      person.user = result;
+      props.handleSubmit(person);
+      setPerson(
+        { user: '', post: '' },
+      );
+    });
   }
 
   return (
