@@ -15,7 +15,7 @@ function Post(props) {
       const response = await axios.get(`${props.link}username/${props.user}`);
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   }
