@@ -108,7 +108,6 @@ export default function App() {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
               {/* TODO: ADD PATH FOR LOG OUT */}
-              {/* TODO: PASS DOWN OBJECT ID AND IF USER IS LOGGED IN OR NOT */}
               <Route
                 exact
                 path="/discussion"
