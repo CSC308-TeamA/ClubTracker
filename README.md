@@ -12,8 +12,8 @@ Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
 
 ## Setup npm
 **Run commands:**
-`npm install
-npm audit fix`
+`npm install`
+`npm audit fix`
 
 
 ## Setup Python venv
@@ -37,10 +37,10 @@ npm audit fix`
 
 # How to run app
 **Running Backend (This is only in development when you are locally running):**
-`cd backend
-[export/set] FLASK_APP=backend.py
-[export/set] FLASK_ENV=development
-[python/python3] -m flask run`
+`cd backend`
+`[export/set] FLASK_APP=backend.py`
+`[export/set] FLASK_ENV=development`
+`[python/python3] -m flask run`
 
 **Running Frontend:**
 `npm start`
