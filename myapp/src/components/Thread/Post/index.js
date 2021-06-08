@@ -12,7 +12,7 @@ function Post(props) {
 
   async function fetch() {
     try {
-      const response = await axios.get(`http://localhost:5000/username/${props.user}`);
+      const response = await axios.get(`${props.link}username/${props.user}`);
       return response.data;
     } catch (error) {
       console.log(error);

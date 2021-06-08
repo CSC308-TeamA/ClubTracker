@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Cards from '../../components/Discussion/Cards';
 
-function DiscussionBoard() {
+function DiscussionBoard({ link }) {
   const [groups, setGroups] = useState([]);
 
   async function fetch() {
     try {
-      const response = await axios.get('http://localhost:5000/discussion');
+      const response = await axios.get(`${link}discussion`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -26,7 +27,7 @@ function DiscussionBoard() {
 
   async function makeDeleteCall(thread) {
     try {
-      const response = await axios.delete('http://localhost:5000/discussion',
+      const response = await axios.delete(`${link}discussion`,
         {
           data: thread,
         });
@@ -68,9 +69,13 @@ function DiscussionBoard() {
           </td>
         </tr>
       </table>
-      <Cards groupData={groups} deleteThread={deleteThread} />
+      <Cards groupData={groups} deleteThread={deleteThread} link={link} />
     </>
   );
 }
+
+DiscussionBoard.propTypes = {
+  link: PropTypes.string.isRequired,
+};
 
 export default DiscussionBoard;

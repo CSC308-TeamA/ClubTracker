@@ -11,8 +11,8 @@ import {
   NavLink,
 } from './CardElements';
 
-function Cards(props) {
-  const groupCards = props.groupData.map((group) => {
+function Cards({ groupData, deleteThread }) {
+  const groupCards = groupData.map((group) => {
     const threads = group.threads.map((thread) => (
       <>
         <ThreadCard>
@@ -32,7 +32,7 @@ function Cards(props) {
                 <td>
                   <button
                     type="button"
-                    onClick={() => props.deleteThread({
+                    onClick={() => deleteThread({
                       groupName: group.groupName,
                       threads: [thread],
                     })}

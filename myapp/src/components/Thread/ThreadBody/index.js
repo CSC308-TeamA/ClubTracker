@@ -9,18 +9,18 @@ import {
   ProfileLeft,
 } from './ThreadElements';
 
-function ThreadBody(props) {
-  const rows = props.postData.map((row) => (
+function ThreadBody({ postData, removePost, link }) {
+  const rows = postData.map((row) => (
     <>
       <Card.Body>
         <ProfileLeft>
-          <Post user={row.user} />
+          <Post user={row.user} link={link} />
         </ProfileLeft>
         <DescriptionText>
           {row.post}
         </DescriptionText>
         <Edit>
-          <button type="button" onClick={() => props.removePost(row)}>Delete</button>
+          <button type="button" onClick={() => removePost(row)}>Delete</button>
         </Edit>
       </Card.Body>
     </>

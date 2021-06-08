@@ -7,19 +7,18 @@ import RosterAdminOptions from '../../components/RosterAdminOptions/index';
 import Roster from '../../components/Roster';
 import Banner from './TeamRosterPageElements';
 
-function TeamRoster({ logInStatus }) {
+function TeamRoster({ logInStatus, link }) {
   const [characters, setCharacters] = useState([]);
 
   async function fetch(field) {
     try {
-      let link = 'http://localhost:5000/teamroster?'; // For testing
-      // let link = 'https://clubtracker-backend.herokuapp.com/teamroster?';
-      if (field.name !== '') link += `name=${field.name}&`;
-      if (field.member_status !== '') link += `member_status=${field.member_status}&`;
-      if (field.position !== '') link += `position=${field.position}&`;
-      if (field.specialization !== '') link += `specialization=${field.specialization}&`;
+      let tempLink = `${link}teamroster?`;
+      if (field.name !== '') tempLink += `name=${field.name}&`;
+      if (field.member_status !== '') tempLink += `member_status=${field.member_status}&`;
+      if (field.position !== '') tempLink += `position=${field.position}&`;
+      if (field.specialization !== '') tempLink += `specialization=${field.specialization}&`;
 
-      const response = await axios.get(link);
+      const response = await axios.get(tempLink);
       return response.data;
     } catch (error) {
       return false;
@@ -45,8 +44,7 @@ function TeamRoster({ logInStatus }) {
 
   async function makePostCall(person) {
     try {
-      const response = await axios.post('http://localhost:5000/teamroster', person); // For Testing
-      // const response = await axios.post('https://clubtracker-backend.herokuapp.com/teamroster', person);
+      const response = await axios.post(`${link}teamroster`, person);
       return response;
     } catch (error) {
       return false;
@@ -63,8 +61,7 @@ function TeamRoster({ logInStatus }) {
 
   async function makeDeleteCall(id) {
     try {
-      const response = await axios.delete(`http://localhost:5000/teamroster?_id=${id}`); // For Testing
-      // const response = await axios.delete(`https://clubtracker-backend.herokuapp.com/teamroster?_id=${id}`);
+      const response = await axios.delete(`${link}teamroster?_id=${id}`);
       return response;
     } catch (error) {
       return false;
@@ -99,14 +96,15 @@ function TeamRoster({ logInStatus }) {
           />
         )
         : '' }
-      <Filter handleSubmit={updatePage} characterData={characters} />
-      <Roster characterData={characters} removeCharacter={removeCharacter} />
+      <Filter handleSubmit={updatePage} link={link} />
+      <Roster characterData={characters} removeCharacter={removeCharacter} link={link} />
     </div>
   );
 }
 
 TeamRoster.propTypes = {
   logInStatus: PropTypes.bool.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export default TeamRoster;

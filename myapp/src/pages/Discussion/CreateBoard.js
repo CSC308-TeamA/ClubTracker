@@ -4,10 +4,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import {Redirect} from "react-router-dom";
+import PropTypes from 'prop-types';
 import { Form as BootStrapForm, Col } from 'react-bootstrap';
 import { NewCard } from './BoardElements';
 
-function CreateBoard(props) {
+function CreateBoard({ link }) {
   const [board, setBoard] = useState(
     {
       groupName: '',
@@ -49,7 +50,7 @@ function CreateBoard(props) {
 
   async function makePostCall(thread) {
     try {
-      const response = await axios.post('http://localhost:5000/discussion', thread);
+      const response = await axios.post(`${link}discussion`, thread);
       return response;
     } catch (error) {
       // console.log(error);
@@ -147,5 +148,9 @@ function CreateBoard(props) {
     </>
   );
 }
+
+CreateBoard.propTypes = {
+  link: PropTypes.string.isRequired,
+};
 
 export default CreateBoard;

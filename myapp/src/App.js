@@ -93,13 +93,12 @@ export default function App() {
               <Route exact path={['/', '/home']} component={Home} />
               {' '}
               <Route path="/about" component={About} />
-              <Route path="/about" component={About} />
               <Route path="/sponsor" component={Sponsor} />
               <Route path="/contact" component={Contact} />
               <Route
                 path="/teamroster"
                 render={(props) => (
-                  <TeamRoster {...props} logInStatus={logInStatus} />
+                  <TeamRoster {...props} logInStatus={logInStatus} link={link} />
                 )}
               />
               <Route path="/calendar" component={Calendar} />
@@ -110,9 +109,25 @@ export default function App() {
               <Route path="/signup" component={SignUp} />
               {/* TODO: ADD PATH FOR LOG OUT */}
               {/* TODO: PASS DOWN OBJECT ID AND IF USER IS LOGGED IN OR NOT */}
-              <Route exact path="/discussion" component={DiscussionBoard} />
-              <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
-              <Route path="/discussion/:thread" render={(props) => <ThreadPage props={props} link={link} />} />
+              <Route
+                exact
+                path="/discussion"
+                render={(props) => (
+                  <DiscussionBoard {...props} link={link} />
+                )}
+              />
+              <Route
+                path="/create_board"
+                render={(props) => (
+                  <CreateBoard {...props} link={link} />
+                )}
+              />
+              <Route
+                path="/discussion/:thread"
+                render={(props) => (
+                  <ThreadPage {...props} link={link} />
+                )}
+              />
             </Switch>
           </Layout>
           <Footer />
