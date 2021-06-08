@@ -185,7 +185,7 @@ def discussion_board(board):
         resp.status_code = 201
         return resp
 
-    
+
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion():
@@ -236,7 +236,45 @@ def discussion():
 
     return resp
 
-    
+
+
+@app.route('/userid/<session>', methods=['GET'])
+def user_id(session):
+    '''
+    Discussion Board: Performs GET action to acquire user id from session id.
+
+        Parameters:
+            session
+
+        Returns:
+            resp (JSON): Contains status code and either an error message or the ObjectId string of the user id.
+    '''
+    if request.method == 'GET':
+        resp = jsonify(User().get_userid(session))
+        resp.status_code = 201
+
+    return resp
+
+
+
+@app.route('/username/<userid>', methods=['GET'])
+def username(userid):
+    '''
+    Discussion Board: Performs GET action to acquire username from userid
+
+        Parameters:
+            userid
+
+        Returns:
+            resp (JSON): Contains status code and either an error message or the username.
+    '''
+    if request.method == 'GET':
+        resp = jsonify(User().get_username(userid))
+        resp.status_code = 201
+
+    return resp
+
+
 
 @app.route('/signup', methods=['POST'])
 def signup():

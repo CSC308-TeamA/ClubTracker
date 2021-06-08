@@ -499,9 +499,9 @@ class User:
 
         return ('Account logged in', 201)
 
-    def get_username(self, cookie_session):
+    def get_userid(self, cookie_session):
         '''
-        Gets the username associated to the session_token stored in the cookie. Returns a string and status code.
+        Gets the userid associated to the session_token stored in the cookie. Returns a string and status code.
 
             Status Codes
             ------------
@@ -513,7 +513,7 @@ class User:
                 cookie_session (String): Session token stored in the cookie
 
             Returns:
-                message (string): Either an error message or the username associated with the session token
+                message (string): Either an error message or the user id associated with the session token
                 status_code (int): Status code
         '''
         collection = self.get_collection('Accounts')
@@ -523,8 +523,32 @@ class User:
             return resp
 
         account = collection.find_one({'session_token': cookie_session})
-        return (account['username'], 201)
+        return (str(account['_id']), 201)
     # split into give str of object id from cookie session
     # from string of object id, get username
 
+    def get_username(self, user_id):
+        '''
+        Gets the username associated to the session_token stored in the cookie. Returns a string and status code.
 
+            Status Codes
+            ------------
+            200: No account associated with the given session token
+            201: Account found
+
+            Parameters:
+                self (class): User class that contains this method
+                user_id (String): ObjectId of desired user
+
+            Returns:
+                message (string): Either an error message or the username associated with the user id
+                status_code (int): Status code
+        '''
+        collection = self.get_collection('Accounts')
+
+        account = collection.find_one({'_id': ObjectId(user_id)})
+        if not account:
+            return (f'No account with userid {user_id}', 200)
+        return (account['username'], 201)
+    # split into give str of object id from cookie session
+    # from string of object id, get username
