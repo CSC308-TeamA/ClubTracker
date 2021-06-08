@@ -10,6 +10,10 @@ cd ../myapp
 
 echo 'bootstraping npm'
 npm install react-bootstrap bootstrap
+# echo 'installing node-gyp'
+# npm install -g node-gyp
+# echo 'installing bycrypt'
+# npm install bcrypt
 
 cd backend
 
@@ -23,6 +27,8 @@ echo 'installing pymongo'
 pip install pymongo
 echo 'installing dnspython'
 pip install dnspython
+echo 'installing bcrypt'
+pip install bcrypt
 
 export FLASK_APP=backend.py
 export FLASK_ENV=development

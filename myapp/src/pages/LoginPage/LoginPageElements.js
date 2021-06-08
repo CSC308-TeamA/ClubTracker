@@ -1,32 +1,14 @@
 import styled from 'styled-components';
-import { NavLink as Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
-export const NavLink = styled(Link)`
-  color: yellow;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 0 1rem;
-  height: 100%;
-  cursor: pointer;
-  &.active {
+const SignUpLink = styled(NavLink)`
   color: white;
+  &.active {
+    color: white;
   }
   &:hover {
-  color: white;
+    color: white;
   }
 `;
 
-export const NewDiv = styled.div`
-  padding: 10px;
-`;
-
-export const NewCard = styled(Card)`
-  padding: 10px;
-  color: black;
-`;
-
-export const Center = styled.h2`
-  text-align: center;
-`;
+export default SignUpLink;
