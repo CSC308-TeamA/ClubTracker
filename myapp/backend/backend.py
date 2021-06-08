@@ -780,7 +780,7 @@ def login():
             None
 
         Returns:
-            resp (JSON): Contains status code and object of account logged in.
+            resp (JSON): Contains status code and object of account logged in
     '''
     if request.method == 'PATCH':
         account_to_login = request.get_json()
