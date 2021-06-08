@@ -4,7 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { CommentInput } from './FormElements';
 
-function Form(props) {
+function Form({ handleSubmit, link }) {
   const [person, setPerson] = useState(
     {
       user: '',
@@ -14,7 +14,7 @@ function Form(props) {
 
   async function fetch(session) {
     try {
-      const response = await axios.get(`http://localhost:5000/userid/${session}`);
+      const response = await axios.get(`${link}userid/${session}`);
       return response.data[0];
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ function Form(props) {
   function submitForm() {
     fetch(person.user).then((result) => {
       person.user = result;
-      props.handleSubmit(person);
+      handleSubmit(person);
       setPerson(
         { user: '', post: '' },
       );
@@ -67,6 +67,7 @@ function Form(props) {
 
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export default Form;

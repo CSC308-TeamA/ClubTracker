@@ -4,13 +4,20 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import ThreadBody from '../ThreadBody';
 
-function Thread(props) {
+function Thread({
+  postData,
+  removePost,
+  logInStatus,
+  link,
+}) {
   return (
     <>
       <Card>
         <ThreadBody
-          postData={props.postData}
-          removePost={props.removePost}
+          postData={postData}
+          removePost={removePost}
+          logInStatus={logInStatus}
+          link={link}
         />
       </Card>
     </>

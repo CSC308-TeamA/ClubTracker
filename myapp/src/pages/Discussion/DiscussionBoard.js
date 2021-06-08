@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Cards from '../../components/Discussion/Cards';
 
-function DiscussionBoard() {
+function DiscussionBoard({ logInStatus, link }) {
   const [groups, setGroups] = useState([]);
 
   async function fetch() {
     try {
-      const response = await axios.get('http://localhost:5000/discussion');
+      const response = await axios.get(`${link}discussion`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -26,7 +27,7 @@ function DiscussionBoard() {
 
   async function makeDeleteCall(thread) {
     try {
-      const response = await axios.delete('http://localhost:5000/discussion',
+      const response = await axios.delete(`${link}discussion`,
         {
           data: thread,
         });
@@ -62,15 +63,29 @@ function DiscussionBoard() {
             <h2>WELCOME TO THE DISCUSSION BOARD</h2>
           </td>
           <td>
-            <a href="/create_board">
-              <button type="submit">New Board</button>
-            </a>
+            {logInStatus
+              ? (
+                <a href="/create_board">
+                  <button type="submit">New Board</button>
+                </a>
+              )
+              : <div />}
           </td>
         </tr>
       </table>
-      <Cards groupData={groups} deleteThread={deleteThread} />
+      <Cards
+        groupData={groups}
+        deleteThread={deleteThread}
+        logInStatus={logInStatus}
+        link={link}
+      />
     </>
   );
 }
+
+DiscussionBoard.propTypes = {
+  logInStatus: PropTypes.bool.isRequired,
+  link: PropTypes.string.isRequired,
+};
 
 export default DiscussionBoard;
