@@ -199,8 +199,8 @@ class User:
         post_to_add['date'] = datetime.datetime.utcnow()
         post_to_add['user'] = ObjectId(post_to_add['user'])
         post_to_add['replies'] = []
-        ret_ID = collection.insert_one(post_to_add)
-        post_to_add['_id'] = str(ret_ID.inserted_id)
+        ret_id = collection.insert_one(post_to_add)
+        post_to_add['_id'] = str(ret_id.inserted_id)
         post_to_add = self.id_to_string_post(post_to_add)
         return post_to_add
 
