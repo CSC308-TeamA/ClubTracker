@@ -6,6 +6,21 @@ Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
 [![Build Status](https://travis-ci.com/CSC308-TeamA/ClubTracker.svg?branch=main)](https://travis-ci.com/CSC308-TeamA/ClubTracker)
 
 
+
+# How To Setup
+**Move to myapp folder.**
+
+## Setup npm
+**Run commands:**
+`npm install`
+`npm audit fix`
+
+
+## Setup Python venv
+**Create virtual environment. [How To](https://docs.python.org/3/tutorial/venv.html)**
+
+
+
 ## JavaScript Linter
 Our team uses **ESLint** for our JavaScript code. Documentation found [here.](https://eslint.org/docs/user-guide/getting-started)
 
