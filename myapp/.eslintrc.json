@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
+        "linebreak-style": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "max-len": [1, { "ignoreStrings": true, "ignoreUrls": true }],
         "indent": [2, 2],
