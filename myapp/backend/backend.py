@@ -11,20 +11,21 @@ Misc Variables:
     app
 '''
 
+import datetime
+import urllib.parse
+from uuid import uuid4
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymongo
 from pymongo import ReturnDocument
-import urllib.parse
-import datetime
 from bson import ObjectId
 import bcrypt
-from uuid import uuid4
 
 
 app = Flask(__name__)
 CORS(app)
 
+# pylint: disable=R0904
 class User:
     '''
     Class to represent a user
@@ -72,8 +73,7 @@ class User:
         '''
         if not self.check_for_collection(name):
             return None
-        else:
-            return self.client.get_database("TeamProj").get_collection(name)
+        return self.client.get_database("TeamProj").get_collection(name)
 
     def create_collection(self, name):
         '''
@@ -119,26 +119,28 @@ class User:
                 True if the collection exists and false otherwise
         '''
 
-        if (self.client.get_database("TeamProj").list_collection_names(filter={"name": name}) != None):
+        if self.client.get_database("TeamProj").list_collection_names(filter={"name": name}) is not None:
             return True
         return False
 
-    def id_to_string_post(retPost):
+    def id_to_string_post(ret_post):
         '''
         Modifies a post (in the format of this discussion board) recieved from mongoDB for return to a browser by converting ObjectID objects to strings
 
             Parameters:
-                retPost (post): Post to modify and return
+                ret_post (post): Post to modify and return
 
             Returns:
-                retPost after modification
+                ret_post after modification
         '''
-        retPost['_id'] = str(retPost['_id'])
-        retPost['user'] = str(retPost['user'])
-        for reply in retPost['replies']:
+        ret_post['_id'] = str(ret_post['_id'])
+        ret_post['user'] = str(ret_post['user'])
+
+        for reply in ret_post['replies']:
             reply['_id'] = str(reply['_id'])
             reply['user'] = str(reply['user'])
-        return retPost
+
+        return ret_post
 
     def get_thread(self, board):
         '''
@@ -152,12 +154,14 @@ class User:
                 a list of all posts in 'Discussion_<board>' with IDs converted to strings
         '''
         collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
-        if (collection == None):
-            return None
-        posts = list(collection.find())
 
+        if collection == None:
+            return None
+
+        posts = list(collection.find())
         for post in posts:
             post = self.id_to_string_post(post)
+
         return posts
 
     def get_discussion_index(self):
@@ -177,28 +181,28 @@ class User:
             group["_id"] = str(group["_id"])
         return groups
 
-    def add_post(self, posttoAdd, board):
+    def add_post(self, post_to_add, board):
         '''
         Gives a post it's date and an empty replies array then adds it to the specified discussion board
 
             Parameters:
                 self (class): User class that contains this method
-                posttoAdd (post): Post to modify and  add
+                post_to_add (post): Post to modify and  add
                 board (String): name of the discussion board to add the post to
 
             Returns:
                 the post after added to the collection and converted to a response using id_to_string_post or None if the board can not be found
         '''
-        if (not self.check_for_collection(board)):
+        if not self.check_for_collection(board):
             return None
         collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
-        posttoAdd['date'] = datetime.datetime.utcnow()
-        posttoAdd['user'] = ObjectId(posttoAdd['user'])
-        posttoAdd['replies'] = []
-        retID = collection.insert_one(posttoAdd)
-        posttoAdd['_id'] = str(retID.inserted_id)
-        posttoAdd = self.id_to_string_post(posttoAdd)
-        return posttoAdd
+        post_to_add['date'] = datetime.datetime.utcnow()
+        post_to_add['user'] = ObjectId(post_to_add['user'])
+        post_to_add['replies'] = []
+        ret_ID = collection.insert_one(post_to_add)
+        post_to_add['_id'] = str(ret_ID.inserted_id)
+        post_to_add = self.id_to_string_post(post_to_add)
+        return post_to_add
 
     def reply_to_post(self, toReplyTo, board):
         '''
@@ -212,36 +216,38 @@ class User:
             Returns:
                 the post after added to the collection and converted to a response using id_to_string_post or None if the baord can not be found
         '''
-        if (not self.check_for_collection(board)):
+        if not self.check_for_collection(board):
             return None
+
         collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
-        for posttoAdd in toReplyTo['replies']:
-            posttoAdd['date'] = datetime.datetime.utcnow()
-            posttoAdd['user'] = ObjectId(posttoAdd['user'])
-            retPost = collection.find_one_and_update(
+        for post_to_add in toReplyTo['replies']:
+            post_to_add['date'] = datetime.datetime.utcnow()
+            post_to_add['user'] = ObjectId(post_to_add['user'])
+            ret_post = collection.find_one_and_update(
                 {'_id': ObjectId(toReplyTo['_id'])},
                 {'$push':
-                     {'replies': posttoAdd}
+                     {'replies': post_to_add}
                  },
                 upsert=True,
                 return_document=ReturnDocument.AFTER
             )
-        retPost = self.id_to_string_post(retPost)
-        return retPost
 
-    def add_thread(self, threadtoAdd):
+        ret_post = self.id_to_string_post(ret_post)
+        return ret_post
+
+    def add_thread(self, thread_to_add):
         '''
         Adds a thread to the Discussion_Index Collection and creates the collection for the thread
 
             Parameters:
                 self (class): User class that contains this method
-                threadtoAdd (thread): A thread formatted inside of a group to add to Discussion Index
+                thread_to_add (thread): A thread formatted inside of a group to add to Discussion Index
 
             Returns:
                 the thread in group with information such as url, numPosts, dateCreated and lastModified added
         '''
-        groupName = threadtoAdd['groupName']
-        threads = threadtoAdd['threads']
+        group_name = thread_to_add['group_name']
+        threads = thread_to_add['threads']
         collection = self.get_collection('Discussion_Index')
         out = list()
         for thread in threads:
@@ -249,9 +255,9 @@ class User:
             thread['numPosts'] = 0
             thread['dateCreated'] = datetime.datetime.utcnow()
             thread['lastModified'] = datetime.datetime.utcnow()
-            if (self.create_collection("Discussion_" + thread['url']) != None):
+            if self.create_collection("Discussion_" + thread['url']) is not None:
                 out.append(collection.find_one_and_update(
-                    {'groupName': groupName},
+                    {'group_name': group_name},
                     {'$push':
                          {'threads': thread}
                      },
@@ -264,23 +270,23 @@ class User:
             thread['_id'] = str(thread['_id'])
         return out
 
-    def update_thread(self, board, thread, incPost):
+    def update_thread(self, board, thread, inc_post):
         '''
-        updates the last modifed date of a specifed thread and increments it's numPosts by incPost
+        updates the last modifed date of a specifed thread and increments it's numPosts by inc_post
 
             Parameters:
                 self (class): User class that contains this method
                 board (String): name of the discussion board to update
                 thread (thread): A thread formatted inside of a group to update
-                incPost (int): the amount to increment the number of posts by
+                inc_post (int): the amount to increment the number of posts by
 
             Returns:
                 a JSON statement refering to the updated thread or None if the thread could not be found
         '''
         collection = self.get_collection('Discussion_Index')
-        if (self.get_collection("Discussion_" + urllib.parse.quote(board)) != None):
+        if self.get_collection("Discussion_" + urllib.parse.quote(board)) is not None:
             collection.find_one_and_update(
-                {'groupName': thread['groupName']},
+                {'group_name': thread['group_name']},
                 {'$push':
                      {'threads': {'lastModified': datetime.datetime.utcnow()}}
                  },
@@ -288,9 +294,9 @@ class User:
                 return_document=ReturnDocument.AFTER
             )
             collection.find_one_and_update(
-                {'groupName': thread['groupName']},
+                {'group_name': thread['group_name']},
                 {'$inc':
-                     {'threads': {'numPosts': incPost}}
+                     {'threads': {'numPosts': inc_post}}
                  },
                 array_filters={'url': urllib.parse.quote(board)},
                 return_document=ReturnDocument.AFTER
@@ -310,20 +316,20 @@ class User:
             Returns:
                 the threads in group that were removed
         '''
-        groupName = thread['groupName']
+        group_name = thread['group_name']
         threads = thread['threads']
         collection = self.get_collection('Discussion_Index')
         out = list()
         for thread in threads:
             self.delete_collection("Discussion_" + thread['url'])
             out.append(collection.find_one_and_update(
-                {'groupName': groupName},
+                {'group_name': group_name},
                 {'$pull':
                      {'threads': {'url': thread['url']}},
                  }
             ))
-            if (collection.find_one({'groupName': groupName})['threads'] == []):
-                collection.find_one_and_delete({'groupName': groupName})
+            if collection.find_one({'group_name': group_name})['threads'] == []:
+                collection.find_one_and_delete({'group_name': group_name})
         return out
 
     def remove_post(self, post, board):
@@ -338,7 +344,7 @@ class User:
             Returns:
                 the post that was removed or None if the collection was not found
         '''
-        if (not self.check_for_collection('Discussion_' + urllib.parse.quote(board))):
+        if not self.check_for_collection('Discussion_' + urllib.parse.quote(board)):
             return None
         collection = self.get_collection('Discussion_' + urllib.parse.quote(board))
         collection.delete_one({'_id': ObjectId(post['_id'])})
@@ -509,7 +515,7 @@ class User:
 
         if collection.count({'session_token': cookie_session}) == 0:
             return ('Session token not linked to a logged in account', 200)
-        
+
         return ('Account logged in', 201)
 
     def get_username(self, cookie_session):
@@ -537,8 +543,8 @@ class User:
 
         account = collection.find_one({'session_token': cookie_session})
         return (account['username'], 201)
-# split into give str of object id from cookie session
-# from string of object id, get username
+    # split into give str of object id from cookie session
+    # from string of object id, get username
 
 
 @app.route('/test')
@@ -584,7 +590,7 @@ def check_user_logged_in():
             resp = jsonify(login_check[0])
             resp.status_code = login_check[1]
 
-        return resp
+    return resp
 
 @app.route('/teamroster', methods=['GET', 'POST', 'DELETE'])
 def get_team_roster():
@@ -656,7 +662,7 @@ def roster_get_link_parse(name, status, position, specialization):
     return filters, single_name
 
 
-@app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/discussions/<board>', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion_board(board):
     '''
     Discussion Board Thead pages: Performs GET, POST, DELETE, PUT, or PATCH action based on the requet method.
@@ -669,7 +675,7 @@ def discussion_board(board):
     '''
     if request.method == 'GET':
         resp = User().get_thread(board)
-        if resp == None:
+        if resp is None:
             return jsonify({"error": "Thread not found"}), 404
 
         resp = jsonify(resp)
@@ -677,32 +683,32 @@ def discussion_board(board):
         return resp
 
     elif request.method == 'POST':
-        posttoAdd = request.get_json()
-        resp = User().add_post(posttoAdd, board)
-        if resp == None:
+        post_to_add = request.get_json()
+        resp = User().add_post(post_to_add, board)
+        if resp is None:
             return jsonify({"error": "Thread not found"}), 404
 
-        resp = jsonify(posttoAdd)
+        resp = jsonify(post_to_add)
         resp.status_code = 201
         return resp
 
-    elif request.method == 'DELETE' :
+    elif request.method == 'DELETE':
         post = request.get_json()
         if User().remove_post(post, board):
             return post
         return jsonify({"error": "Post not found"}), 404
 
-    elif request.method == 'PUT' :
+    elif request.method == 'PUT':
         reply = request.get_json()
         resp = User().reply_to_post(reply, board)
-        if resp == None:
+        if resp is None:
             return jsonify({"error": "Thread or Post not found"}), 404
 
         resp = jsonify(reply)
         resp.status_code = 201
         return resp
 
-    elif request.method == 'PATCH' :
+    elif request.method == 'PATCH':
         thread =  request.get_json()
         User().update_thread(board, thread)
         return None
@@ -721,24 +727,28 @@ def discussion():
     if request.method == 'GET':
         resp = jsonify(User().get_discussion_index())
         resp.status_code = 201
-        return resp
 
     elif request.method == 'POST':
-        threadtoAdd = request.get_json()
-        resp = User().add_thread(threadtoAdd)
-        if resp == None:
-            return jsonify({"error": "Thread already exists"}), 409
+        thread_to_add = request.get_json()
+        resp = User().add_thread(thread_to_add)
 
-        resp = jsonify(resp)
-        resp.status_code = 201
-        return resp
+        if resp is None:
+            resp = jsonify({"error": "Thread already exists"})
+            resp.status_code = 409
+        else:
+            resp = jsonify(resp)
+            resp.status_code = 201
 
     elif request.method == 'DELETE':
         thread = request.get_json()
         if User().remove_thread(thread):
-            return thread
+            resp = jsonify(thread)
+            resp.status_code = 201
+        else:
+            resp = jsonify({"error": "Thread not found"})
+            resp.status_code = 404
 
-        return jsonify({"error": "Thread not found"}), 404
+    return resp
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -753,13 +763,13 @@ def signup():
     '''
     if request.method == 'POST':
         account_to_create = request.get_json()
-
         creating_account = User().create_account(account_to_create)
 
         resp = jsonify(creating_account[0])
         resp.set_cookie('session', creating_account[0])
         resp.status_code = creating_account[1]
-        return resp
+
+    return resp
 
 @app.route('/login', methods=['PATCH'])
 def login():
@@ -774,10 +784,10 @@ def login():
     '''
     if request.method == 'PATCH':
         account_to_login = request.get_json()
-
         login_account = User().login_account(account_to_login)
 
         resp = jsonify(login_account[0])
         resp.set_cookie('session', login_account[0])
         resp.status_code = login_account[1]
-        return resp
+
+    return resp

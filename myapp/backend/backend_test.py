@@ -4,8 +4,7 @@ from backend import app as flask_app
 from backend import *
 
 '''
-Note that these tests are designed to not interact with any actual MongoDB databases and focus more on testing
-the logic of the backend (refactoring as needed to separate processing logic from any request/external calls).
+Note that these tests are designed to not interact with any actual MongoDB databases and focus more on testing the logic of the backend (refactoring as needed to separate processing logic from any request/external calls).
 
 Fixtures set-up an instance of our flask app for testing purposes.
 '''
