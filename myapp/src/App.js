@@ -31,11 +31,11 @@ export default function App() {
   // TODO: CHANGE THIS TO 45 MIN IN MS LATER
   const TEN_SECONDS_MS = 10000;
 
+  const link = 'http://localhost:5000/'; // For testing
+  // let link = 'https://clubtracker-backend.herokuapp.com/';
+
   async function fetch() {
     try {
-      const link = 'http://localhost:5000/'; // For testing
-      // let link = 'https://clubtracker-backend.herokuapp.com/';
-
       const response = await axios.get(link);
       return response;
     } catch (error) {
@@ -112,7 +112,7 @@ export default function App() {
               {/* TODO: PASS DOWN OBJECT ID AND IF USER IS LOGGED IN OR NOT */}
               <Route exact path="/discussion" component={DiscussionBoard} />
               <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
-              <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
+              <Route path="/discussion/:thread" render={(props) => <ThreadPage props={props} link={link} />} />
             </Switch>
           </Layout>
           <Footer />

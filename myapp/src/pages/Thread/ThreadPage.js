@@ -10,13 +10,14 @@ import Form from '../../components/Thread/Form';
 import './thread.css';
 
 function ThreadPage(props) {
-  const { thread } = props.match.params;
+  console.log(props);
+  const { thread } = props.props.match.params;
 
   const [posts, setPosts] = useState([]);
 
   async function fetch() {
     try {
-      const response = await axios.get(`http://localhost:5000/discussion/${thread}`);
+      const response = await axios.get(`${props.link}discussion/${thread}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -26,7 +27,7 @@ function ThreadPage(props) {
 
   async function makePostCall(post) {
     try {
-      const response = await axios.post(`http://localhost:5000/discussion/${thread}`, post);
+      const response = await axios.post(`${props.link}discussion/${thread}`, post);
       return response;
     } catch (error) {
       console.log(error);
@@ -36,7 +37,7 @@ function ThreadPage(props) {
 
   async function makeDeleteCall(post) {
     try {
-      const response = await axios.delete(`http://localhost:5000/discussion/${thread}`,
+      const response = await axios.delete(`${props.link}discussion/${thread}`,
         {
           data: post,
         });
