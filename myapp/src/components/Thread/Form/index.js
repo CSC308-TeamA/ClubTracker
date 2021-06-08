@@ -17,7 +17,7 @@ function Form({ handleSubmit, link }) {
       const response = await axios.get(`${link}userid/${session}`);
       return response.data[0];
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   }

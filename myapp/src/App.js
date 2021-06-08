@@ -98,7 +98,11 @@ export default function App() {
               <Route
                 path="/teamroster"
                 render={(props) => (
-                  <TeamRoster {...props} logInStatus={logInStatus} link={link} />
+                  <TeamRoster
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
                 )}
               />
               <Route path="/calendar" component={Calendar} />
@@ -112,19 +116,31 @@ export default function App() {
                 exact
                 path="/discussion"
                 render={(props) => (
-                  <DiscussionBoard {...props} logInStatus={logInStatus} link={link} />
+                  <DiscussionBoard
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
                 )}
               />
               <Route
                 path="/create_board"
                 render={(props) => (
-                  <CreateBoard {...props} logInStatus={logInStatus} link={link} />
+                  <CreateBoard
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
                 )}
               />
               <Route
                 path="/discussion/:thread"
                 render={(props) => (
-                  <ThreadPage {...props} logInStatus={logInStatus} link={link} />
+                  <ThreadPage
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
                 )}
               />
             </Switch>

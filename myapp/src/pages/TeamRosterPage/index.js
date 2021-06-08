@@ -97,7 +97,11 @@ function TeamRoster({ logInStatus, link }) {
         )
         : '' }
       <Filter handleSubmit={updatePage} link={link} />
-      <Roster characterData={characters} removeCharacter={removeCharacter} link={link} />
+      <Roster
+        characterData={characters}
+        removeCharacter={removeCharacter}
+        link={link}
+      />
     </div>
   );
 }
