@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -25,58 +27,97 @@ import CreateBoard from './pages/Discussion/CreateBoard';
 import ThreadPage from './pages/Thread/ThreadPage';
 
 export default function App() {
+  const [logInStatus, setLogInStatus] = useState(false);
+  // TODO: CHANGE THIS TO 45 MIN IN MS LATER
+  const TEN_SECONDS_MS = 10000;
+
+  async function fetch() {
+    try {
+      const link = 'http://localhost:5000/'; // For testing
+      // let link = 'https://clubtracker-backend.herokuapp.com/';
+
+      const response = await axios.get(link);
+      return response;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch().then((result) => {
+        if (result.status === 201) {
+          setLogInStatus(true);
+        }
+      });
+    }, TEN_SECONDS_MS);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <>
-      <Router>
-        <div>
-          <Navbar sticky="top" bg="warning">
-            <Navbar.Brand href="/">Bear Metal</Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="/home">Home</Nav.Link>
-                <Nav.Link href="/first">FIRST</Nav.Link>
-                <Nav.Link href="/about">About Us</Nav.Link>
-                <Nav.Link href="/sponsor">Sponsors</Nav.Link>
-                <Nav.Link href="/contact">Contact Us</Nav.Link>
-                <Nav.Link href="/discussion">Discussion Board</Nav.Link>
-                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="/calendar">Calendar</NavDropdown.Item>
-                  <NavDropdown.Item href="/pictures">Pictures</NavDropdown.Item>
-                  <NavDropdown.Item href="/teamroster">Team Roster</NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </Navbar.Collapse>
-          </Navbar>
+    <Router>
+      <div>
+        <Navbar sticky="top" bg="warning">
+          <Navbar.Brand href="/">Bear Metal</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="/home">Home</Nav.Link>
+              <Nav.Link href="/first">FIRST</Nav.Link>
+              <Nav.Link href="/about">About Us</Nav.Link>
+              <Nav.Link href="/sponsor">Sponsors</Nav.Link>
+              <Nav.Link href="/contact">Contact Us</Nav.Link>
+              <Nav.Link href="/discussion">Discussion Board</Nav.Link>
+              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="/calendar">Calendar</NavDropdown.Item>
+                <NavDropdown.Item href="/pictures">Pictures</NavDropdown.Item>
+                <NavDropdown.Item href="/teamroster">Team Roster</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            {logInStatus
+              ? <Nav.Link href="/logout">Log Out</Nav.Link>
+              : (
+                <>
+                  <Nav.Link href="/login">Log In</Nav.Link>
+                  <Nav.Link href="/signup">Sign Up</Nav.Link>
+                </>
+              )}
+          </Navbar.Collapse>
+        </Navbar>
 
-          <div className="container mt-3">
-            <Layout>
-              <Switch>
+        <div className="container mt-3">
+          <Layout>
+            <Switch>
 
-                <Route exact path={['/', '/home']} component={Home} />
-                {' '}
-                <Route path="/about" component={About} />
-                <Route path="/about" component={About} />
-                <Route path="/sponsor" component={Sponsor} />
-                <Route path="/contact" component={Contact} />
-                <Route path="/teamroster" component={TeamRoster} />
-                <Route path="/calendar" component={Calendar} />
-                <Route path="/first" component={First} />
-                <Route path="/pictures" component={Pictures} />
+              <Route exact path={['/', '/home']} component={Home} />
+              {' '}
+              <Route path="/about" component={About} />
+              <Route path="/about" component={About} />
+              <Route path="/sponsor" component={Sponsor} />
+              <Route path="/contact" component={Contact} />
+              <Route
+                path="/teamroster"
+                render={(props) => (
+                  <TeamRoster {...props} logInStatus={logInStatus} />
+                )}
+              />
+              <Route path="/calendar" component={Calendar} />
+              <Route path="/first" component={First} />
+              <Route path="/pictures" component={Pictures} />
 
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={SignUp} />
-
-                <Route exact path="/discussion" component={DiscussionBoard} />
-                <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
-                <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
-              </Switch>
-            </Layout>
-            <Footer />
-          </div>
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={SignUp} />
+              {/* TODO: ADD PATH FOR LOG OUT */}
+              {/* TODO: PASS DOWN OBJECT ID AND IF USER IS LOGGED IN OR NOT */}
+              <Route exact path="/discussion" component={DiscussionBoard} />
+              <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
+              <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
+            </Switch>
+          </Layout>
+          <Footer />
         </div>
-      </Router>
-    </>
+      </div>
+    </Router>
   );
 }
