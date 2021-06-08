@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Form as BootStrapForm, Col } from 'react-bootstrap';
 import { NewCard } from './BoardElements';
 
-function CreateBoard({ link }) {
+function CreateBoard({ logInStatus, link }) {
   const [board, setBoard] = useState(
     {
       groupName: '',
@@ -110,46 +110,51 @@ function CreateBoard({ link }) {
     <>
       <h2>CREATE A BOARD</h2>
 
-      <NewCard>
-        <BootStrapForm>
-          <BootStrapForm.Row>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="group">Group</label>
-              <select name="group" id="group" onChange={handleChange}>
-                <option value="">pick a group</option>
-                <option value="Robot">Robot</option>
-                <option value="Competition">Competition</option>
-              </select>
-            </BootStrapForm.Group>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={board.name}
-                onChange={handleChange}
-              />
-            </BootStrapForm.Group>
-          </BootStrapForm.Row>
-          <BootStrapForm.Row>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                name="description"
-                value={board.description}
-                onChange={handleChange}
-              />
-            </BootStrapForm.Group>
-            <input type="button" value="Create" onClick={submitForm} />
-          </BootStrapForm.Row>
-        </BootStrapForm>
-      </NewCard>
+      {logInStatus
+        ? (
+          <NewCard>
+            <BootStrapForm>
+              <BootStrapForm.Row>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="group">Group</label>
+                  <select name="group" id="group" onChange={handleChange}>
+                    <option value="">pick a group</option>
+                    <option value="Robot">Robot</option>
+                    <option value="Competition">Competition</option>
+                  </select>
+                </BootStrapForm.Group>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={board.name}
+                    onChange={handleChange}
+                  />
+                </BootStrapForm.Group>
+              </BootStrapForm.Row>
+              <BootStrapForm.Row>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={board.description}
+                    onChange={handleChange}
+                  />
+                </BootStrapForm.Group>
+                <input type="button" value="Create" onClick={submitForm} />
+              </BootStrapForm.Row>
+            </BootStrapForm>
+          </NewCard>
+        )
+        : <h2>YOU ARE NOT LOGGED IN</h2>}
     </>
   );
 }
 
 CreateBoard.propTypes = {
+  logInStatus: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
 };
 

@@ -9,7 +9,12 @@ import {
   ProfileLeft,
 } from './ThreadElements';
 
-function ThreadBody({ postData, removePost, link }) {
+function ThreadBody({
+  postData,
+  removePost,
+  logInStatus,
+  link,
+}) {
   const rows = postData.map((row) => (
     <>
       <Card.Body>
@@ -19,9 +24,13 @@ function ThreadBody({ postData, removePost, link }) {
         <DescriptionText>
           {row.post}
         </DescriptionText>
-        <Edit>
-          <button type="button" onClick={() => removePost(row)}>Delete</button>
-        </Edit>
+        {logInStatus
+          ? (
+            <Edit>
+              <button type="button" onClick={() => removePost(row)}>Delete</button>
+            </Edit>
+          )
+          : <div />}
       </Card.Body>
     </>
   ));

@@ -9,7 +9,7 @@ import Thread from '../../components/Thread/Thread';
 import Form from '../../components/Thread/Form';
 import './thread.css';
 
-function ThreadPage({ match, link }) {
+function ThreadPage({ match, logInStatus, link }) {
   const { thread } = match.params;
 
   const [posts, setPosts] = useState([]);
@@ -80,9 +80,12 @@ function ThreadPage({ match, link }) {
       <Thread
         postData={posts}
         removePost={deletePost}
+        logInStatus={logInStatus}
         link={link}
       />
-      <Form handleSubmit={createPost} link={link} />
+      {logInStatus
+        ? <Form handleSubmit={createPost} link={link} />
+        : <div />}
     </>
   );
 }

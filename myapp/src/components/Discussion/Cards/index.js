@@ -11,7 +11,7 @@ import {
   NavLink,
 } from './CardElements';
 
-function Cards({ groupData, deleteThread }) {
+function Cards({ groupData, deleteThread, logInStatus }) {
   const groupCards = groupData.map((group) => {
     const threads = group.threads.map((thread) => (
       <>
@@ -30,15 +30,19 @@ function Cards({ groupData, deleteThread }) {
                   </DescriptionText>
                 </ThreadInfo>
                 <td>
-                  <button
-                    type="button"
-                    onClick={() => deleteThread({
-                      groupName: group.groupName,
-                      threads: [thread],
-                    })}
-                  >
-                    Delete
-                  </button>
+                  {logInStatus
+                    ? (
+                      <button
+                        type="button"
+                        onClick={() => deleteThread({
+                          groupName: group.groupName,
+                          threads: [thread],
+                        })}
+                      >
+                        Delete
+                      </button>
+                    )
+                    : <div />}
                 </td>
               </tr>
             </table>

@@ -113,19 +113,19 @@ export default function App() {
                 exact
                 path="/discussion"
                 render={(props) => (
-                  <DiscussionBoard {...props} link={link} />
+                  <DiscussionBoard {...props} logInStatus={logInStatus} link={link} />
                 )}
               />
               <Route
                 path="/create_board"
                 render={(props) => (
-                  <CreateBoard {...props} link={link} />
+                  <CreateBoard {...props} logInStatus={logInStatus} link={link} />
                 )}
               />
               <Route
                 path="/discussion/:thread"
                 render={(props) => (
-                  <ThreadPage {...props} link={link} />
+                  <ThreadPage {...props} logInStatus={logInStatus} link={link} />
                 )}
               />
             </Switch>
