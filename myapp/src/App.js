@@ -36,7 +36,7 @@ export default function App() {
 
   async function fetch() {
     try {
-      const response = await axios.get(link);
+      const response = await axios.get(link, { withCredentials: true });
       return response;
     } catch (error) {
       return false;

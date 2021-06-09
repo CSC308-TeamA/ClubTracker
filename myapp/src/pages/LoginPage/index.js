@@ -73,7 +73,7 @@ function Login({ history, link }) {
 
   async function makeLoginAttempt(user) {
     try {
-      const response = await axios.patch(`${link}login`, user);
+      const response = await axios.patch(`${link}login`, user, { withCredentials: true });
       return response;
     } catch (error) {
       return false;

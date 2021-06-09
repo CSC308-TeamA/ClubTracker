@@ -27,7 +27,7 @@ Routes
 import datetime
 import urllib.parse
 from uuid import uuid4
-from flask import Flask, request, jsonify
+from flask import Flask, session, request, jsonify, make_response
 from flask_cors import CORS
 import pymongo
 from pymongo import ReturnDocument
@@ -37,7 +37,8 @@ from user_class import User
 
 
 app = Flask(__name__)
-CORS(app)
+app.config['SECRET_KEY'] = 'hey'
+CORS(app, supports_credentials=True)
 
 @app.route('/test')
 def hello_world():
@@ -71,15 +72,17 @@ def hello_world_test(test_rule):
 @app.route('/', methods=['GET'])
 def check_user_logged_in():
     if request.method == 'GET':
-        session_token = request.cookies.get('session')
+        session_token = request.cookies.get('session_token')
 
         if session_token is None:
             resp = jsonify({"error": "No session token stored in cookie"})
             resp.status_code = 200
         else:
             login_check = User().is_account_logged_in(session_token)
-            resp = jsonify(login_check[0])
+            resp = make_response(session.get('session_token'))
+            # resp = make_response(request.cookies.get('session'))
             resp.status_code = login_check[1]
+        print(session.get('session_token'))
 
     return resp
 
@@ -296,7 +299,8 @@ def signup():
         creating_account = User().create_account(account_to_create)
 
         resp = jsonify(creating_account[0])
-        resp.set_cookie('session', creating_account[0])
+        if creating_account[1] == 201:
+            resp.set_cookie('session', creating_account[0])
         resp.status_code = creating_account[1]
 
     return resp
@@ -313,12 +317,15 @@ def login():
             resp (JSON): Contains status code and object of account logged in
     '''
     if request.method == 'PATCH':
-        print('here')
         account_to_login = request.get_json()
         login_account = User().login_account(account_to_login)
 
-        resp = jsonify(login_account[0])
-        resp.set_cookie('session', login_account[0])
+        resp = make_response(login_account[0])
+        if login_account[1] == 201:
+            print(login_account[0])
+            session['session_token'] = login_account[0]
+            # resp.set_cookie('session', value=login_account[0], domain='127.0.0.1')
+            
         resp.status_code = login_account[1]
 
     return resp

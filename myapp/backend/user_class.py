@@ -466,6 +466,7 @@ class User:
 
         given_pswd = bytes(account_to_login['password'], encoding='utf-8')
         if not bcrypt.checkpw(given_pswd, account['password']):
+            print('here')
             return ('Incorrect password', 200)
 
         logged_in = collection.find_one_and_update(
