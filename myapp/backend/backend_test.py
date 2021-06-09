@@ -65,6 +65,22 @@ def test_mock_user_discussion_delete_fail(client):
     assert res.status_code == 404
 
 
+def test_mock_user_discussion_thread_put_fail(client):
+    when(User).reply_to_post(...).thenReturn(None)
+
+    res = client.put("/discussion/thread")
+    assert res.json == {"error": "Thread or Post not found"}
+    assert res.status_code == 404
+
+
+def test_mock_user_discussion_thread_post_fail(client):
+    when(User).add_post(...).thenReturn(None)
+
+    res = client.post("/discussion/thread")
+    assert res.json == {"error": "Thread not found"}
+    assert res.status_code == 404
+
+
 def test_roster_get_only_single_name():
     response = roster_get_link_parse("Steve", None, None, None)
 

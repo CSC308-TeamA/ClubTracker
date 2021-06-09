@@ -2,7 +2,7 @@
 //   View a display of members within the club so that I can see who's
 //   active and know about their roles and contact info
 
-// Scenario: Vie with specific filter
+// Scenario: View with specific filter
 //  Given I have any site access roles or none
 //  When I access the roster page and search using name, status, role, or position
 //  Then I should see team members that match the given criteria
