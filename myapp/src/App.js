@@ -22,7 +22,7 @@ import SignUp from './pages/SignUpPage';
 import Pictures from './pages/PicturePage';
 import Layout from './components/Layout';
 
-import DiscussionBoard from './pages/Discussion/DiscussionBoard';
+import DiscussionBoard from './pages/Discussion/DiscussionBoardPage';
 import CreateBoard from './pages/Discussion/CreateBoard';
 import ThreadPage from './pages/Thread/ThreadPage';
 

@@ -34,11 +34,14 @@ class User:
     mdb_username = 'TeamProjAdmin'
     sdb_password = 'teamproject308'
 
-    client = pymongo.MongoClient(
-        f'mongodb+srv://{mdb_username}:{sdb_password}@cluster0.3xlma.' +
+    # client = pymongo.MongoClient(
+    #     f'mongodb+srv://{mdb_username}:{sdb_password}@cluster0.3xlma.' +
+    #     'mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&' +
+    #     'tlsAllowInvalidCertificates=true'
+    # )
+    client = pymongo.MongoClient(f'mongodb+srv://{mdb_username}:{sdb_password}@cluster0.3xlma.' +
         'mongodb.net/TeamProj?retryWrites=true&w=majority&tls=true&' +
-        'tlsAllowInvalidCertificates=true'
-    )
+        'tlsAllowInvalidCertificates=true')
 
     def get_collection(self, name):
         '''

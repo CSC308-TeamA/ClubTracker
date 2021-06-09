@@ -4,8 +4,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import {Redirect} from "react-router-dom";
-import { Form as BootStrapForm, Col } from 'react-bootstrap';
-import { NewCard } from './BoardElements';
+import {
+  Form as BootStrapForm, Col, Popover, OverlayTrigger, Button,
+} from 'react-bootstrap';
+import { NewCard } from './CreateBoardElements';
 
 function CreateBoard(props) {
   const [board, setBoard] = useState(
@@ -107,8 +109,18 @@ function CreateBoard(props) {
 
   return (
     <>
-      <h2>CREATE A BOARD</h2>
-
+      <table>
+        <tr>
+          <td>
+            <h2>CREATE A BOARD</h2>
+          </td>
+          <td>
+            <a href="/discussion">
+              <button type="submit">Back</button>
+            </a>
+          </td>
+        </tr>
+      </table>
       <NewCard>
         <BootStrapForm>
           <BootStrapForm.Row>
@@ -140,7 +152,25 @@ function CreateBoard(props) {
                 onChange={handleChange}
               />
             </BootStrapForm.Group>
-            <input type="button" value="Create" onClick={submitForm} />
+            {['top'].map((placement) => (
+              <OverlayTrigger
+                trigger="click"
+                key={placement}
+                placement={placement}
+                overlay={(
+                  <Popover id={`popover-positioned-${placement}`}>
+                    <Popover.Content>
+                      <strong>Done!</strong>
+                    </Popover.Content>
+                  </Popover>
+                )}
+              >
+                <Button type="submit" onClick={submitForm}>
+                  Create
+                </Button>
+              </OverlayTrigger>
+            ))}
+            {/* <input type="button" value="Create" onClick={submitForm} /> */}
           </BootStrapForm.Row>
         </BootStrapForm>
       </NewCard>

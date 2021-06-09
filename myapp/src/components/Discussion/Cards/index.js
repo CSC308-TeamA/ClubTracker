@@ -4,51 +4,50 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import {
-  ThreadCard,
   TitleText,
   DescriptionText,
   NavLink,
+  CardElement,
+  ThreadTitle,
+  DescriptionInfo,
+  Delete,
+  HR,
 } from './CardElements';
 
 function Cards(props) {
   const groupCards = props.groupData.map((group) => {
     const threads = group.threads.map((thread) => (
       <>
-        <ThreadCard>
-          <Card.Body>
-            <table>
-              <tr>
-                <td>
-                  <NavLink to={`discussion/${thread.url}`}>
-                    <TitleText>
-                      {thread.name}
-                    </TitleText>
-                  </NavLink>
-                  <DescriptionText>
-                    {thread.description}
-                  </DescriptionText>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => props.deleteThread({
-                      groupName: group.groupName,
-                      threads: [thread],
-                    })}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </table>
-          </Card.Body>
-        </ThreadCard>
+        <Card.Body>
+          <HR />
+          <DescriptionInfo>
+            <NavLink to={`discussion/${thread.url}`}>
+              <ThreadTitle>
+                {thread.name}
+              </ThreadTitle>
+            </NavLink>
+            <DescriptionText>
+              {thread.description}
+            </DescriptionText>
+          </DescriptionInfo>
+          <Delete>
+            <button
+              type="button"
+              onClick={() => props.deleteThread({
+                groupName: group.groupName,
+                threads: [thread],
+              })}
+            >
+              Delete
+            </button>
+          </Delete>
+        </Card.Body>
       </>
     ));
 
     return (
       <>
-        <Card>
+        <CardElement>
           <Accordion>
             <Accordion.Toggle as={Card.Header} eventKey="0">
               <Card.Body>
@@ -56,7 +55,7 @@ function Cards(props) {
                   {group.groupName}
                 </TitleText>
                 <DescriptionText>
-                  Number of threads:
+                  🧵 Number of threads:
                   {' '}
                   {group.threads.length}
                 </DescriptionText>
@@ -68,7 +67,7 @@ function Cards(props) {
               </div>
             </Accordion.Collapse>
           </Accordion>
-        </Card>
+        </CardElement>
       </>
     );
   });
