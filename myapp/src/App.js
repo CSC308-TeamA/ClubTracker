@@ -115,6 +115,7 @@ export default function App() {
                   <Login
                     {...props}
                     link={link}
+                    setLogInStatus={setLogInStatus}
                   />
                 )}
               />

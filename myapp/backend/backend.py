@@ -72,14 +72,14 @@ def hello_world_test(test_rule):
 @app.route('/', methods=['GET'])
 def check_user_logged_in():
     if request.method == 'GET':
-        session_token = request.cookies.get('session_token')
+        session_token = session.get('session_token')
 
         if session_token is None:
             resp = jsonify({"error": "No session token stored in cookie"})
             resp.status_code = 200
         else:
             login_check = User().is_account_logged_in(session_token)
-            resp = make_response(session.get('session_token'))
+            resp = make_response(session_token)
             resp.status_code = login_check[1]
 
     return resp

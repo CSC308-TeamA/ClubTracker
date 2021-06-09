@@ -12,7 +12,7 @@ import {
 } from './LoginPageElements';
 import { loginErrors, emailEndings } from './LoginPageProperties';
 
-function Login({ history, link }) {
+function Login({ history, link, setLogInStatus }) {
   const [account, setAccount] = useState({
     email: '',
     password: '',
@@ -23,8 +23,6 @@ function Login({ history, link }) {
 
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const [validated, setValidated] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -71,28 +69,28 @@ function Login({ history, link }) {
     return noErrors;
   }
 
-  async function makeLoginAttempt(user) {
+  async function makeLoginAttempt() {
     try {
-      const response = await axios.patch(`${link}login`, user, { withCredentials: true });
+      const response = await axios.patch(
+        `${link}login`, account, { withCredentials: true },
+      );
       return response;
     } catch (error) {
       return false;
     }
   }
 
-  async function loginAttempt(user) {
+  async function loginAttempt() {
     let loggedIn = false;
 
-    await makeLoginAttempt(user).then((result) => {
-      if (result.status !== 201) {
-        setErrorMessage(result.data);
-        console.log(errorMessage);
-        loggedIn = false;
-      } else {
-        setValidated(true);
-        loggedIn = true;
-      }
-    });
+    const result = await makeLoginAttempt();
+    if (result.status !== 201) {
+      await setErrorMessage(result.data);
+      console.log(errorMessage);
+      loggedIn = false;
+    } else {
+      loggedIn = true;
+    }
 
     return loggedIn;
   }
@@ -100,21 +98,20 @@ function Login({ history, link }) {
   async function submitForm() {
     const inputValid = checkInput();
     if (!inputValid) {
-      setShowError(true);
+      await setShowError(true);
       console.log('NOPE');
       console.log(showError);
-      setValidated(false);
       return;
     }
 
-    const loginValid = await loginAttempt(account);
+    const loginValid = await loginAttempt();
     if (!loginValid) {
-      setShowError(true);
-      setValidated(false);
+      await setShowError(true);
       return;
     }
 
-    if (inputValid && loginValid && validated) {
+    if (inputValid && loginValid) {
+      setLogInStatus(true);
       history.push('/home');
     }
   }
@@ -179,6 +176,7 @@ function Login({ history, link }) {
 Login.propTypes = {
   history: PropTypes.any.isRequired,
   link: PropTypes.string.isRequired,
+  setLogInStatus: PropTypes.func.isRequired,
 };
 
 export default Login;
