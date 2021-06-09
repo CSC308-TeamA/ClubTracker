@@ -6,4 +6,12 @@ export const loginErrors = {
   wrongPassword: false,
 };
 
-export const emailEndings = ['.com', '.net', '.edu', '.org'];
+export const stdErrors = ['noEmail', 'noPassword', 'wrongEmailForm'];
+
+export const errorMap = {
+  noEmail: 'Please enter an email',
+  noPassword: 'Please enter a password',
+  wrongEmailForm: 'Please enter an email in the following form: email@email.com',
+};
+
+export const emailEndings = ['.com', '.net', '.edu', '.org', '.io'];

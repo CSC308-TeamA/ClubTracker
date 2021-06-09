@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
+  Alert,
   Col, Form, Row,
 } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -10,7 +11,9 @@ import {
   LoginForm, LoginFormTitle, PasswordCheck, PasswordLabel,
   LoginButton, NoAccount,
 } from './LoginPageElements';
-import { loginErrors, emailEndings } from './LoginPageProperties';
+import {
+  loginErrors, stdErrors, errorMap, emailEndings,
+} from './LoginPageProperties';
 
 function Login({ history, link, setLogInStatus }) {
   const [account, setAccount] = useState({
@@ -86,7 +89,6 @@ function Login({ history, link, setLogInStatus }) {
     const result = await makeLoginAttempt();
     if (result.status !== 201) {
       await setErrorMessage(result.data);
-      console.log(errorMessage);
       loggedIn = false;
     } else {
       loggedIn = true;
@@ -99,8 +101,6 @@ function Login({ history, link, setLogInStatus }) {
     const inputValid = checkInput();
     if (!inputValid) {
       await setShowError(true);
-      console.log('NOPE');
-      console.log(showError);
       return;
     }
 
@@ -120,6 +120,19 @@ function Login({ history, link, setLogInStatus }) {
     <LoginForm>
       <LoginForm.Body>
         <LoginFormTitle>Log In</LoginFormTitle>
+        <Alert show={showError} variant="danger" onClose={() => setShowError(false)} dismissible>
+          {Object.entries(loginErrors).map((required) => {
+            let msg = '';
+            if (required[1]) {
+              if (stdErrors.includes(required[0])) {
+                msg = errorMap[required[0]];
+              } else {
+                msg = errorMessage;
+              }
+            }
+            return msg;
+          })}
+        </Alert>
         <Form>
           <Form.Group>
             <Form.Label>Email</Form.Label>

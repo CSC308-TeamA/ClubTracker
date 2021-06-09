@@ -29,7 +29,7 @@ import ThreadPage from './pages/Thread/ThreadPage';
 export default function App() {
   const [logInStatus, setLogInStatus] = useState(false);
   // TODO: CHANGE THIS TO 45 MIN IN MS LATER
-  const TEN_SECONDS_MS = 10000;
+  const TEN_SECONDS_MS = 1000;
 
   const link = 'http://localhost:5000/'; // For testing
   // let link = 'https://clubtracker-backend.herokuapp.com/';
@@ -47,6 +47,7 @@ export default function App() {
     const interval = setInterval(() => {
       fetch().then((result) => {
         if (result.status === 201) {
+          console.log(result.data);
           setLogInStatus(true);
         }
       });

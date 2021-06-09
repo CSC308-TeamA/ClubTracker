@@ -61,4 +61,4 @@ export const errorMap = {
   ec2_phone_number: '(Second) Emergency Contact\'s Phone Number',
 };
 
-export const emailEndings = ['.com', '.net', '.edu', '.org'];
+export const emailEndings = ['.com', '.net', '.edu', '.org', '.io'];
