@@ -34,3 +34,8 @@ export const Center = styled.h2`
 export const NewModal = styled(Modal)`
   color: black;
 `;
+
+export const AccountInput = styled.input`
+  background: white;
+  color: black;
+`;
