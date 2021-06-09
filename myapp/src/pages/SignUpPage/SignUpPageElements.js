@@ -11,6 +11,11 @@ export const SignupFormTitle = styled(Card.Title)`
   text-align: center;
 `;
 
+export const EmailLabel = styled(Form.Label)`
+  margin: 0px 0px 5px 0px;
+  padding-right: 20px;
+`;
+
 export const PasswordCheck = styled.div`
   display: flex;
   justify-content: flex-end;

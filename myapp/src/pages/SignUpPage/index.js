@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import {
-  SignupForm, SignupFormTitle, PasswordCheck, PasswordLabel,
+  SignupForm, SignupFormTitle, EmailLabel, PasswordCheck, PasswordLabel,
   SignupButton, AlreadyHaveAccount,
 } from './SignUpPageElements';
 import {
@@ -95,10 +95,10 @@ function SignUp({ history, link, setLogInStatus }) {
     const result = await makeSignupAttempt();
     if (result.status !== 201) {
       await setErrorMessage(result.data);
-      console.log(errorMessage);
-
+      signupErrors.signupAttemptError = true;
       signnedUp = false;
     } else {
+      signupErrors.signupAttemptError = false;
       signnedUp = true;
     }
 
@@ -160,7 +160,7 @@ function SignUp({ history, link, setLogInStatus }) {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Email</Form.Label>
+            <EmailLabel>Email</EmailLabel>
             <Form.Control
               type="text"
               name="email"

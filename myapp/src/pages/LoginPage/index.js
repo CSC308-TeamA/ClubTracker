@@ -87,8 +87,10 @@ function Login({ history, link, setLogInStatus }) {
     const result = await makeLoginAttempt();
     if (result.status !== 201) {
       await setErrorMessage(result.data);
+      loginErrors.loginAttemptError = true;
       loggedIn = false;
     } else {
+      loginErrors.loginAttemptError = false;
       loggedIn = true;
     }
 

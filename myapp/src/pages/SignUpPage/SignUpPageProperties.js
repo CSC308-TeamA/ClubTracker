@@ -3,8 +3,7 @@ export const signupErrors = {
   noEmail: false,
   wrongEmailForm: false,
   noPassword: false,
-  emailExists: false,
-  usernameExists: false,
+  signupAttemptError: false,
 };
 
 export const stdErrors = ['noUsername', 'noEmail', 'noPassword', 'wrongEmailForm'];

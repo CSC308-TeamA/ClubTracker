@@ -2,8 +2,7 @@ export const loginErrors = {
   noEmail: false,
   wrongEmailForm: false,
   noPassword: false,
-  noAccount: false,
-  wrongPassword: false,
+  loginAttemptError: false,
 };
 
 export const stdErrors = ['noEmail', 'noPassword', 'wrongEmailForm'];
