@@ -73,8 +73,10 @@ def hello_world_test(test_rule):
 def check_user_logged_in():
     if request.method == 'GET':
         session_token = session.get('session_token')
-
-        if session_token is None:
+        if session_token == '':
+            resp = jsonify({"error": "No session token"})
+            resp.status_code = 200
+        elif session_token is None:
             resp = jsonify({"error": "No session token stored in cookie"})
             resp.status_code = 200
         else:
@@ -326,9 +328,9 @@ def login():
 
     return resp
 
-@app.route('/logout', methods=['PATCH'])
+@app.route('/logout', methods=['GET'])
 def logout():
-    if request.method == 'PATCH':
+    if request.method == 'GET':
         user_to_logout = session.get('session_token')
         if user_to_logout is None:
             resp = jsonify({"error": "No session token stored in cookie"})
