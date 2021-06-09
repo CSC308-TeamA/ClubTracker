@@ -32,8 +32,8 @@ export default function App() {
   const [session, setSession] = useState('');
   const ONE_SECONDS_MS = 1000;
 
-  const link = 'http://localhost:5000/'; // For testing
-  // let link = 'https://clubtracker-backend.herokuapp.com/';
+  // const link = 'http://localhost:5000/'; // For testing
+  let link = 'https://clubtracker-backend.herokuapp.com/';
 
   async function fetch() {
     try {
