@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Form as BootStrapForm, Col } from 'react-bootstrap';
 import { NewCard } from './CreateBoardElements';
 
-function CreateBoard({ logInStatus, link }) {
+function CreateBoard({ history, logInStatus, link }) {
   const [board, setBoard] = useState(
     {
       groupName: '',
@@ -73,8 +73,9 @@ function CreateBoard({ logInStatus, link }) {
     }
     makePostCall(thread).then((result) => {
       if (result) {
-        // console.log(result);
-        // redirect
+        const { threads } = result.data[0];
+        const newThread = threads[threads.length - 1].url;
+        history.push(`/discussion/${newThread}`);
       }
     });
   }
@@ -154,6 +155,7 @@ function CreateBoard({ logInStatus, link }) {
 }
 
 CreateBoard.propTypes = {
+  history: PropTypes.any.isRequired,
   logInStatus: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
 };
