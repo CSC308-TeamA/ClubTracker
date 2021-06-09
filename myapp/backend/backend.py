@@ -1,20 +1,33 @@
 '''
-Classes:
-    User
-
-Functions:
-    hello_world() --> string,         route: /test
-    get_team_roster() --> JSON,       route: /teamroster
-    discussion_board(board) --> JSON, route: /discussions/<board>
-
-Misc Variables:
-    app
+Routes
+------
+    /test
+        hello_world():
+    /test/<test_rule>
+        hello_world_test(test_rule):
+    /
+        check_user_logged_in():
+    /teamroster
+        get_team_roster():
+        roster_get_link_parse(name, status, position, specialization):
+    /discussion/<board>
+        discussion_board(board):
+    /discussion
+        discussion():
+    /userid/<session>
+        user_id(session):
+    /username/<userid>
+        username(userid):
+    /signup
+        signup():
+    /login
+        login():
 '''
 
 import datetime
 import urllib.parse
 from uuid import uuid4
-from flask import Flask, request, jsonify
+from flask import Flask, session, request, jsonify, make_response
 from flask_cors import CORS
 import pymongo
 from pymongo import ReturnDocument
@@ -22,8 +35,10 @@ from bson import ObjectId
 import bcrypt
 from user_class import User
 
+
 app = Flask(__name__)
-CORS(app)
+app.config['SECRET_KEY'] = 'hey'
+CORS(app, supports_credentials=True)
 
 @app.route('/test')
 def hello_world():
@@ -41,7 +56,6 @@ def hello_world():
         return test
     return "fail"
 
-
 @app.route('/test/<test_rule>')
 def hello_world_test(test_rule):
     '''
@@ -58,14 +72,16 @@ def hello_world_test(test_rule):
 @app.route('/', methods=['GET'])
 def check_user_logged_in():
     if request.method == 'GET':
-        session_token = request.cookies.get('session')
-
-        if session_token is None:
+        session_token = session.get('session_token')
+        if session_token == '':
+            resp = jsonify({"error": "No session token"})
+            resp.status_code = 200
+        elif session_token is None:
             resp = jsonify({"error": "No session token stored in cookie"})
             resp.status_code = 200
         else:
             login_check = User().is_account_logged_in(session_token)
-            resp = jsonify(login_check[0])
+            resp = make_response(session_token)
             resp.status_code = login_check[1]
 
     return resp
@@ -114,7 +130,6 @@ def get_team_roster():
             resp.status_code = 404
 
     return resp
-
 
 def roster_get_link_parse(name, status, position, specialization):
     filters = {}
@@ -172,7 +187,7 @@ def discussion_board(board):
     elif request.method == 'DELETE':
         post = request.get_json()
         if User().remove_post(post, board):
-          return post
+            return post
         return jsonify({"error": "Post not found"}), 404
 
     elif request.method == 'PUT':
@@ -184,8 +199,6 @@ def discussion_board(board):
         resp = jsonify(resp)
         resp.status_code = 201
         return resp
-
-    
 
 @app.route('/discussion', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
 def discussion():
@@ -236,7 +249,39 @@ def discussion():
 
     return resp
 
-    
+@app.route('/userid/<session>', methods=['GET'])
+def user_id(session):
+    '''
+    Discussion Board: Performs GET action to acquire user id from session id.
+
+        Parameters:
+            session
+
+        Returns:
+            resp (JSON): Contains status code and either an error message or the ObjectId string of the user id.
+    '''
+    if request.method == 'GET':
+        resp = jsonify(User().get_userid(session))
+        resp.status_code = 201
+
+    return resp
+
+@app.route('/username/<userid>', methods=['GET'])
+def username(userid):
+    '''
+    Discussion Board: Performs GET action to acquire username from userid
+
+        Parameters:
+            userid
+
+        Returns:
+            resp (JSON): Contains status code and either an error message or the username.
+    '''
+    if request.method == 'GET':
+        resp = jsonify(User().get_username(userid))
+        resp.status_code = 201
+
+    return resp
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -253,8 +298,9 @@ def signup():
         account_to_create = request.get_json()
         creating_account = User().create_account(account_to_create)
 
-        resp = jsonify(creating_account[0])
-        resp.set_cookie('session', creating_account[0])
+        resp = make_response(creating_account[0])
+        if creating_account[1] == 201:
+            session['session_token'] = creating_account[0]
         resp.status_code = creating_account[1]
 
     return resp
@@ -268,14 +314,33 @@ def login():
             None
 
         Returns:
-            resp (JSON): Contains status code and object of account logged in.
+            resp (JSON): Contains status code and object of account logged in
     '''
     if request.method == 'PATCH':
         account_to_login = request.get_json()
         login_account = User().login_account(account_to_login)
 
-        resp = jsonify(login_account[0])
-        resp.set_cookie('session', login_account[0])
+        resp = make_response(login_account[0])
+        if login_account[1] == 201:
+            session['session_token'] = login_account[0]
+
         resp.status_code = login_account[1]
+
+    return resp
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    if request.method == 'GET':
+        user_to_logout = session.get('session_token')
+        if user_to_logout is None:
+            resp = jsonify({"error": "No session token stored in cookie"})
+            resp.status_code = 200
+        else:
+            logout_user = User().logout_account(user_to_logout)
+            resp = make_response(logout_user[0])
+            if logout_user[1] == 201:
+                session['session_token'] = ''
+
+            resp.status_code = logout_user[1]
 
     return resp

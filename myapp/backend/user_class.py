@@ -1,10 +1,11 @@
-from time import thread_time_ns
+import urllib.parse
+import datetime
 from flask import jsonify
 import pymongo
 from pymongo import ReturnDocument
-import urllib.parse
-import datetime
 from bson import ObjectId
+import bcrypt
+from uuid import uuid4
 
 class User:
     '''
@@ -464,10 +465,11 @@ class User:
         email = account_to_login['email']
         account = collection.find_one({'email': email})
         if not account:
-            return (f'No account with email {email}', 200)
+            return (f'No account associated to email: {email}', 200)
 
         given_pswd = bytes(account_to_login['password'], encoding='utf-8')
         if not bcrypt.checkpw(given_pswd, account['password']):
+            print('here')
             return ('Incorrect password', 200)
 
         logged_in = collection.find_one_and_update(
@@ -502,9 +504,9 @@ class User:
 
         return ('Account logged in', 201)
 
-    def get_username(self, cookie_session):
+    def get_userid(self, cookie_session):
         '''
-        Gets the username associated to the session_token stored in the cookie. Returns a string and status code.
+        Gets the userid associated to the session_token stored in the cookie. Returns a string and status code.
 
             Status Codes
             ------------
@@ -516,7 +518,7 @@ class User:
                 cookie_session (String): Session token stored in the cookie
 
             Returns:
-                message (string): Either an error message or the username associated with the session token
+                message (string): Either an error message or the user id associated with the session token
                 status_code (int): Status code
         '''
         collection = self.get_collection('Accounts')
@@ -526,8 +528,41 @@ class User:
             return resp
 
         account = collection.find_one({'session_token': cookie_session})
+        return (str(account['_id']), 201)
+
+    def get_username(self, user_id):
+        '''
+        Gets the username associated to the session_token stored in the cookie. Returns a string and status code.
+
+            Status Codes
+            ------------
+            200: No account associated with the given session token
+            201: Account found
+
+            Parameters:
+                self (class): User class that contains this method
+                user_id (String): ObjectId of desired user
+
+            Returns:
+                message (string): Either an error message or the username associated with the user id
+                status_code (int): Status code
+        '''
+        collection = self.get_collection('Accounts')
+
+        account = collection.find_one({'_id': ObjectId(user_id)})
+        if not account:
+            return (f'No account with userid {user_id}', 200)
         return (account['username'], 201)
-    # split into give str of object id from cookie session
-    # from string of object id, get username
 
+    def logout_account(self, session_token):
+        collection = self.get_collection('Accounts')
 
+        if collection.count({'session_token': session_token}) == 0:
+            return ('Session token not linked to a logged in account', 200)
+
+        collection.find_one_and_update(
+            {'session_token': session_token},
+            {'$set': {'session_token': ''}},
+            return_document=ReturnDocument.AFTER
+        )
+        return ('Account logged out', 201)

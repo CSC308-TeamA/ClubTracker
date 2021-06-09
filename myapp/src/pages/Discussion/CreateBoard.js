@@ -4,12 +4,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import {Redirect} from "react-router-dom";
-import {
-  Form as BootStrapForm, Col, Popover, OverlayTrigger, Button,
-} from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Form as BootStrapForm, Col } from 'react-bootstrap';
 import { NewCard } from './CreateBoardElements';
 
-function CreateBoard(props) {
+function CreateBoard({ logInStatus, link }) {
   const [board, setBoard] = useState(
     {
       groupName: '',
@@ -51,7 +50,7 @@ function CreateBoard(props) {
 
   async function makePostCall(thread) {
     try {
-      const response = await axios.post('http://localhost:5000/discussion', thread);
+      const response = await axios.post(`${link}discussion`, thread);
       return response;
     } catch (error) {
       // console.log(error);
@@ -109,73 +108,54 @@ function CreateBoard(props) {
 
   return (
     <>
-      <table>
-        <tr>
-          <td>
-            <h2>CREATE A BOARD</h2>
-          </td>
-          <td>
-            <a href="/discussion">
-              <button type="submit">Back</button>
-            </a>
-          </td>
-        </tr>
-      </table>
-      <NewCard>
-        <BootStrapForm>
-          <BootStrapForm.Row>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="group">Group</label>
-              <select name="group" id="group" onChange={handleChange}>
-                <option value="">pick a group</option>
-                <option value="Robot">Robot</option>
-                <option value="Competition">Competition</option>
-              </select>
-            </BootStrapForm.Group>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={board.name}
-                onChange={handleChange}
-              />
-            </BootStrapForm.Group>
-          </BootStrapForm.Row>
-          <BootStrapForm.Row>
-            <BootStrapForm.Group as={Col} controlId="formBasicPassword">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                name="description"
-                value={board.description}
-                onChange={handleChange}
-              />
-            </BootStrapForm.Group>
-            {['top'].map((placement) => (
-              <OverlayTrigger
-                trigger="click"
-                key={placement}
-                placement={placement}
-                overlay={(
-                  <Popover id={`popover-positioned-${placement}`}>
-                    <Popover.Content>
-                      <strong>Done!</strong>
-                    </Popover.Content>
-                  </Popover>
-                )}
-              >
-                <Button type="submit" onClick={submitForm}>
-                  Create
-                </Button>
-              </OverlayTrigger>
-            ))}
-            {/* <input type="button" value="Create" onClick={submitForm} /> */}
-          </BootStrapForm.Row>
-        </BootStrapForm>
-      </NewCard>
+      <h2>CREATE A BOARD</h2>
+
+      {logInStatus
+        ? (
+          <NewCard>
+            <BootStrapForm>
+              <BootStrapForm.Row>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="group">Group</label>
+                  <select name="group" id="group" onChange={handleChange}>
+                    <option value="">pick a group</option>
+                    <option value="Robot">Robot</option>
+                    <option value="Competition">Competition</option>
+                  </select>
+                </BootStrapForm.Group>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={board.name}
+                    onChange={handleChange}
+                  />
+                </BootStrapForm.Group>
+              </BootStrapForm.Row>
+              <BootStrapForm.Row>
+                <BootStrapForm.Group as={Col} controlId="formBasicPassword">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={board.description}
+                    onChange={handleChange}
+                  />
+                </BootStrapForm.Group>
+                <input type="button" value="Create" onClick={submitForm} />
+              </BootStrapForm.Row>
+            </BootStrapForm>
+          </NewCard>
+        )
+        : <h2>YOU ARE NOT LOGGED IN</h2>}
     </>
   );
 }
+
+CreateBoard.propTypes = {
+  logInStatus: PropTypes.bool.isRequired,
+  link: PropTypes.string.isRequired,
+};
 
 export default CreateBoard;

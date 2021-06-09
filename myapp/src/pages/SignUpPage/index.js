@@ -1,87 +1,220 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import {
-  NavLink, NewDiv, NewCard, Center, NewModal,
+  Alert,
+  Col, Form, Row,
+} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import {
+  SignupForm, SignupFormTitle, EmailLabel, PasswordCheck, PasswordLabel,
+  SignupButton, AlreadyHaveAccount,
 } from './SignUpPageElements';
-import ProfileForm from '../../components/Authentication/ProfileForm';
-import ProfilePreview from '../../components/Authentication/ProfilePreview';
-import pfp3 from '../../assets/profiles/pfp3.gif';
+import {
+  signupErrors, stdErrors, errorMap, emailEndings,
+} from './SignUpPageProperties';
 
-function SignUp() {
-  const [show, setShow] = useState(false);
+function SignUp({ history, link, setLogInStatus }) {
+  const [account, setAccount] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [showPassword, setShowPassword] = useState('password');
 
-  const [characters, setCharacters] = useState([
-    {
-      first: 'John',
-      last: 'Doe',
-      phone: '(555) 555-5555',
-      user: 'johndoe123',
-      email: 'john@email.com',
-      password: 'password',
-      role: 'Advisor',
-      position: 'Lead',
-      specialization: 'Swerve Drive',
-      picture: pfp3,
-    },
-  ]);
-  function updateList(person) {
-    setCharacters([person]);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    const temp = { ...account };
+
+    temp[name] = value;
+    setAccount(temp);
   }
-  return (
-    <>
-      <Center>Sign Up Here!</Center>
-      <NewDiv>
-        <NewCard>
-          <Form>
-            <ProfileForm handleSubmit={updateList} />
 
-            <Button variant="primary" onClick={handleShow}>
-              Discussion
-            </Button>
-            <NewModal show={show} onHide={handleClose}>
-              <NewModal.Header closeButton>
-                <NewModal.Title>
-                  Hello 👋! Thank you for signing up.
-                  Please confirm your information below.
-                </NewModal.Title>
-              </NewModal.Header>
-              <NewModal.Body>
-                <ProfilePreview characterData={characters} />
-                <p>
-                  You can proceed to the discussion board or stay here...
-                  only if you want to...
-                </p>
-              </NewModal.Body>
-              <NewModal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  <NavLink to="/discussion">Go to discussion</NavLink>
-                </Button>
-              </NewModal.Footer>
-            </NewModal>
-          </Form>
-        </NewCard>
-      </NewDiv>
-      <NewDiv>
-        <NewCard>
-          <NewCard.Body>
-            <NewCard.Title>Already signed up?</NewCard.Title>
-            <NewCard.Text>
-              Click below to log in.
-            </NewCard.Text>
-            <Button variant="primary" type="Log In">
-              <NavLink to="/login">Log In</NavLink>
-            </Button>
-          </NewCard.Body>
-        </NewCard>
-      </NewDiv>
-    </>
+  function handlePrivateClick() {
+    setPasswordCheck(!passwordCheck);
+
+    if (showPassword === 'password') {
+      setShowPassword('text');
+    } else {
+      setShowPassword('password');
+    }
+  }
+
+  function checkInput() {
+    let noErrors = true;
+
+    if (account.username.trim() === '') {
+      signupErrors.noUsername = true;
+      noErrors = false;
+    } else {
+      signupErrors.noUsername = false;
+    }
+
+    if (account.email.trim() === '') {
+      signupErrors.noEmail = true;
+      noErrors = false;
+    } else {
+      signupErrors.noEmail = false;
+      if ((account.email.split('@').length > 1) && (emailEndings.includes(account.email.slice(-4)))) {
+        signupErrors.wrongEmailForm = false;
+      } else {
+        signupErrors.wrongEmailForm = true;
+        noErrors = false;
+      }
+    }
+
+    if (account.password.trim() === '') {
+      signupErrors.noPassword = true;
+      noErrors = false;
+    } else {
+      signupErrors.noPassword = false;
+    }
+
+    return noErrors;
+  }
+
+  async function makeSignupAttempt() {
+    try {
+      const response = await axios.post(
+        `${link}signup`, account, { withCredentials: true },
+      );
+      return response;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async function signupAttempt() {
+    let signnedUp = false;
+
+    const result = await makeSignupAttempt();
+    if (result.status !== 201) {
+      await setErrorMessage(result.data);
+      signupErrors.signupAttemptError = true;
+      signnedUp = false;
+    } else {
+      signupErrors.signupAttemptError = false;
+      signnedUp = true;
+    }
+
+    return signnedUp;
+  }
+
+  async function submitForm() {
+    const inputValid = checkInput();
+    if (!inputValid) {
+      await setShowError(true);
+      return;
+    }
+
+    const signupValid = await signupAttempt();
+    if (!signupValid) {
+      await setShowError(true);
+      return;
+    }
+
+    if (inputValid && signupValid) {
+      setLogInStatus(true);
+      history.push('/home');
+    }
+  }
+
+  return (
+    <SignupForm>
+      <SignupForm.Body>
+        <SignupFormTitle>Sign Up</SignupFormTitle>
+        <Alert show={showError} variant="danger" onClose={() => setShowError(false)} dismissible>
+          {Object.entries(signupErrors).map((required) => {
+            let msg = '';
+            if (required[1]) {
+              if (stdErrors.includes(required[0])) {
+                msg = errorMap[required[0]];
+              } else {
+                msg = errorMessage;
+              }
+              return (
+                <>
+                  {msg}
+                  <br />
+                </>
+              );
+            }
+            return msg;
+          })}
+        </Alert>
+        <Form>
+          <Form.Group>
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              placeholder="username"
+              value={account.username}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <EmailLabel>Email</EmailLabel>
+            <Form.Control
+              type="text"
+              name="email"
+              placeholder="email@gmail.com"
+              value={account.email}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Row>
+            <Col>
+              <PasswordLabel>Password</PasswordLabel>
+            </Col>
+
+            <PasswordCheck>
+              <Form.Check
+                type="checkbox"
+                name="showPassword"
+                id="showPassword"
+                value={passwordCheck}
+                checked={passwordCheck}
+                onChange={handlePrivateClick}
+              />
+              <PasswordLabel>Show Password</PasswordLabel>
+            </PasswordCheck>
+          </Row>
+
+          <Form.Control
+            type={showPassword}
+            id="password"
+            name="password"
+            placeholder="password"
+            value={account.password}
+            onChange={handleChange}
+          />
+
+          <SignupButton variant="primary" onClick={submitForm}>
+            Sign Up
+          </SignupButton>
+        </Form>
+
+        <AlreadyHaveAccount>
+          Already have an account?
+          <NavLink to="/login"> Log In!</NavLink>
+        </AlreadyHaveAccount>
+      </SignupForm.Body>
+    </SignupForm>
   );
 }
+
+SignUp.propTypes = {
+  history: PropTypes.any.isRequired,
+  link: PropTypes.string.isRequired,
+  setLogInStatus: PropTypes.func.isRequired,
+};
 
 export default SignUp;

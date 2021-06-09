@@ -1,51 +1,201 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import {
-  NavLink, NewDiv, NewCard, Center,
+  Alert,
+  Col, Form, Row,
+} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import {
+  LoginForm, LoginFormTitle, PasswordCheck, PasswordLabel,
+  LoginButton, NoAccount,
 } from './LoginPageElements';
-import LoginCheck from '../../components/Authentication/LoginCheck';
+import {
+  loginErrors, stdErrors, errorMap, emailEndings,
+} from './LoginPageProperties';
 
-function Login() {
-  const [setCharacters] = useState([
-    {
-      email: 'john@email.com',
-      password: 'password',
-    },
-  ]);
+function Login({ history, link, setLogInStatus }) {
+  const [account, setAccount] = useState({
+    email: '',
+    password: '',
+  });
 
-  function updateList(person) {
-    setCharacters([person]);
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [showPassword, setShowPassword] = useState('password');
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    const temp = { ...account };
+
+    temp[name] = value;
+    setAccount(temp);
+  }
+
+  function handlePrivateClick() {
+    setPasswordCheck(!passwordCheck);
+
+    if (showPassword === 'password') {
+      setShowPassword('text');
+    } else {
+      setShowPassword('password');
+    }
+  }
+
+  function checkInput() {
+    let noErrors = true;
+
+    if (account.email.trim() === '') {
+      loginErrors.noEmail = true;
+      noErrors = false;
+    } else {
+      loginErrors.noEmail = false;
+      if ((account.email.split('@').length > 1) && (emailEndings.includes(account.email.slice(-4)))) {
+        loginErrors.wrongEmailForm = false;
+      } else {
+        loginErrors.wrongEmailForm = true;
+        noErrors = false;
+      }
+    }
+
+    if (account.password.trim() === '') {
+      loginErrors.noPassword = true;
+      noErrors = false;
+    } else {
+      loginErrors.noPassword = false;
+    }
+
+    return noErrors;
+  }
+
+  async function makeLoginAttempt() {
+    try {
+      const response = await axios.patch(
+        `${link}login`, account, { withCredentials: true },
+      );
+      return response;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async function loginAttempt() {
+    let loggedIn = false;
+
+    const result = await makeLoginAttempt();
+    if (result.status !== 201) {
+      await setErrorMessage(result.data);
+      loginErrors.loginAttemptError = true;
+      loggedIn = false;
+    } else {
+      loginErrors.loginAttemptError = false;
+      loggedIn = true;
+    }
+
+    return loggedIn;
+  }
+
+  async function submitForm() {
+    const inputValid = checkInput();
+    if (!inputValid) {
+      await setShowError(true);
+      return;
+    }
+
+    const loginValid = await loginAttempt();
+    if (!loginValid) {
+      await setShowError(true);
+      return;
+    }
+
+    if (inputValid && loginValid) {
+      setLogInStatus(true);
+      history.push('/home');
+    }
   }
 
   return (
-    <>
-      <Center>LOG IN</Center>
-      <NewDiv>
-        <NewCard>
-          <Form>
-            <LoginCheck handleSubmit={updateList} />
-            {/* Temp */}
-            <Button variant="primary" type="Login">
-              <NavLink to="/discussion">Log In</NavLink>
-            </Button>
-          </Form>
-        </NewCard>
-      </NewDiv>
-      <NewDiv>
-        <NewCard>
-          <NewCard.Body>
-            <NewCard.Title>Haven&apos;t signed up?</NewCard.Title>
-            <NewCard.Text>
-              Click below to sign up.
-            </NewCard.Text>
-            <Button variant="primary" type="Sign Up">
-              <NavLink to="/signup">Sign Up</NavLink>
-            </Button>
-          </NewCard.Body>
-        </NewCard>
-      </NewDiv>
-    </>
+    <LoginForm>
+      <LoginForm.Body>
+        <LoginFormTitle>Log In</LoginFormTitle>
+        <Alert show={showError} variant="danger" onClose={() => setShowError(false)} dismissible>
+          {Object.entries(loginErrors).map((required) => {
+            let msg = '';
+            if (required[1]) {
+              if (stdErrors.includes(required[0])) {
+                msg = errorMap[required[0]];
+              } else {
+                msg = errorMessage;
+              }
+              return (
+                <>
+                  {msg}
+                  <br />
+                </>
+              );
+            }
+            return msg;
+          })}
+        </Alert>
+        <Form>
+          <Form.Group>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              name="email"
+              placeholder="email@gmail.com"
+              value={account.email}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Row>
+            <Col>
+              <PasswordLabel>Password</PasswordLabel>
+            </Col>
+
+            <PasswordCheck>
+              <Form.Check
+                type="checkbox"
+                name="showPassword"
+                id="showPassword"
+                value={passwordCheck}
+                checked={passwordCheck}
+                onChange={handlePrivateClick}
+              />
+              <PasswordLabel>Show Password</PasswordLabel>
+            </PasswordCheck>
+          </Row>
+
+          <Form.Control
+            type={showPassword}
+            id="password"
+            name="password"
+            placeholder="password"
+            value={account.password}
+            onChange={handleChange}
+          />
+
+          <LoginButton variant="primary" onClick={submitForm}>
+            Log In
+          </LoginButton>
+        </Form>
+
+        <NoAccount>
+          Don&apos;t have an account?
+          <NavLink to="/signup"> Sign up for one!</NavLink>
+        </NoAccount>
+      </LoginForm.Body>
+    </LoginForm>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.any.isRequired,
+  link: PropTypes.string.isRequired,
+  setLogInStatus: PropTypes.func.isRequired,
+};
 
 export default Login;

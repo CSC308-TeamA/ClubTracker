@@ -18,6 +18,7 @@ import TeamRoster from './pages/TeamRosterPage';
 import Calendar from './pages/CalendarPage';
 import Login from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
+import LogOut from './pages/LogOutPage';
 
 import Pictures from './pages/PicturePage';
 import Layout from './components/Layout';
@@ -28,15 +29,15 @@ import ThreadPage from './pages/Thread/ThreadPage';
 
 export default function App() {
   const [logInStatus, setLogInStatus] = useState(false);
-  // TODO: CHANGE THIS TO 45 MIN IN MS LATER
-  const TEN_SECONDS_MS = 10000;
+  const [session, setSession] = useState('');
+  const ONE_SECONDS_MS = 1000;
+
+  // const link = 'http://localhost:5000/'; // For testing
+  const link = 'https://clubtracker-backend.herokuapp.com/';
 
   async function fetch() {
     try {
-      const link = 'http://localhost:5000/'; // For testing
-      // let link = 'https://clubtracker-backend.herokuapp.com/';
-
-      const response = await axios.get(link);
+      const response = await axios.get(link, { withCredentials: true });
       return response;
     } catch (error) {
       return false;
@@ -47,10 +48,11 @@ export default function App() {
     const interval = setInterval(() => {
       fetch().then((result) => {
         if (result.status === 201) {
+          setSession(result.data);
           setLogInStatus(true);
         }
       });
-    }, TEN_SECONDS_MS);
+    }, ONE_SECONDS_MS);
 
     return () => clearInterval(interval);
   }, []);
@@ -93,26 +95,83 @@ export default function App() {
               <Route exact path={['/', '/home']} component={Home} />
               {' '}
               <Route path="/about" component={About} />
-              <Route path="/about" component={About} />
               <Route path="/sponsor" component={Sponsor} />
               <Route path="/contact" component={Contact} />
               <Route
                 path="/teamroster"
                 render={(props) => (
-                  <TeamRoster {...props} logInStatus={logInStatus} />
+                  <TeamRoster
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
                 )}
               />
               <Route path="/calendar" component={Calendar} />
               <Route path="/first" component={First} />
               <Route path="/pictures" component={Pictures} />
 
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={SignUp} />
-              {/* TODO: ADD PATH FOR LOG OUT */}
-              {/* TODO: PASS DOWN OBJECT ID AND IF USER IS LOGGED IN OR NOT */}
-              <Route exact path="/discussion" component={DiscussionBoard} />
-              <Route path="/create_board" render={(props) => <CreateBoard {...props} />} />
-              <Route path="/discussion/:thread" render={(props) => <ThreadPage {...props} />} />
+              <Route
+                path="/login"
+                render={(props) => (
+                  <Login
+                    {...props}
+                    link={link}
+                    setLogInStatus={setLogInStatus}
+                  />
+                )}
+              />
+              <Route
+                path="/signup"
+                render={(props) => (
+                  <SignUp
+                    {...props}
+                    link={link}
+                    setLogInStatus={setLogInStatus}
+                  />
+                )}
+              />
+              <Route
+                path="/logout"
+                render={(props) => (
+                  <LogOut
+                    {...props}
+                    link={link}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/discussion"
+                render={(props) => (
+                  <DiscussionBoard
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
+                )}
+              />
+              <Route
+                path="/create_board"
+                render={(props) => (
+                  <CreateBoard
+                    {...props}
+                    logInStatus={logInStatus}
+                    link={link}
+                  />
+                )}
+              />
+              <Route
+                path="/discussion/:thread"
+                render={(props) => (
+                  <ThreadPage
+                    {...props}
+                    logInStatus={logInStatus}
+                    sessionId={session}
+                    link={link}
+                  />
+                )}
+              />
             </Switch>
           </Layout>
           <Footer />
