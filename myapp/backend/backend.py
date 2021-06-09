@@ -80,9 +80,7 @@ def check_user_logged_in():
         else:
             login_check = User().is_account_logged_in(session_token)
             resp = make_response(session.get('session_token'))
-            # resp = make_response(request.cookies.get('session'))
             resp.status_code = login_check[1]
-        print(session.get('session_token'))
 
     return resp
 
@@ -300,7 +298,7 @@ def signup():
 
         resp = jsonify(creating_account[0])
         if creating_account[1] == 201:
-            resp.set_cookie('session', creating_account[0])
+            session['session_token'] = creating_account[0]
         resp.status_code = creating_account[1]
 
     return resp
@@ -322,9 +320,7 @@ def login():
 
         resp = make_response(login_account[0])
         if login_account[1] == 201:
-            print(login_account[0])
             session['session_token'] = login_account[0]
-            # resp.set_cookie('session', value=login_account[0], domain='127.0.0.1')
             
         resp.status_code = login_account[1]
 
