@@ -18,6 +18,7 @@ import TeamRoster from './pages/TeamRosterPage';
 import Calendar from './pages/CalendarPage';
 import Login from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
+import LogOut from './pages/LogOutPage';
 
 import Pictures from './pages/PicturePage';
 import Layout from './components/Layout';
@@ -129,7 +130,15 @@ export default function App() {
                   />
                 )}
               />
-              {/* TODO: ADD PATH FOR LOG OUT */}
+              <Route
+                path="/logout"
+                render={(props) => (
+                  <LogOut
+                    {...props}
+                    link={link}
+                  />
+                )}
+              />
               <Route
                 exact
                 path="/discussion"
