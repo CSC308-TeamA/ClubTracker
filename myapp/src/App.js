@@ -46,7 +46,7 @@ export default function App() {
     const interval = setInterval(() => {
       fetch().then((result) => {
         if (result.status === 201) {
-          console.log(result.data);
+          setSession(result.data);
           setLogInStatus(true);
         }
       });
@@ -147,6 +147,7 @@ export default function App() {
                   <ThreadPage
                     {...props}
                     logInStatus={logInStatus}
+                    sessionId={session}
                     link={link}
                   />
                 )}

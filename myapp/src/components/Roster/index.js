@@ -8,7 +8,7 @@ import {
   RosterBodySection, DeleteMemberButton, RosterListCardBody,
 } from './RosterElements';
 
-function Roster({ characterData, removeCharacter }) {
+function Roster({ characterData, removeCharacter, logInStatus }) {
   return (
     <TeamRoster>
       {characterData.map((row) => (
@@ -55,11 +55,15 @@ function Roster({ characterData, removeCharacter }) {
                     <b>Quote: </b>
                     {row.member_quote ? row.member_quote : ''}
                   </RosterBodySection>
-                  <DeleteMemberButton>
-                    <Button block onClick={() => removeCharacter(row._id)}>
-                      Delete Member
-                    </Button>
-                  </DeleteMemberButton>
+                  {logInStatus
+                    ? (
+                      <DeleteMemberButton>
+                        <Button block onClick={() => removeCharacter(row._id)}>
+                          Delete Member
+                        </Button>
+                      </DeleteMemberButton>
+                    )
+                    : <div />}
                 </RosterListCard.Text>
               </RosterListCardBody>
             </RosterList.Collapse>
@@ -73,6 +77,7 @@ function Roster({ characterData, removeCharacter }) {
 Roster.propTypes = {
   characterData: PropTypes.node.isRequired,
   removeCharacter: PropTypes.func.isRequired,
+  logInStatus: PropTypes.bool.isRequired,
 };
 
 export default Roster;

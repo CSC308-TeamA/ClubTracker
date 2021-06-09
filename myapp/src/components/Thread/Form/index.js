@@ -4,10 +4,9 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { CommentInput } from './FormElements';
 
-function Form({ handleSubmit, link }) {
+function Form({ handleSubmit, sessionId, link }) {
   const [person, setPerson] = useState(
     {
-      user: '',
       post: '',
     },
   );
@@ -31,11 +30,11 @@ function Form({ handleSubmit, link }) {
   }
 
   function submitForm() {
-    fetch(person.user).then((result) => {
+    fetch(sessionId).then((result) => {
       person.user = result;
       handleSubmit(person);
       setPerson(
-        { user: '', post: '' },
+        { post: '' },
       );
     });
   }
@@ -43,14 +42,6 @@ function Form({ handleSubmit, link }) {
   return (
     <>
       <form>
-        <label htmlFor="user">User</label>
-        <CommentInput
-          type="text"
-          name="user"
-          id="user"
-          value={person.user}
-          onChange={handleChange}
-        />
         <label htmlFor="post">Comment</label>
         <CommentInput
           type="text"
@@ -67,6 +58,7 @@ function Form({ handleSubmit, link }) {
 
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  sessionId: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
 };
 
