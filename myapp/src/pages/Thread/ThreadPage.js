@@ -9,7 +9,12 @@ import Thread from '../../components/Thread/Thread';
 import Form from '../../components/Thread/Form';
 import './thread.css';
 
-function ThreadPage({ match, logInStatus, link }) {
+function ThreadPage({
+  match,
+  logInStatus,
+  sessionId,
+  link,
+}) {
   const { thread } = match.params;
 
   const [posts, setPosts] = useState([]);
@@ -84,7 +89,7 @@ function ThreadPage({ match, logInStatus, link }) {
         link={link}
       />
       {logInStatus
-        ? <Form handleSubmit={createPost} link={link} />
+        ? <Form handleSubmit={createPost} sessionId={sessionId} link={link} />
         : <div />}
     </>
   );

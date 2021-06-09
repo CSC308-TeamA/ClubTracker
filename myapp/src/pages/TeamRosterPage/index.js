@@ -100,6 +100,7 @@ function TeamRoster({ logInStatus, link }) {
       <Roster
         characterData={characters}
         removeCharacter={removeCharacter}
+        logInStatus={logInStatus}
         link={link}
       />
     </div>

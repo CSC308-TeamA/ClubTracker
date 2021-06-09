@@ -28,6 +28,7 @@ import ThreadPage from './pages/Thread/ThreadPage';
 
 export default function App() {
   const [logInStatus, setLogInStatus] = useState(false);
+  const [session, setSession] = useState('');
   // TODO: CHANGE THIS TO 45 MIN IN MS LATER
   const TEN_SECONDS_MS = 1000;
 
@@ -47,7 +48,7 @@ export default function App() {
     const interval = setInterval(() => {
       fetch().then((result) => {
         if (result.status === 201) {
-          console.log(result.data);
+          setSession(result.data);
           setLogInStatus(true);
         }
       });
@@ -149,6 +150,7 @@ export default function App() {
                   <ThreadPage
                     {...props}
                     logInStatus={logInStatus}
+                    sessionId={session}
                     link={link}
                   />
                 )}
