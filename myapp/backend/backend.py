@@ -24,9 +24,17 @@ Routes
         login():
 '''
 
+import datetime
+import urllib.parse
+from uuid import uuid4
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pymongo
+from pymongo import ReturnDocument
+from bson import ObjectId
+import bcrypt
 from user_class import User
+
 
 app = Flask(__name__)
 CORS(app)
@@ -305,6 +313,7 @@ def login():
             resp (JSON): Contains status code and object of account logged in
     '''
     if request.method == 'PATCH':
+        print('here')
         account_to_login = request.get_json()
         login_account = User().login_account(account_to_login)
 

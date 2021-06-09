@@ -1,9 +1,8 @@
-from time import thread_time_ns
+import urllib.parse
+import datetime
 from flask import jsonify
 import pymongo
 from pymongo import ReturnDocument
-import urllib.parse
-import datetime
 from bson import ObjectId
 import bcrypt
 from uuid import uuid4
@@ -463,7 +462,7 @@ class User:
         email = account_to_login['email']
         account = collection.find_one({'email': email})
         if not account:
-            return (f'No account with email {email}', 200)
+            return (f'No account associated to email: {email}', 200)
 
         given_pswd = bytes(account_to_login['password'], encoding='utf-8')
         if not bcrypt.checkpw(given_pswd, account['password']):

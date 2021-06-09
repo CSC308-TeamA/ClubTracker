@@ -10,7 +10,7 @@ import {
   SubmitButton,
 } from './AddUserFormElements';
 import {
-  status, positions, grades, shirtSizes, genders, errorMap,
+  status, positions, grades, shirtSizes, genders, errorMap, emailEndings,
 } from './AddUserFormProperties';
 
 function AddUserForm({ handleSubmit, handleHide, showForm }) {
@@ -199,7 +199,7 @@ function AddUserForm({ handleSubmit, handleHide, showForm }) {
       if (form.includes('ec2') && inputValue.trim() === '') {
         temp[form] = true;
       } else if (form.includes('email')) {
-        if ((inputValue.split('@').length > 1) && (inputValue.slice(-4) === '.com')) {
+        if ((inputValue.split('@').length > 1) && (emailEndings.includes(inputValue.slice(-4)))) {
           temp[form] = true;
         } else {
           isValid = false;

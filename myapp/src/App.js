@@ -109,7 +109,15 @@ export default function App() {
               <Route path="/first" component={First} />
               <Route path="/pictures" component={Pictures} />
 
-              <Route path="/login" component={Login} />
+              <Route
+                path="/login"
+                render={(props) => (
+                  <Login
+                    {...props}
+                    link={link}
+                  />
+                )}
+              />
               <Route path="/signup" component={SignUp} />
               {/* TODO: ADD PATH FOR LOG OUT */}
               <Route
