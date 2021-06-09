@@ -1,10 +1,68 @@
-# TeamProject
+# ClubTracker
 ## Team Members
 Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
 
 ## Travis CI Build Status
 [![Build Status](https://travis-ci.com/CSC308-TeamA/ClubTracker.svg?branch=main)](https://travis-ci.com/CSC308-TeamA/ClubTracker)
 
+## Code Coverage
+You should have the following python packages: pytest, coverage (plus all other packages required by the backend).
+You should also be in a python virtual environment (venv).
+
+**Commands to get coverage measurements of our backend:**
+`cd myapp/backend`
+`coverage run --source=. -m pytest backend_test.py backend.py`
+`coverage report -m`
+
+Here is a sample of a coverage report:
+![image](https://user-images.githubusercontent.com/17805409/121275756-3676ef80-c882-11eb-8523-ce034a6740a0.png)
+Coverage last ran and updated: June 8, 2021, 17:52
+
+We do have at least 50% coverage of backend.py, which includes our primary data processing and backend-contained logic, and 
+the rest are mostly code that deal with external interfaces (i.e., requests library, MongoDB). For example, our entire User
+class is mostly MongoDB accessing/interfacing.
+
+# How To Setup
+**All of these start in myapp folder.**
+
+## Setup npm
+**Run commands:**
+`npm install`
+`npm audit fix`
+
+
+## Setup Python venv
+**1. Create virtual environment. [How To](https://docs.python.org/3/tutorial/venv.html)**
+
+**2. Activate virtual environment. (Same link as above)**
+
+**3. Run following command:**
+`[pip/pip3] install -r requirements.txt`
+
+
+
+# How to Lint (Both require you've set up the environments)
+**To use ESLint on a file:**
+`npx eslint <filename>`
+
+**To use pylint on a file:**
+`python -m pylint <filename>`
+
+
+
+# How to run app
+**Running Backend (This is only in development when you are locally running):**
+`cd backend`
+`[export/set] FLASK_APP=backend.py`
+`[export/set] FLASK_ENV=development`
+`[python/python3] -m flask run`
+
+**Running Frontend:**
+`npm start`
+
+
+
+# Documentation on Dependencies
 
 ## JavaScript Linter
 Our team uses **ESLint** for our JavaScript code. Documentation found [here.](https://eslint.org/docs/user-guide/getting-started)

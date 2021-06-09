@@ -49,13 +49,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ### Possible other installs
-
-You may have to download extra things which would be the following:
-
--npm install node-sass@4.14.1
--npm install react-icons --save
--npm install react-player --save
-
 Notes to self:
 MAKE SURE TO RUN AS ADMIN (powershell)
 First terminal:
