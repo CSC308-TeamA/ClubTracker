@@ -126,10 +126,10 @@ export default function App() {
                   <SignUp
                     {...props}
                     link={link}
+                    setLogInStatus={setLogInStatus}
                   />
                 )}
               />
-              {/* TODO: ADD PATH FOR LOG OUT */}
               <Route
                 exact
                 path="/discussion"

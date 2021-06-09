@@ -553,7 +553,7 @@ class User:
 
     def logout_account(self, session_token):
         collection = self.get_collection('Accounts')
-        
+
         if collection.count({'session_token': session_token}) == 0:
             return ('Session token not linked to a logged in account', 200)
 
