@@ -321,7 +321,21 @@ def login():
         resp = make_response(login_account[0])
         if login_account[1] == 201:
             session['session_token'] = login_account[0]
-            
+
         resp.status_code = login_account[1]
+
+    return resp
+
+@app.route('/logout', methods=['PATCH'])
+def logout():
+    if request.method == 'PATCH':
+        user_to_logout = session.get('session_token')
+        logout_user = User().logout_account(user_to_logout)
+
+        resp = make_response(logout_user[0])
+        if logout_user[1] == 201:
+            session['session_token'] = ''
+
+        resp.status_code = logout_user[1]
 
     return resp

@@ -129,6 +129,12 @@ function Login({ history, link, setLogInStatus }) {
               } else {
                 msg = errorMessage;
               }
+              return (
+                <>
+                  {msg}
+                  <br />
+                </>
+              );
             }
             return msg;
           })}

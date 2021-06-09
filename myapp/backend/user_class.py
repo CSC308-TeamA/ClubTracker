@@ -550,3 +550,16 @@ class User:
         if not account:
             return (f'No account with userid {user_id}', 200)
         return (account['username'], 201)
+
+    def logout_account(self, session_token):
+        collection = self.get_collection('Accounts')
+        
+        if collection.count({'session_token': session_token}) == 0:
+            return ('Session token not linked to a logged in account', 200)
+
+        collection.find_one_and_update(
+            {'session_token': session_token},
+            {'$set': {'session_token': ''}},
+            return_document=ReturnDocument.AFTER
+        )
+        return ('Account logged out', 201)

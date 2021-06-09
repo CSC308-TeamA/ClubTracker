@@ -28,6 +28,7 @@ import ThreadPage from './pages/Thread/ThreadPage';
 
 export default function App() {
   const [logInStatus, setLogInStatus] = useState(false);
+  const [session, setSession] = useState('');
   const ONE_SECONDS_MS = 1000;
 
   const link = 'http://localhost:5000/'; // For testing
