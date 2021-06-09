@@ -24,22 +24,22 @@ function SignUp({ link }) {
       const response = await axios.post(`${link}signup`, account);
       return response;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   }
 
   function submitForm() {
     if (account.username === '') {
-      alert('Please enter username');
+      // alert('Please enter username');
       return;
     }
     if (account.email === '') {
-      alert('Please enter email');
+      // alert('Please enter email');
       return;
     }
     if (account.password === '') {
-      alert('Please enter password');
+      // alert('Please enter password');
       return;
     }
 
