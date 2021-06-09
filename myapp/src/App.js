@@ -120,7 +120,16 @@ export default function App() {
                   />
                 )}
               />
-              <Route path="/signup" component={SignUp} />
+              <Route
+                path="/signup"
+                render={(props) => (
+                  <SignUp
+                    {...props}
+                    link={link}
+                  />
+                )}
+              />
+              {/* TODO: ADD PATH FOR LOG OUT */}
               <Route
                 exact
                 path="/discussion"

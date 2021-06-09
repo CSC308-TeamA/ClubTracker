@@ -56,7 +56,7 @@ function Login({ history, link, setLogInStatus }) {
       if ((account.email.split('@').length > 1) && (emailEndings.includes(account.email.slice(-4)))) {
         loginErrors.wrongEmailForm = false;
       } else {
-        console.log(emailEndings.includes(account.email.slice(-4)));
+        // console.log(emailEndings.includes(account.email.slice(-4)));
         loginErrors.wrongEmailForm = true;
         noErrors = false;
       }
