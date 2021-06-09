@@ -28,8 +28,7 @@ import ThreadPage from './pages/Thread/ThreadPage';
 
 export default function App() {
   const [logInStatus, setLogInStatus] = useState(false);
-  // TODO: CHANGE THIS TO 45 MIN IN MS LATER
-  const TEN_SECONDS_MS = 1000;
+  const ONE_SECONDS_MS = 1000;
 
   const link = 'http://localhost:5000/'; // For testing
   // let link = 'https://clubtracker-backend.herokuapp.com/';
@@ -51,7 +50,7 @@ export default function App() {
           setLogInStatus(true);
         }
       });
-    }, TEN_SECONDS_MS);
+    }, ONE_SECONDS_MS);
 
     return () => clearInterval(interval);
   }, []);
@@ -121,7 +120,6 @@ export default function App() {
                 )}
               />
               <Route path="/signup" component={SignUp} />
-              {/* TODO: ADD PATH FOR LOG OUT */}
               <Route
                 exact
                 path="/discussion"
