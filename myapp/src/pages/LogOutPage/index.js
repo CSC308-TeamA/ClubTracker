@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function LogOut({ link }) {
   async function logout() {
     try {
-      const response = await axios.patch(
+      const response = await axios.get(
         `${link}logout`, { withCredentials: true },
       );
       return response;
