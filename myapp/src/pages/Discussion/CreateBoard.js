@@ -6,7 +6,7 @@ import axios from 'axios';
 // import {Redirect} from "react-router-dom";
 import PropTypes from 'prop-types';
 import { Form as BootStrapForm, Col } from 'react-bootstrap';
-import { NewCard } from './BoardElements';
+import { NewCard } from './CreateBoardElements';
 
 function CreateBoard({ logInStatus, link }) {
   const [board, setBoard] = useState(
