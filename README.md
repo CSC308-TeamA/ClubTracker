@@ -7,12 +7,17 @@ Jacob Burianek, Tammy Chau, Isaiah Kroeker, Steven Ngo, Jenisa Nguyen
 
 ## Acceptance Tests
 Here is a link to our original acceptance test document: https://docs.google.com/document/d/1Tvu6fH-OcDuaEhUeSDayKiv9yg5H1vwU9JO8CJpLHGg/edit?usp=sharing
+
 The criteria in the document do not actually reflect our final acceptance tests, rather what we have in myapp/cypress/integration
 better indicates what the main features of our site are. Below is a screenshot of all our acceptance tests passing.
 ![image](https://user-images.githubusercontent.com/17805409/121474274-b1bacd00-c978-11eb-9293-686dfc85342f.png)
 Cypress last ran and updated: June 9, 2021, 23:16
 
 Here is a link to our Cypress runs dashboard: https://dashboard.cypress.io/projects/2drixm/runs
+
+Due to the time crunch and the nature of how cookies do not work with our deployed Heroku site (non-verified account), the 
+acceptance tests can only be done locally and therefore are not yet automated. We did at least start the steps if to do so, as
+seen with our Cypress dashboard being set up.
 
 ## Code Coverage
 You should have the following python packages: pytest, coverage (plus all other packages required by the backend).
