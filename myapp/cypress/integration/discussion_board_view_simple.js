@@ -19,11 +19,10 @@ describe("View an existing thead", () => {
     it("Then I should be directed to a new page with a calendar", () => {
         cy.contains("Robot");
         cy.contains("Number of threads:");
-        cy.contains("Outreach");
     });
 
     it("And I should be able to click on a thread to see more", () => {
         cy.contains("Robot").click();
-        cy.contains("Bot1");
+        cy.contains("New parts");
     });
 })
